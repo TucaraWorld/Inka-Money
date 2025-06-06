@@ -1,0 +1,371 @@
+/* balance.css */
+
+/* Encabezado */
+.balance-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.balance-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #000000;
+}
+
+
+.budget-nav {
+  display: flex;
+  align-items: center;
+  background-color: var(--color-secundario);
+  border-radius: 20px;
+  padding: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+    
+.nav-option {
+  padding: 0.5rem 1rem;
+  margin: 0 0.25rem;
+  border-radius: 6px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  font-weight: 500;
+  color: #000000;
+}
+    
+.nav-option:hover {
+  text-decoration: underline;
+}
+
+.nav-option.active {
+  color: #000000;
+  text-decoration: underline;
+}
+
+
+/* Estilo para la pantalla de Balance Total */
+.balance-container {
+  padding: 0 2rem 0 2rem;
+}
+
+.balance-total {
+  padding: 2rem;
+  background-color: var(--color-fondo);
+}
+
+/* Estilo para la tarjeta de saldo actual */
+.saldo-card {
+  flex: 1;
+  background-color: #d1f7d1; /* Color verde claro para la tarjeta */
+  padding: 1.8rem;
+  border-radius: 10px;
+  margin-top: 1rem;
+  margin-left: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.saldo-icon {
+  font-size: 2rem;
+  margin-right: 1rem;
+}
+.saldo-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.saldo-text {
+  display: flex;
+  align-items: center;
+  color: #266129;
+}
+
+.saldo-amount {
+  font-family: var(--fuente-numero);
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #404040; /* Verde más oscuro */
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.saldo-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.saldo-date {
+  font-size: 0.9rem;
+  color: #404040;
+}
+
+.btn-link {
+  color: #404040;
+  font-size: 1rem;
+}
+
+.btn-link:hover {
+  text-decoration: underline;
+}
+
+.user-profile{
+  width: 230px;
+}
+
+.user-profile img{
+  max-width: 100%;
+  height: 230px;
+  width: auto;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Espaciado y alineación del título y avatar */
+.balance-average {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+/* Cards de Mayor Ingreso, Mayor Gasto, Menor Ingreso, etc. */
+/* Estilo para las filas de las cards */
+.cards-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  gap: 1.5rem; /* Espaciado entre tarjetas */
+}
+
+.card {
+  background-color: #F2F2F2;
+  padding: 1.5rem;
+  border-radius: 10px;
+  width: 48%; /* Ancho ajustado para que quepan bien las tarjetas */
+  text-align: left;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--color-primario);
+}
+
+.card.icon {
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  padding: 0; /* Elimina el padding para que la imagen ocupe todo el espacio */
+  display: flex;
+  align-items: center;
+  justify-content: stretch;
+  height: 100%; /* Asegura que la card tenga altura completa */
+}
+
+.card.icon img {
+  width: 70%;
+  height: 70%;
+  object-fit: cover; /* Hace que la imagen cubra toda la card */
+  border-radius: 10px; /* Mantiene el borde redondeado de la card */
+  margin: 0;
+  display: block;
+}
+
+
+.card h5 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.card p {
+  font-size: 1rem;
+}
+
+.card h6 {
+  font-size: 1.3rem;
+  font-weight: bold;
+  font-family: var(--fuente-numero);
+}
+
+
+/* Total Balance Page */
+/*.total-balance {
+  padding: 3rem 0;
+}
+
+.profile-info {
+  background-color: var(--color-fondo-tarjeta);
+  padding: 1.5rem;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.profile-info img {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 1rem;
+}
+
+.balance {
+  background-color: var(--color-secundario);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+}
+
+.card {
+  border: none;
+  border-radius: 10px;
+}
+
+.card-body {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.card-title {
+  font-weight: bold;
+}
+
+.card h6 {
+  font-size: 1.2rem;
+  color: var(--color-primario);
+}
+
+.btn-link {
+  color: var(--color-secundario);
+}
+
+.btn-link:hover {
+  text-decoration: underline;
+}
+
+
+
+ Tarjetas 
+.card {
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1.5rem;
+  background-color: var(--color-fondo-tarjeta);
+}
+
+.card-header {
+  background-color: var(--color-fondo-tarjeta);
+  border-bottom: 1px solid var(--color-borde);
+  font-weight: 600;
+  padding: 1rem 1.5rem;
+  border-radius: 12px 12px 0 0 !important;
+  color: var(--color-texto);
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+ Elementos de categoría 
+.category-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #EDF2F7;
+}
+
+.category-item:last-child {
+  border-bottom: none;
+}
+
+.category-name {
+  font-weight: 500;
+  color: var(--color-texto);
+}
+
+.category-amount {
+  font-weight: 600;
+  font-family: 'Space Mono', monospace;
+  color: var(--color-texto);
+}
+
+Saldo actual
+
+Estilos para la foto de perfil y contenedor 
+.profile-photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+}
+
+.profile-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.current-balance {
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: 'Urbanist', sans-serif;
+  color: var(--color-primario);
+  margin: 0.5rem 0;
+}
+
+.month-selector {
+  color: var(--color-texto-secundario);
+  font-weight: 500;
+}
+
+.hide-balance {
+  color: var(--color-texto-footer);
+  cursor: pointer;
+  margin-top: 0.5rem;
+  display: inline-block;
+}
+
+.hide-balance i {
+  margin-right: 0.5rem;
+}
+
+ Presupuesto 
+.budget-category {
+  color: var(--color-texto-secundario);
+  font-style: italic;
+}
+
+ Pie de página 
+.footer-text {
+  color: var(--color-texto-footer);
+  font-size: 0.875rem;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+ Responsive 
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+    padding: 1rem;
+  }
+  
+  .balance-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .month-selector {
+    margin-top: 0.5rem;
+  }
+}*/
