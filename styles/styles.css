@@ -1,0 +1,93 @@
+:root {
+  --color-primario: #002C5F;
+  --color-secundario: #FFD100;
+  --color-fondo: #FFFFFF;
+  --fuente-base: 'Inter', sans-serif;
+  --fuente-boton: 'Poppins', sans-serif;
+  --fuente-titulo: 'Urbanist', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--fuente-base);
+  background-color: var(--color-fondo);
+  color: #000;
+}
+
+h1, h2, h3 {
+  font-family: var(--fuente-titulo);
+  font-weight: 700;
+}
+
+button, .btn {
+  font-family: var(--fuente-boton);
+  font-weight: 600;
+}
+
+/* Sidebar común */
+.menu-lateral {
+  width: 240px;
+  background-color: var(--color-primario);
+  min-height: 100%;
+  overflow-y: auto;
+}
+
+.logo-aplicacion {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.menu-lateral .nav-link {
+  font-size: 1rem;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+  color: white;
+}
+
+.menu-lateral .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.menu-lateral .nav-gastos,
+.menu-lateral .nav-ingresos,
+.menu-lateral .nav-balance,
+.menu-lateral .nav-visualizacion {
+  background-color: var(--color-secundario);
+  color: black !important;
+  font-weight: bold;
+  border-radius: 20px;
+  padding-left: 20px;
+  margin-right: 10px;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.menu-lateral .nav-gastos i,
+.menu-lateral .nav-ingresos i,
+.menu-lateral .nav-balance i,
+.menu-lateral .nav-visualizacion i {
+  color: black !important;
+}
+
+.top-header {
+  background-color: var(--color-primario);
+  height: 32px;
+}
+
+.footer {
+  background-color: var(--color-primario);
+  font-size: 0.9rem;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+}
+
+html, body {
+  height: 100%;
+}
