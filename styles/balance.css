@@ -9,7 +9,7 @@
 }
 
 .balance-title {
-  font-size: 1.8rem;
+  font-size: 1.9rem;
   font-weight: 600;
   color: #000000;
 }
@@ -146,9 +146,8 @@
 .card {
   background-color: #F2F2F2;
   padding: 1.5rem;
-  border-radius: 10px;
+  border-radius: 5px;
   width: 48%; /* Ancho ajustado para que quepan bien las tarjetas */
-  text-align: left;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   display: flex;
   justify-content: space-between;
@@ -176,6 +175,18 @@
   display: block;
 }
 
+.card.text {
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  text-align: center;
+  padding: 0.3rem;
+}
+
+.card.text h5 {
+  font-size: 3rem;
+  color: #000000;
+}
 
 .card h5 {
   font-size: 2rem;
@@ -190,6 +201,14 @@
   font-size: 1.3rem;
   font-weight: bold;
   font-family: var(--fuente-numero);
+}
+
+.advertencia-text {
+  text-align: left;
+  font-style: italic;
+  font-size: 1rem;
+  margin-top: 2rem;
+  color: var(--color-primario);
 }
 
 
