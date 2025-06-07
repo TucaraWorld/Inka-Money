@@ -1,0 +1,78 @@
+.main-eliminar {
+  flex-grow: 1;
+  padding: 2rem;
+  background-color: var(--color-fondo);
+}
+
+.footer-eliminar {
+  background-color: var(--color-primario);
+  font-size: 0.9rem;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+}
+
+.filtro-label {
+  font-family: var(--fuente-boton);
+  font-size: 0.9rem;
+  color: #000;
+}
+
+.toast-exito {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  background-color: var(--color-primario);
+  color: white;
+  max-width: 450px;
+  width: 90%;
+}
+
+.toast-exito .check-circle {
+  width: 32px;
+  height: 32px;
+  background-color: white;
+  color: var(--color-primario);
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.toast-exito .check-circle i {
+  color: var(--color-primario);
+}
+
+.toast-exito span {
+  color: white;
+}
+
+.layout-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.layout-wrapper > .contenedor-general {
+  flex-grow: 1;
+  display: flex;
+}
+
+.pagination .page-link {
+  border-radius: 10px;
+  color: #000;
+}
+
+.pagination .active .page-link {
+  background-color: var(--color-secundario);
+  border-color: var(--color-secundario);
+  color: #000;
+  font-weight: bold;
+}
+
+.table td:nth-child(4),
+.table th:nth-child(4) {
+  font-family: 'Space Mono', monospace; /* Para montos */
+}
