@@ -79,7 +79,7 @@
                         </div>
                         <div class="nav nav-pills mt-3 budget-nav" id="balanceTabs" role="tablist">
                             <a href="#total" class="nav-option active" id="total-tab" data-bs-toggle="pill" data-bs-target="#total-content" role="tab" aria-controls="total-content" aria-selected="true">Total</a>
-                            <a href="#presupuesto" class="nav-option" id="presupuesto-tab" data-bs-toggle="pill" data-bs-target="#presupuesto-content" role="tab" aria-controls="presupuesto-content" aria-selected="false">Presupuesto</a>
+                            <a href="#presupuesto-content" class="nav-option" id="presupuesto-tab" data-bs-toggle="pill" data-bs-target="#presupuesto-content" role="tab" aria-controls="presupuesto-content" aria-selected="false">Presupuesto</a>
                             <a href="#categoria" class="nav-option" id="categoria-tab" data-bs-toggle="pill" data-bs-target="#categoria-content" role="tab" aria-controls="categoria-content" aria-selected="false">Categoría</a>
                             <a href="#graficos" class="nav-option" id="graficos-tab" data-bs-toggle="pill" data-bs-target="#graficos-content" role="tab" aria-controls="graficos-content" aria-selected="false">Gráficos</a>
                         </div>
@@ -98,14 +98,28 @@
                                 tab.classList.add('active');
                                 const targetContent = document.querySelector(tab.getAttribute('data-bs-target'));
                                 targetContent.classList.add('show', 'active');
+                                // Update hash for deep linking
+                                if (tab.getAttribute('data-bs-target')) {
+                                    window.location.hash = tab.getAttribute('data-bs-target');
+                                }
                             });
+                            });
+
+                            // Activate tab based on hash on page load
+                            document.addEventListener('DOMContentLoaded', function() {
+                                if (window.location.hash) {
+                                    const hash = window.location.hash;
+                                    // Only match hashes that correspond to tab content
+                                    const tab = Array.from(tabs).find(t => t.getAttribute('data-bs-target') === hash);
+                                    if (tab) tab.click();
+                                }
                             });
                         </script>
                     </section>
 
                     <div class="tab-content mt-4" id="balanceTabsContent">
                         <!-- BALANCE TOTAL -->
-                        <div class="tab-pane fade" id="total-content" role="tabpanel" aria-labelledby="total-tab">
+                        <div class="tab-pane fade show active" id="total-content" role="tabpanel" aria-labelledby="total-tab">
                             <section class="total-balance">
                                 <div class="balance-average">
                                     <div class="user-profile">
@@ -165,11 +179,10 @@
                         </div>
 
                         <!-- PRESUPUESTO -->
-                        <div class="tab-pane fade show active" id="presupuesto-content" role="tabpanel" aria-labelledby="presupuesto-tab">
+                        <div class="tab-pane fade" id="presupuesto-content" role="tabpanel" aria-labelledby="presupuesto-tab">
                             <section class="presupuesto-balance">
                                 <div class="presupuesto-header">
-                                    <h1 class="balance-title">Presupuestos</h1>
-                                    <button class="btn nueva-meta-btn btn-warning fw-bold">
+                                    <button class="btn nueva-meta-btn btn-warning fw-bold" onclick="window.location.href='formulario-presupuesto.html'">
                                         + Nueva meta <span class="nueva-meta-icon"></span>
                                     </button>
                                 </div>
@@ -193,7 +206,7 @@
                                                         <th class="header">Actual</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody id="presupuestoTableBody">
                                                     <tr>
                                                         <td>Viaje</td>
                                                         <td>S/. 9,500.00</td>
@@ -421,6 +434,41 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Load presupuestos from localStorage and render them
+        function renderPresupuestosFromStorage() {
+            const tableBody = document.getElementById('presupuestoTableBody');
+            // Keep the initial hardcoded rows
+            // Remove any rows previously added by JS
+            Array.from(tableBody.querySelectorAll('tr[data-storage="true"]')).forEach(tr => tr.remove());
 
+            const stored = localStorage.getItem('presupuestos');
+            if (stored) {
+                const presupuestos = JSON.parse(stored);
+                presupuestos.forEach(p => {
+                    const row = document.createElement('tr');
+                    row.setAttribute('data-storage', 'true');
+                    row.innerHTML = `
+                        <td>${p.categoria}</td>
+                        <td>S/. ${Number(p.limite).toLocaleString('es-PE', {minimumFractionDigits: 2})}</td>
+                        <td>S/. ${Number(p.actual).toLocaleString('es-PE', {minimumFractionDigits: 2})}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            }
+        }
+
+        // Call on page load
+        renderPresupuestosFromStorage();
+
+        // --- NUEVO: Activar pestaña "Presupuesto" si el hash es #presupuesto-content ---
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.location.hash === '#presupuesto-content') {
+                // Activar la pestaña "Presupuesto"
+                const tab = document.querySelector('.nav-option#presupuesto-tab');
+                if (tab) tab.click();
+            }
+        });
+    </script>
 </body>
 </html>

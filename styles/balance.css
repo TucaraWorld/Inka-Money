@@ -386,12 +386,15 @@
 .nueva-meta-btn {
     border-radius: 12px;
     border: 1px solid #000; /* Siempre mostrar el borde */
+    display: flex;
+    margin-left: auto;
 }
 
 .nueva-meta-btn:hover {
   border-radius: 12px;
   border: 1px solid #000; /* Siempre mostrar el borde */
   text-decoration: underline;
+  margin-left: auto;
 }
 
 .nueva-meta-icon {
