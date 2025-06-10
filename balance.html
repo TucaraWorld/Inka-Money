@@ -105,7 +105,7 @@
 
                     <div class="tab-content mt-4" id="balanceTabsContent">
                         <!-- BALANCE TOTAL -->
-                        <div class="tab-pane fade show active" id="total-content" role="tabpanel" aria-labelledby="total-tab">
+                        <div class="tab-pane fade" id="total-content" role="tabpanel" aria-labelledby="total-tab">
                             <section class="total-balance">
                                 <div class="balance-average">
                                     <div class="user-profile">
@@ -164,10 +164,61 @@
                             </section>
                         </div>
 
-
                         <!-- PRESUPUESTO -->
-                        <div class="tab-pane fade" id="presupuesto-content" role="tabpanel" aria-labelledby="presupuesto-tab">
+                        <div class="tab-pane fade show active" id="presupuesto-content" role="tabpanel" aria-labelledby="presupuesto-tab">
                             <section class="presupuesto-balance">
+                                <div class="presupuesto-header">
+                                    <h1 class="balance-title">Presupuestos</h1>
+                                    <button class="btn nueva-meta-btn btn-warning fw-bold">
+                                        + Nueva meta <span class="nueva-meta-icon"></span>
+                                    </button>
+                                </div>
+                                <div class="presupuesto-img-container">
+                                    <!-- Imagen de usuario (placeholder) -->
+                                    <div class="ahorros-img">
+                                        <img src="assets/img/ahorros.png">
+                                    </div>
+                                </div>
+                                <div class="presupuesto-lista-container">
+                                    <div class="card">
+                                        <div class="presupuesto-lista-header">
+                                            Lista de presupuestos
+                                        </div>
+                                        <div class="table-responsive presupuesto-lista-table">
+                                            <table class="table">
+                                                <thead class="presupuesto-lista-thead">
+                                                    <tr>
+                                                        <th class="header">Categoría</th>
+                                                        <th class="header">Límite</th>
+                                                        <th class="header">Actual</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Viaje</td>
+                                                        <td>S/. 9,500.00</td>
+                                                        <td>S/. 8,400.00</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Transporte 2</td>
+                                                        <td>S/. 5,000.00</td>
+                                                        <td>S/. 3,200.00</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Comida</td>
+                                                        <td>S/. 2,000.00</td>
+                                                        <td>S/. 1,500.00</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Salud</td>
+                                                        <td>S/. 1,200.00</td>
+                                                        <td>S/. 900.00</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                             </section>
                         </div>
 
