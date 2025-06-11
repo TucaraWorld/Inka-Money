@@ -39,31 +39,31 @@
 
       <nav aria-label="Navegación principal">
         <ul class="nav nav-pills flex-column mb-auto lista-navegacion">
-          <li class="nav-item"><a href="#" class="nav-link text-white"><i class="bi bi-house me-2"></i>Inicio</a></li>
+          <li class="nav-item"><a href="index.html" class="nav-link text-white"><i class="bi bi-house me-2"></i>Inicio</a></li>
           <li>
-            <a class="nav-link text-white d-flex justify-content-between align-items-center enlace-registros" data-bs-toggle="collapse" href="#submenuRegistros" role="button" aria-expanded="true">
+            <a class="nav-link text-white d-flex justify-content-between align-items-center enlace-registros" data-bs-toggle="collapse" href="#submenuRegistros" role="button" aria-expanded="false">
               <span><i class="bi bi-currency-dollar me-2"></i>Registros</span>
               <i class="bi bi-caret-down-fill"></i>
             </a>
-            <div class="collapse show" id="submenuRegistros">
+            <div class="collapse" id="submenuRegistros">
               <ul class="nav flex-column ms-4 mt-2 submenu-registros">
                 <li><a href="ingresos.html" class="nav-link text-white"><i class="bi bi-plus-lg me-2"></i>Ingresos</a></li>
-                <li><a href="gastos.html" class="nav-link nav-gastos"><i class="bi bi-dash-lg me-2"></i>Gastos</a></li>
+                <li><a href="gastos.html" class="nav-link text-white"><i class="bi bi-dash-lg me-2"></i>Gastos</a></li>
                 <li><a href="balance.html" class="nav-link text-white"><i class="bi bi-bar-chart me-2"></i>Balance</a></li>
               </ul>
             </div>
           </li>
           <li><a href="metas-ahorro.html" class="nav-link text-white"><i class="bi bi-pie-chart me-2"></i>Metas de ahorro</a></li>
           <li>
-            <a class="nav-link text-white d-flex justify-content-between align-items-center enlace-visualizacion" data-bs-toggle="collapse" href="#submenuVisualizacion" role="button" aria-expanded="false">
+            <a class="nav-link text-white d-flex justify-content-between align-items-center enlace-visualizacion" data-bs-toggle="collapse" href="#submenuVisualizacion" role="button" aria-expanded="true">
               <span><i class="bi bi-graph-up me-2"></i>Visualización</span>
               <i class="bi bi-caret-down-fill"></i>
             </a>
-            <div class="collapse" id="submenuVisualizacion">
+            <div class="collapse show" id="submenuVisualizacion">
               <ul class="nav flex-column ms-4 mt-2 submenu-visualizacion">
                 <li><a href="#" class="nav-link text-white"><i class="bi bi-pie-chart me-2"></i>Categorías</a></li>
                 <li><a href="#" class="nav-link text-white"><i class="bi bi-bar-chart me-2"></i>Resumen</a></li>
-                <li><a href="historial-movimientos.html" class="nav-link text-white"><i class="bi bi-clock-history me-2"></i>Historial</a></li>
+                <li><a href="historial-movimientos.html" class="nav-link nav-historial"><i class="bi bi-clock-history me-2"></i>Historial</a></li>
               </ul>
             </div>
           </li>
@@ -77,11 +77,8 @@
       <main class="p-4 w-100 flex-grow-1 area-contenido" role="main">
         
         <!-- TÍTULO Y BOTÓN -->
-        <header class="d-flex justify-content-between align-items-center mb-4 encabezado-principal">
-          <h2>Gastos</h2>
-          <a href="formulario-gasto.html" class="btn btn-warning fw-bold rounded-pill px-4 boton-agregar-gasto">
-            + Agregar gasto
-          </a>
+        <header class="d-flex align-items-center mb-4 encabezado-principal">
+          <h2>Historial movimientos</h2>
         </header>
 
         <!-- FILTROS RÁPIDOS -->
@@ -109,53 +106,36 @@
           <button id="applyDateFilter" class="btn btn-primary">Aplicar filtro</button>
         </div>
 
-        <!-- TABLA DE GASTOS -->
+        <!-- TABLA DE HISTORIAL -->
         <section class="table-responsive shadow-sm rounded bg-white contenedor-tabla" aria-label="Tabla de gastos">
           <table class="table table-bordered mb-0" id="tablaGastos">
             <thead class="table-light text-center">
               <tr>
-                <th></th>
                 <th>FECHA</th>
                 <th>CATEGORÍA</th>
                 <th>CANTIDAD</th>
-                <th></th>
               </tr>
             </thead>
             <tbody class="text-center align-middle cuerpo-tabla"  id="cuerpoTablaGastos">
               <tr>
-                <td><i class="bi bi-pencil"></i></td>
                 <td>20/04/2025</td>
                 <td>Comida</td>
-                <td>S/. 50.00</td>
-                <td><i class="bi bi-trash eliminar-fila" style="cursor: pointer;"></i></td>
+                <td>- S/. 50.00</td>
               </tr>
               <tr>
-                <td><i class="bi bi-pencil"></i></td>
                 <td>18/04/2025</td>
                 <td>Transporte</td>
-                <td>S/. 40.00</td>
-                <td><i class="bi bi-trash eliminar-fila" style="cursor: pointer;"></i></td>
+                <td>+ S/. 40.00</td>
               </tr>
               <tr>
-                <td><i class="bi bi-pencil"></i></td>
                 <td>16/04/2025</td>
                 <td>Educación</td>
-                <td>S/. 50.00</td>
-                <td><i class="bi bi-trash eliminar-fila" style="cursor: pointer;"></i></td>
+                <td>+ S/. 50.00</td>
               </tr>
               <tr>
-                <td><i class="bi bi-pencil"></i></td>
                 <td>15/04/2025</td>
                 <td>Salud</td>
-                <td>S/. 35.00</td>
-                <td><i class="bi bi-trash eliminar-fila" style="cursor: pointer;"></i></td>
-              </tr>
-              <tr>
-                <td><i class="bi bi-pencil"></i></td>
-                <td>14/04/2025</td>
-                <td>Comida</td>
-                <td>S/. 45.00</td>
-                <td><i class="bi bi-trash eliminar-fila" style="cursor: pointer;"></i></td>
+                <td>- S/. 35.00</td>
               </tr>
             </tbody>
           </table>
@@ -197,6 +177,7 @@
   <!-- Custom JS -->
   <script src="scripts/eliminar-gasto.js"></script>
   <script src="scripts/filtrar-gastos.js"></script>
+  <script src="scripts/historial-movimientos.js"></script>
 
   <!-- Confirmación -->
   <template id="confirmacion-template">
