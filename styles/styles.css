@@ -59,6 +59,8 @@ button, .btn {
 .menu-lateral .nav-ingresos,
 .menu-lateral .nav-balance,
 .menu-lateral .nav-visualizacion,
+.menu-lateral .nav-resumen,
+.menu-lateral .nav-categorias,
 .menu-lateral .nav-historial {
   background-color: var(--color-secundario);
   color: black !important;
