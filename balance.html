@@ -118,22 +118,30 @@
                     </section>
 
                     <div class="tab-content mt-4" id="balanceTabsContent">
+                        <div id="noRecordsWarning" class="alert alert-info" style="display: none;">
+                            <i class="bi bi-exclamation-circle-fill"></i>
+                            <div class="alert-text">
+                                <strong>¡Advertencia!</strong>
+                                <p>No se han registrado ingresos, gastos o movimientos. ¿Desearía realizar algún movimiento?</p>
+                            </div>
+                        </div>
+
                         <!-- BALANCE TOTAL -->
                         <div class="tab-pane fade show active" id="total-content" role="tabpanel" aria-labelledby="total-tab">
                             <section class="total-balance">
                                 <div class="balance-average">
-                                    <div class="user-profile">
+                                    <div class="user-profile hide-when-zero">
                                         <img src="assets/img/user-avatar.png" alt="User Avatar">
                                     </div>      
 
                                     <!-- Tarjeta de Saldo Actual -->
-                                    <div class="saldo-card">
+                                    <div class="saldo-card" id="saldoCardTotal">
                                         <div class="saldo-text">
                                             <i class="bi bi-cash-coin saldo-icon"></i>
                                             <h3 class="saldo-title">Saldo actual</h3>
                                         </div>
 
-                                        <h2 class="saldo-amount total">S/. 250.00</h2>
+                                        <h2 class="saldo-amount total" id="saldoAmountTotal">S/. 250.00</h2>
 
                                         <div class="saldo-footer">
                                             <small class="saldo-date">Abril del 2025</small>
@@ -144,7 +152,7 @@
                                     </div>
                                 </div>
                             
-                                <div class="cards-row">
+                                <div class="cards-row hide-when-zero">
                                     <div class="card">
                                         <h5>Mayor ingreso</h5>
                                         <p>Para educación</p>
@@ -160,7 +168,7 @@
                                     </div>
                                 </div>
 
-                                <div class="cards-row">
+                                <div class="cards-row hide-when-zero">
                                     <div class="card">
                                         <h5>Menor ingreso</h5>
                                         <p>Para transporte</p>
@@ -246,18 +254,18 @@
                         <div class="tab-pane fade" id="categoria-content" role="tabpanel" aria-labelledby="categoria-tab">
                             <section class="categoria-balance">
                                 <div class="balance-average">
-                                    <div class="user-profile">
+                                    <div class="user-profile hide-when-zero">
                                         <img src="assets/img/user-avatar.png" alt="User Avatar">
                                     </div>      
 
                                     <!-- Tarjeta de Saldo Actual -->
-                                    <div class="saldo-card">
+                                    <div class="saldo-card" id="saldoCardCategoria">
                                         <div class="saldo-text">
                                             <i class="bi bi-cash-coin saldo-icon"></i>
                                             <h3 class="saldo-title">Saldo actual</h3>
                                         </div>
 
-                                        <h2 class="saldo-amount categoria">S/. 250.00</h2>
+                                        <h2 class="saldo-amount categoria" id="saldoAmountCategoria">S/. 250.00</h2>
 
                                         <div class="saldo-footer">
                                             <small class="saldo-date">Abril del 2025</small>
@@ -266,7 +274,7 @@
                                     </div>
                                 </div>
 
-                                <div class="cards-row">
+                                <div class="cards-row hide-when-zero">
                                     <div class="card text">
                                         <h5>Saldo por categoría</h5>
                                     </div>
@@ -280,7 +288,7 @@
                                     </div>
                                 </div>
 
-                                <div class="cards-row">
+                                <div class="cards-row hide-when-zero">
                                     <div class="card">
                                         <h5>Salud</h5>
                                         <h6>S/. 100.00</h6>
@@ -303,7 +311,7 @@
 
                         <!-- BALANCE GRAFICOS -->
                         <div class="tab-pane fade" id="graficos-content" role="tabpanel" aria-labelledby="graficos-tab">
-                            <section class="graficos-balance">
+                            <section class="graficos-balance hide-when-zero">
                                 <div class="balance-average">
                                     <div class="user-profile">
                                         <img src="assets/img/user-avatar.png" alt="User Avatar">
@@ -478,5 +486,6 @@
         });
     </script>
     <script src="scripts/balance-alerts.js"></script>
+    <script src="scripts/balance.js"></script>
 </body>
 </html>
