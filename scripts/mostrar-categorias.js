@@ -1,4 +1,5 @@
 const categorias = ['Comida', 'Transporte', 'Educación', 'Salud', 'Hobbies'];
+//categorias = []
 const colores = ['#7ed6df', '#e056fd', '#686de0', '#f6e58d', '#30336b'];
 const gastos = [250, 20, 1300, 100, 30];
 
@@ -7,7 +8,7 @@ if (categorias.length === 0) {
   document.querySelector('section').innerHTML = `
     <div class="text-center py-5">
       <h4 class="mb-4">No hay categorías registradas</h4>
-      <button class="btn btn-warning fw-bold" id="btnAddCategory">Agregar categoría</button>
+      <a href="formulario-categoria.html" class="btn btn-warning fw-bold" id="btnAddCategory">Agregar categoría</a>
     </div>
   `;
 } else {
