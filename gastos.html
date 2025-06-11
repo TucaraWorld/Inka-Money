@@ -61,7 +61,7 @@
             </a>
             <div class="collapse" id="submenuVisualizacion">
               <ul class="nav flex-column ms-4 mt-2 submenu-visualizacion">
-                <li><a href="#" class="nav-link text-white"><i class="bi bi-pie-chart me-2"></i>Categorías</a></li>
+                <li><a href="vista-categorias.html" class="nav-link text-white"><i class="bi bi-pie-chart me-2"></i>Categorías</a></li>
                 <li><a href="#" class="nav-link text-white"><i class="bi bi-bar-chart me-2"></i>Resumen</a></li>
                 <li><a href="#" class="nav-link text-white"><i class="bi bi-clock-history me-2"></i>Historial</a></li>
               </ul>
@@ -206,6 +206,7 @@
   <!-- Custom JS -->
   <script src="scripts/eliminar-gasto.js"></script>
   <script src="scripts/filtrar-gastos.js"></script>
+  <script src="scripts/editar-gasto.js"></script>
 
   <!-- Confirmación -->
   <template id="confirmacion-template">
@@ -236,6 +237,49 @@
       </div>
     </div>
   </template>
+
+  <!-- Modal para editar gasto -->
+  <div class="modal fade" id="modalEditarGasto" tabindex="-1" aria-labelledby="modalEditarGastoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form id="formEditarGasto" autocomplete="off">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalEditarGastoLabel">Editar Gasto</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">Monto de gasto*</label>
+              <input type="text" class="form-control" id="editarMontoGasto" required />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Categoría de gasto*</label>
+              <select class="form-select" id="editarCategoriaGasto" required>
+                <option value="">Seleccione una opción</option>
+                <option>Comida</option>
+                <option>Transporte</option>
+                <option>Educación</option>
+                <option>Salud</option>
+                <!-- Agrega más categorías si es necesario -->
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Descripción</label>
+              <textarea class="form-control" id="editarDescripcionGasto"></textarea>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Fecha*</label>
+              <input type="text" class="form-control" id="editarFechaGasto" required />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-warning">Guardar cambios</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>
