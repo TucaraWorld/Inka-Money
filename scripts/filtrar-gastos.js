@@ -45,6 +45,8 @@ document.addEventListener('DOMContentLoaded', function() {
   //Filtrar las filas según la fecha seleccionada
   function filterRowsByDate(startDate, endDate) {
     const rows = document.querySelectorAll('#cuerpoTablaGastos tr');
+    let anyRowVisible = false;
+
     rows.forEach(row => {
       const rowDate = row.cells[1].textContent;
       const rowDateObject = new Date(rowDate.split('/').reverse().join('-'));
@@ -61,10 +63,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
       if (showRow) {
         row.style.display = '';
+        anyRowVisible = true;
       } else {
         row.style.display = 'none';
       }
     });
+
+    // Mostrar o ocultar el mensaje de advertencia
+    const warningMessage = document.getElementById('noRecordsWarning');
+    if (anyRowVisible) {
+      warningMessage.style.display = 'none';  // Ocultar el mensaje si hay registros
+    } else {
+      warningMessage.style.display = 'block';  // Mostrar el mensaje si no hay registros
+    }
   }
 
   //Actualizar el texto del botón "Todas las fechas"

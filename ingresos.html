@@ -108,6 +108,14 @@
             <button id="applyDateFilter" class="btn btn-primary">Aplicar filtro</button>
         </div>
 
+        <div id="noRecordsWarning" class="alert alert-info" style="display: none;">
+            <i class="bi bi-exclamation-circle-fill"></i>
+            <div class="alert-text">
+                <strong>¡Advertencia!</strong>
+                <p>No se han registrado ingresos en el rango de fecha seleccionado, ¿desearía registrar algún ingreso? Haga clic en "Agregar ingreso".</p>
+            </div>
+        </div>
+
         <!-- TABLA DE INGRESOS -->
         <section class="table-responsive shadow-sm rounded bg-white contenedor-tabla" aria-label="Tabla de ingresos">
           <table class="table table-bordered mb-0" id="tablaIngresos">

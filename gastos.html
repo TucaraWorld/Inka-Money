@@ -109,6 +109,15 @@
           <button id="applyDateFilter" class="btn btn-primary">Aplicar filtro</button>
         </div>
 
+
+        <div id="noRecordsWarning" class="alert alert-info" style="display: none;">
+            <i class="bi bi-exclamation-circle-fill"></i>
+            <div class="alert-text">
+                <strong>¡Advertencia!</strong>
+                <p>No se han registrado gastos en el rango de fecha seleccionado, ¿desearía registrar algún gasto? Haga clic en "Agregar gasto".</p>
+            </div>
+        </div>
+
         <!-- TABLA DE GASTOS -->
         <section class="table-responsive shadow-sm rounded bg-white contenedor-tabla" aria-label="Tabla de gastos">
           <table class="table table-bordered mb-0" id="tablaGastos">
