@@ -253,6 +253,60 @@
   height: 100% !important;
 }
 
+/* Estilo para la alerta de error */
+
+#noRecordsWarning {
+  display: none;
+  background-color: #d1ecf1;
+  color: var(--color-primario);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  width: 100%;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  border: none;
+}
+
+#noRecordsWarning i {
+  font-size: 2rem;
+  margin-right: 1rem;
+}
+
+.alert-text {
+  flex: 1;
+}
+
+.alert-text p {
+  margin: 0; /* Quitar el margen por defecto */
+  font-size: 1rem;
+}
+
+#noRecordsWarning strong {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.saldo-card.gris .saldo-text {
+  color: #404040;
+}
+
+.saldo-card.gris {
+  background-color: #d3d3d3;  /* Gris claro */
+  margin-left: 0;
+
+}
+
+.hide-when-zero.hide {
+    display: none !important;
+}
+
+/* Clase para mostrar los elementos */
+.cards-row.hide-when-zero.show {
+      display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  gap: 1.5rem; /* Espaciado entre tarjetas */
+}
 
 /* Media Queries: Responsividad para pantallas pequeñas */
 @media (max-width: 800px) {
