@@ -186,6 +186,8 @@
                                         + Nuevo presupuesto <span class="nueva-meta-icon"></span>
                                     </button>
                                 </div>
+                                <!-- Alert container for presupuesto warnings/excess -->
+                                <div id="presupuesto-alert-container"></div>
                                 <div class="presupuesto-img-container">
                                     <!-- Imagen de usuario (placeholder) -->
                                     <div class="ahorros-img">
@@ -209,22 +211,27 @@
                                                 <tbody id="presupuestoTableBody">
                                                     <tr>
                                                         <td>Viaje</td>
-                                                        <td>S/. 9,500.00</td>
-                                                        <td>S/. 8,400.00</td>
+                                                        <td>S/. 9500.00</td>
+                                                        <td>S/. 8400.00</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Viaje 2</td>
+                                                        <td>S/. 8300.00</td>
+                                                        <td>S/. 8400.00</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Transporte 2</td>
-                                                        <td>S/. 5,000.00</td>
-                                                        <td>S/. 3,200.00</td>
+                                                        <td>S/. 5000.00</td>
+                                                        <td>S/. 3200.00</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Comida</td>
-                                                        <td>S/. 2,000.00</td>
-                                                        <td>S/. 1,500.00</td>
+                                                        <td>S/. 2000.00</td>
+                                                        <td>S/. 1500.00</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Salud</td>
-                                                        <td>S/. 1,200.00</td>
+                                                        <td>S/. 1200.00</td>
                                                         <td>S/. 900.00</td>
                                                     </tr>
                                                 </tbody>
@@ -470,5 +477,6 @@
             }
         });
     </script>
+    <script src="scripts/balance-alerts.js"></script>
 </body>
 </html>

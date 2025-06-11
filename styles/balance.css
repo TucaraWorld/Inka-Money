@@ -480,10 +480,60 @@
 }
 
 .presupuesto-img-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 1.5rem; /* equivalent to mb-4 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0 1rem 0;
+}
+
+/* Add to the end of balance.css */
+.custom-presupuesto-alert {
+  display: flex;
+  flex-direction: column;
+  background: #eaf4ff;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  padding: 16px 20px 12px 20px;
+  box-shadow: 0 2px 8px #EAF4FF;
+  font-family: 'Inter', Arial, sans-serif;
+  position: relative;
+  animation: fadeInAlert 0.4s;
+}
+.custom-presupuesto-alert .alert-header {
+  display: flex;
+  align-items: center;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+.custom-presupuesto-alert .alert-icon {
+  color: #002C5F;
+  font-size: 1.5em;
+  margin-right: 10px;
+}
+.custom-presupuesto-alert.alert-danger .alert-icon {
+  color: #002C5F;
+}
+.custom-presupuesto-alert .close-alert {
+  background: none;
+  border: none;
+  font-size: 1.3em;
+  color: #888;
+  margin-left: auto;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.custom-presupuesto-alert .close-alert:hover {
+  color: #ff4d4f;
+}
+.custom-presupuesto-alert .alert-body {
+  font-size: 1em;
+  color: #333;
+  margin-left: 2.2em;
+}
+@keyframes fadeInAlert {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 
