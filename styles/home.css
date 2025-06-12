@@ -207,7 +207,7 @@ body.bienvenido-wrapper {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   position: relative;
   margin: 2.3rem 0rem 0 0rem;     
-  max-width: 1300px;        /* Limita el ancho */
+  max-width: 1000px;        /* Limita el ancho */
 
 }
 
