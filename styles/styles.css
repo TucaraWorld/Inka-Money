@@ -5,6 +5,7 @@
   --fuente-base: 'Inter', sans-serif;
   --fuente-boton: 'Poppins', sans-serif;
   --fuente-titulo: 'Urbanist', sans-serif;
+  --fuente-numero: 'Space Mono', sans-serif;
 }
 
 * {
@@ -57,7 +58,11 @@ button, .btn {
 .menu-lateral .nav-gastos,
 .menu-lateral .nav-ingresos,
 .menu-lateral .nav-balance,
-.menu-lateral .nav-visualizacion {
+.menu-lateral .nav-visualizacion,
+.menu-lateral .nav-resumen,
+.menu-lateral .nav-categorias,
+.menu-lateral .nav-historial,
+.menu-lateral .nav-home {
   background-color: var(--color-secundario);
   color: black !important;
   font-weight: bold;
@@ -71,7 +76,8 @@ button, .btn {
 .menu-lateral .nav-gastos i,
 .menu-lateral .nav-ingresos i,
 .menu-lateral .nav-balance i,
-.menu-lateral .nav-visualizacion i {
+.menu-lateral .nav-visualizacion i,
+.menu-lateral .nav-historial i {
   color: black !important;
 }
 
@@ -90,4 +96,16 @@ button, .btn {
 
 html, body {
   height: 100%;
+}
+
+.remove-date-filter {
+  color: #888;
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-left: 4px;
+  cursor: pointer;
+}
+
+.remove-date-filter:hover {
+  color: #dc3545;
 }
