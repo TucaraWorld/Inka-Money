@@ -11,16 +11,12 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter&family=Poppins:wght@600&family=Space+Mono&family=Urbanist:wght@700&display=swap" rel="stylesheet" />
-  <!-- Bootstrap Datepicker CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css" rel="stylesheet">
-
+  
   <link rel="icon" type="image/png" href="assets/logo.png">
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="styles/styles.css">
   <link rel="stylesheet" href="styles/gastos.css" />
-  <link rel="stylesheet" href="styles/filtrar-calendario.css" />
-
 </head>
 <body class="layout-wrapper">
 
@@ -39,7 +35,7 @@
 
       <nav aria-label="Navegación principal">
         <ul class="nav nav-pills flex-column mb-auto lista-navegacion">
-          <li class="nav-item"><a href="home.html" class="nav-link text-white"><i class="bi bi-house me-2"></i>Inicio</a></li>
+          <li class="nav-item"><a href="#" class="nav-link text-white"><i class="bi bi-house me-2"></i>Inicio</a></li>
           <li>
             <a class="nav-link text-white d-flex justify-content-between align-items-center enlace-registros" data-bs-toggle="collapse" href="#submenuRegistros" role="button" aria-expanded="true">
               <span><i class="bi bi-currency-dollar me-2"></i>Registros</span>
@@ -47,13 +43,13 @@
             </a>
             <div class="collapse show" id="submenuRegistros">
               <ul class="nav flex-column ms-4 mt-2 submenu-registros">
-                <li><a href="ingresos.html" class="nav-link text-white"><i class="bi bi-plus-lg me-2"></i>Ingresos</a></li>
-                <li><a href="gastos.html" class="nav-link nav-gastos"><i class="bi bi-dash-lg me-2"></i>Gastos</a></li>
-                <li><a href="balance.html" class="nav-link text-white"><i class="bi bi-bar-chart me-2"></i>Balance</a></li>
+                <li><a href="#" class="nav-link text-white"><i class="bi bi-plus-lg me-2"></i>Ingresos</a></li>
+                <li><a href="#" class="nav-link nav-gastos"><i class="bi bi-dash-lg me-2"></i>Gastos</a></li>
+                <li><a href="#" class="nav-link text-white"><i class="bi bi-bar-chart me-2"></i>Balance</a></li>
               </ul>
             </div>
           </li>
-          <li><a href="metas-ahorro.html" class="nav-link text-white"><i class="bi bi-pie-chart me-2"></i>Metas de ahorro</a></li>
+          <li><a href="#" class="nav-link text-white"><i class="bi bi-pie-chart me-2"></i>Metas de ahorro</a></li>
           <li>
             <a class="nav-link text-white d-flex justify-content-between align-items-center enlace-visualizacion" data-bs-toggle="collapse" href="#submenuVisualizacion" role="button" aria-expanded="false">
               <span><i class="bi bi-graph-up me-2"></i>Visualización</span>
@@ -61,9 +57,9 @@
             </a>
             <div class="collapse" id="submenuVisualizacion">
               <ul class="nav flex-column ms-4 mt-2 submenu-visualizacion">
-                <li><a href="vista-categorias.html" class="nav-link text-white"><i class="bi bi-pie-chart me-2"></i>Categorías</a></li>
-                <li><a href="visualizacion.html" class="nav-link text-white"><i class="bi bi-bar-chart me-2"></i>Resumen</a></li>
-                <li><a href="historial-movimientos.html" class="nav-link text-white"><i class="bi bi-clock-history me-2"></i>Historial</a></li>
+                <li><a href="#" class="nav-link text-white"><i class="bi bi-pie-chart me-2"></i>Categorías</a></li>
+                <li><a href="#" class="nav-link text-white"><i class="bi bi-bar-chart me-2"></i>Resumen</a></li>
+                <li><a href="#" class="nav-link text-white"><i class="bi bi-clock-history me-2"></i>Historial</a></li>
               </ul>
             </div>
           </li>
@@ -86,37 +82,16 @@
 
         <!-- FILTROS RÁPIDOS -->
         <section class="mb-3 d-flex gap-2 flex-wrap align-items-center filtros-rapidos" aria-label="Filtros rápidos">
-          <button class="btn btn-light rounded-pill" id="tagFiltrarCategorias">Todas las categorías</button>
-          <button class="btn btn-light rounded-pill" id="tagFiltrarFechas">Todas las fechas</button>
+          <button class="btn btn-light rounded-pill">Todas las categorías</button>
+          <button class="btn btn-light rounded-pill">Todas las fechas</button>
         </section>
 
         <!-- FILTROS AVANZADOS -->
         <section class="mb-4 d-flex justify-content-end align-items-center gap-2 flex-wrap filtros-avanzados" aria-label="Agregar filtros">
           <span class="fw-bold filtro-label">+ Agregar Filtro</span>
-          <button class="btn btn-white btn-cuadrado text-dark" id="btnFiltrarPorCategoria">Por categoría</button>
-          <button class="btn btn-white btn-cuadrado text-dark" id="btnFiltrarPorFecha">Por fecha</button>
+          <button class="btn btn-white btn-cuadrado text-dark">Por categoría</button>
+          <button class="btn btn-white btn-cuadrado text-dark">Por fecha</button>
         </section>
-
-        <!-- Contenedor del calendario (este se mostrará solo cuando se haga clic en el filtro) -->
-        <div id="calendarContainer" style="display: none;">
-          <button class="btn-close-calendar" id="closeCalendar" aria-label="Cerrar calendario">&times;</button>
-          <label for="startDate">Fecha de inicio:</label>
-          <input type="text" id="startDate" class="form-control" placeholder="Selecciona una fecha de inicio">
-
-          <label for="endDate">Fecha de fin:</label>
-          <input type="text" id="endDate" class="form-control" placeholder="Selecciona una fecha de fin">
-
-          <button id="applyDateFilter" class="btn btn-primary">Aplicar filtro</button>
-        </div>
-
-
-        <div id="noRecordsWarning" class="alert alert-info" style="display: none;">
-            <i class="bi bi-exclamation-circle-fill"></i>
-            <div class="alert-text">
-                <strong>¡Advertencia!</strong>
-                <p>No se han registrado gastos en el rango de fecha seleccionado, ¿desearía registrar algún gasto? Haga clic en "Agregar gasto".</p>
-            </div>
-        </div>
 
         <!-- TABLA DE GASTOS -->
         <section class="table-responsive shadow-sm rounded bg-white contenedor-tabla" aria-label="Tabla de gastos">
@@ -130,7 +105,7 @@
                 <th></th>
               </tr>
             </thead>
-            <tbody class="text-center align-middle cuerpo-tabla"  id="cuerpoTablaGastos">
+            <tbody class="text-center align-middle cuerpo-tabla">
               <tr>
                 <td><i class="bi bi-pencil"></i></td>
                 <td>20/04/2025</td>
@@ -192,21 +167,10 @@
     </div>
   </div>
 
-  <!-- Custom JS -->
-  <script src="scripts/filtrar-gastos.js"></script>
-  <!-- jQuery (requerido para Bootstrap Datepicker) -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <!-- Bootstrap JS (requerido para la funcionalidad de Bootstrap) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Bootstrap Datepicker JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/locales/bootstrap-datepicker.es.min.js"></script>
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <!-- Custom JS -->
   <script src="scripts/eliminar-gasto.js"></script>
-  <script src="scripts/filtrar-gastos.js"></script>
-  <script src="scripts/editar-gasto.js"></script>
 
   <!-- Confirmación -->
   <template id="confirmacion-template">
@@ -237,49 +201,6 @@
       </div>
     </div>
   </template>
-
-  <!-- Modal para editar gasto -->
-  <div class="modal fade" id="modalEditarGasto" tabindex="-1" aria-labelledby="modalEditarGastoLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <form id="formEditarGasto" autocomplete="off">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modalEditarGastoLabel">Editar Gasto</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-          </div>
-          <div class="modal-body">
-            <div class="mb-3">
-              <label class="form-label">Monto de gasto*</label>
-              <input type="text" class="form-control" id="editarMontoGasto" required />
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Categoría de gasto*</label>
-              <select class="form-select" id="editarCategoriaGasto" required>
-                <option value="">Seleccione una opción</option>
-                <option>Comida</option>
-                <option>Transporte</option>
-                <option>Educación</option>
-                <option>Salud</option>
-                <!-- Agrega más categorías si es necesario -->
-              </select>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Descripción</label>
-              <textarea class="form-control" id="editarDescripcionGasto"></textarea>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Fecha*</label>
-              <input type="text" class="form-control" id="editarFechaGasto" required />
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            <button type="submit" class="btn btn-warning">Guardar cambios</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
 
 </body>
 </html>
