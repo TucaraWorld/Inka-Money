@@ -61,7 +61,8 @@ button, .btn {
 .menu-lateral .nav-visualizacion,
 .menu-lateral .nav-resumen,
 .menu-lateral .nav-categorias,
-.menu-lateral .nav-historial {
+.menu-lateral .nav-historial,
+.menu-lateral .nav-home {
   background-color: var(--color-secundario);
   color: black !important;
   font-weight: bold;
