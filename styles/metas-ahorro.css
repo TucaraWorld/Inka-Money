@@ -1,0 +1,262 @@
+
+
+.layout-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+
+.content {
+  flex-grow: 1;
+  width: 100%;
+}
+
+.nav-metas {
+  background-color: var(--color-secundario) !important;
+  color: #000 !important;
+  font-weight: bold;
+}
+
+.boton-nueva-meta {
+  background-color: var(--color-secundario);
+  border: none;
+  color: #000;
+}
+
+.boton-nueva-meta:hover {
+  background-color: var(--color-secundario-hover);
+  color: #000;
+}
+/* Estilos para la foto de perfil */
+.user-profile-photo {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 0px solid var(--color-secundario);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-profile-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+#filtroCategoria,
+#filtroTiempo,
+#filtroCategoria option,
+#filtroTiempo option {
+  background-color: #fff !important;
+  color: #000 !important;
+  
+}
+/* Estilos para el encabezado */
+header {
+  padding-bottom: 1rem;
+  border-bottom: 0px solid #eee;
+}
+
+h2 {
+  color: var(--fuente-titulo);
+  font-weight: 700;
+  font-size: 1.9rem;
+}
+.contenedor-lista-metas {
+  background-color: #D9D9D9;
+  border: 2px solid #000;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+.titulo-lista-metas {
+  color: #00205F;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  margin-left: 0.2rem;
+}
+.contenedor-tabla {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table th {
+  font-weight: 600;
+}
+.table,
+.table th,
+.table td {
+  color: #00205F !important;
+}
+.table,
+.table-bordered,
+.table thead,
+.table thead th,
+.table thead tr,
+.table-bordered > thead > tr > th,
+.table-bordered > thead > tr > td {
+  border-top: 2px solid #FFD100 !important;
+  border-color: #FFD100 !important;
+}
+.contenedor-lista-metas,
+.contenedor-lista-metas .table,
+.contenedor-lista-metas .table thead,
+.contenedor-lista-metas .table tbody,
+.contenedor-lista-metas .table tr,
+.contenedor-lista-metas .table th,
+.contenedor-lista-metas .table td {
+  background-color: #D9D9D9 !important;
+}
+.progress {
+  height: 24px;
+  border-radius: 12px;
+}
+
+.progress-bar {
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.table td:nth-child(2),
+.table th:nth-child(2),
+.table td:nth-child(4),
+.table th:nth-child(4) {
+  font-family: 'Space Mono', monospace; /* Para montos */
+}
+
+/* Estilos para el formulario de nueva meta */
+.contenedor-formulario {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: 8px;
+  background-color: #D9D9D9;
+  
+}
+
+.form-select, 
+.form-select:focus {
+  background-color: #FFD100 !important;
+  color: #000 !important;
+  border-color: #FFD100 !important;
+}
+
+.form-select option {
+  background-color: #FFD100 !important;
+  color: #000 !important;
+}
+
+.form-label {
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.input-group-text {
+  background-color: #FFD100;
+  border-radius: 8px 0 0 8px !important;
+}
+
+.btn-outline-secondary {
+  border-width: 2px;
+}
+
+
+
+/* Toast de éxito */
+.toast-exito,
+.toast-error {
+  position: fixed;
+  top: 50%;
+  left: 60%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  background-color: #EAF4FF;
+  color: #002C5F ;
+  max-width: 500px;
+  width: 90%;
+  font-size: 1.3rem;
+  text-align: center;
+  padding: 1.5rem 2rem;
+  border: 3px solid #000000;
+}
+
+.toast-exito .check-circle,
+.toast-error .error-circle {
+  width: 40px;
+  height: 40px;
+  background-color: white;
+  border: 4px solid #002C5F;
+  color: #002C5F ;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+}
+
+.toast-exito .check-circle i,
+.toast-error .error-circle i {
+  color: #002C5F;
+}
+
+.mensaje-toast-error,
+.toast-exito span {
+  color: #002C5F !important;
+  font-size: 1.3rem;
+}
+.pagination .page-link {
+  border-radius: 10px;
+  color: #000;
+}
+
+.pagination .active .page-link {
+  background-color: var(--color-secundario);
+  border-color: var(--color-secundario);
+  color: #000;
+  font-weight: bold;
+}
+.titulo-rectangulo {
+  background-color: #FFD100; 
+  border-radius: 16px;
+  padding: 1rem 2rem;
+}
+
+#notificacion-meta {
+  max-width: 900px;
+  margin: 0 auto 2rem auto;
+  padding: 1.5rem 2rem;
+  border-radius: 16px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#notificacion-meta i {
+  font-size: 3rem;
+  flex-shrink: 0;
+}
+
+#notificacion-meta .texto-notificacion {
+  line-height: 1.4;
+  font-size: 1.2rem;
+}
+
+#notificacion-meta .texto-notificacion strong {
+  display: block;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.alert-success {
+  background-color: #d4f4d4;
+  color: #155724;
+  border-left: 6px solid #28a745;
+}
+
+.alert-info {
+  background-color: #d9ecff;
+  color: #084298;
+  border-left: 6px solid #0d6efd;
+}
