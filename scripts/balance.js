@@ -118,10 +118,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     //Actualizar elementos de mayor ingreso/gasto
     document.getElementById('mayorIngresoCard').querySelector('h6').textContent = `S/. ${mayorIngreso.monto.toFixed(2)}`;
-    document.getElementById('mayorIngresoCard').querySelector('p').textContent = `Para ${mayorIngreso.categoria}`;
+    document.getElementById('mayorIngresoCard').querySelector('p').textContent = `Para ${categorias.find(cat => cat.id === mayorIngreso.categoria)?.nombre ?? 'Sin categoría'}`;
 
     document.getElementById('mayorGastoCard').querySelector('h6').textContent = `S/. ${mayorGasto.monto.toFixed(2)}`;
-    document.getElementById('mayorGastoCard').querySelector('p').textContent = `Para ${mayorGasto.categoria}`;
+    document.getElementById('mayorGastoCard').querySelector('p').textContent = `Para ${categorias.find(cat => cat.id === mayorGasto.categoria)?.nombre ?? 'Sin categoría'}`;
 
     //Icono
     if (mayorIngreso.monto > mayorGasto.monto) {
@@ -132,10 +132,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     //Actualizar elementos de menor ingreso/gasto
     document.getElementById('menorIngresoCard').querySelector('h6').textContent = `S/. ${menorIngreso.monto.toFixed(2)}`;
-    document.getElementById('menorIngresoCard').querySelector('p').textContent = `Para ${menorIngreso.categoria}`;
+    document.getElementById('menorIngresoCard').querySelector('p').textContent = `Para ${categorias.find(cat => cat.id === menorIngreso.categoria)?.nombre ?? 'Sin categoría'}`;
     
     document.getElementById('menorGastoCard').querySelector('h6').textContent = `S/. ${menorGasto.monto.toFixed(2)}`;
-    document.getElementById('menorGastoCard').querySelector('p').textContent = `Para ${menorGasto.categoria}`;
+    document.getElementById('menorGastoCard').querySelector('p').textContent = `Para ${categorias.find(cat => cat.id === menorGasto.categoria)?.nombre ?? 'Sin categoría'}`;
 
     //Icono
     if (menorIngreso.monto > menorGasto.monto) {
@@ -146,16 +146,70 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     // Cards de saldo por categoría
-    function calcularSaldoCategoria(categoria) {
-        const totalIngresos = ingresos.reduce((total, ingreso) => total + ingreso.monto, 0);
-        const totalGastos = gastos.reduce((total, gasto) => total + gasto.monto, 0);
+    function calcularSaldoCategoria(categoriaId) {
+        const totalIngresos = ingresos.reduce((total, ingreso) => ingreso.categoria === categoriaId ? total + ingreso.monto : total + 0, 0);
+        const totalGastos = gastos.reduce((total, gasto) => gasto.categoria === categoriaId ? total + gasto.monto : total + 0, 0);
 
         const saldo = totalIngresos - totalGastos;
 
-        saldoAmountTotal.textContent = `S/. ${saldo.toFixed(2)}`;
-        saldoAmountCategoria.textContent = `S/. ${saldo.toFixed(2)}`;
-
+        console.log(`totalIngresos: ${totalIngresos}`);
+        console.log(`totalGastos: ${totalGastos}`);
+        console.log(`Saldo: ${saldo}`);
         console.log(`Saldo Total: S/. ${saldo.toFixed(2)}`);
-        return saldo;
+        return `S/. ${saldo.toFixed(2)}`;
     }
+
+    function renderCardsPorCategoria() {    
+        const regCategorias = getCategorias();   
+        if (regCategorias.length >= 1) {
+            const saldoCategoria1 = document.getElementById('categoriaCard1');
+            console.log('Saldo cat 1: ', regCategorias[0]);
+            saldoCategoria1.querySelector('h6').textContent = calcularSaldoCategoria(regCategorias[0].id);
+            saldoCategoria1.querySelector('h5').textContent = regCategorias[0].nombre;
+        }
+        else {
+            document.getElementById('categoriaCard1').remove();
+        }
+        if (regCategorias.length >= 2) {
+            const saldoCategoria2 = document.getElementById('categoriaCard2');
+            console.log('Saldo cat 2: ', regCategorias[1]);
+            saldoCategoria2.querySelector('h6').textContent = calcularSaldoCategoria(regCategorias[1].id);
+            saldoCategoria2.querySelector('h5').textContent = regCategorias[1].nombre;
+        }
+        else {
+            document.getElementById('categoriaCard2').remove();
+        }
+        
+        const container = document.getElementById('containerCardsCategoria');
+        container.innerHTML = ''; // Limpia contenido anterior
+                
+        for (let i = 2; i < regCategorias.length; i += 3) {            
+            const fila = document.createElement('div');
+            fila.className = 'cards-row';
+
+            const grupo = regCategorias.slice(i, i + 3);
+
+            grupo.forEach(cat => {
+                const card = document.createElement('div');
+                card.className = 'card';
+
+                const h5 = document.createElement('h5');
+                h5.textContent = cat.nombre;
+
+                const h6 = document.createElement('h6');
+                h6.textContent = calcularSaldoCategoria(cat.id);
+
+                card.appendChild(h5);
+                card.appendChild(h6);
+                fila.appendChild(card);
+            });
+
+            container.appendChild(fila);
+        }
+        
+    }
+
+    renderCardsPorCategoria();
+    
+
 });

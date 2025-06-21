@@ -195,8 +195,15 @@ const categorias = [
         user_id: 1,
         nombre: "Salud",
         descripcion: "Citas médicas y medicamentos"
+    },
+    {
+        id: 5,
+        user_id: 1,
+        nombre: "Hobbies",
+        descripcion: "Salidas con amigos, cine, videojuegos, etc."
     }
 ];
+
 
 if (!localStorage.getItem('categorias')) {
     localStorage.setItem('categorias', JSON.stringify(categorias));
@@ -206,17 +213,6 @@ function getCategorias() {
     let regCategorias = JSON.parse(localStorage.getItem('categorias')) || [];
     let filtradoCategorias = regCategorias.filter(categoria => categoria.user_id === parseInt(idUsuarioActivo));
     console.log(filtradoCategorias);
-    filtradoCategorias.sort((a, b) => {
-        const fechaA = a.fecha.split('/').reverse().join('-');
-        const fechaB = b.fecha.split('/').reverse().join('-');
-        const fechaComparison = new Date(fechaB) - new Date(fechaA);
-
-        if (fechaComparison === 0) {
-            return b.id - a.id;
-        }
-
-        return new Date(fechaB) - new Date(fechaA);
-    });
 
     return filtradoCategorias;
 }
