@@ -66,6 +66,31 @@ const gastos = [
     }
 ];
 
+
+if (!localStorage.getItem('gastos')) {
+    localStorage.setItem('gastos', JSON.stringify(gastos));
+}
+
+// Obtener todos los ingresos desde localStorage
+function getGastos() {
+    let regGastos = JSON.parse(localStorage.getItem('gastos')) || [];
+    let filtradoGastos = regGastos.filter(gasto => gasto.user_id === parseInt(idUsuarioActivo));
+    //console.log(filtradoGastos);
+    filtradoGastos.sort((a, b) => {
+        const fechaA = a.fecha.split('/').reverse().join('-');
+        const fechaB = b.fecha.split('/').reverse().join('-');
+        const fechaComparison = new Date(fechaB) - new Date(fechaA);
+
+        if (fechaComparison === 0) {
+            return b.id - a.id;
+        }
+
+        return new Date(fechaB) - new Date(fechaA);
+    });
+
+    return filtradoGastos;
+}
+
 const ingresos = [
     {
         id: 1,
@@ -135,8 +160,6 @@ function getIngresos() {
         return new Date(fechaB) - new Date(fechaA);
     });
 
-    
-
     return filtradoIngresos;
 }
 
@@ -146,3 +169,5 @@ function guardarIngreso(nuevoIngreso) {
     ingresos.push(nuevoIngreso);
     localStorage.setItem('ingresos', JSON.stringify(ingresos));
 }
+
+

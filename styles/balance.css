@@ -206,53 +206,6 @@
   color: var(--color-primario);
 }
 
-/* Graficos */
-.graficos-balance .card-title {
-  font-size: 1.5rem;
-  text-align: left;
-  color: var(--color-primario);
-}
-
-.graficos-balance .card {
-  flex: 0.8;
-  padding: 1.5rem;
-  margin-left: 2rem;
-  width: 48%;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  display: flex;
-  justify-content: space-between;
-  align-items: stretch;
-  text-align: left;
-}
-
-.graficos-balance .card-chart {
-  background-color: #F2F2F2;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  align-items: center;
-  color: var(--color-primario);
-  padding: 1.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: stretch;
-  text-align: left;
-  border: #d1d1d1 1px solid;
-}
-
-.graficos-balance .card-body {
-  padding: 1rem;
-}
-
-.graficos-balance .card-title {
-  font-weight: bold;
-}
-
-/* Reducir altura del gráfico */
-#averageBalanceChart, #incomeExpenseChart, #categoryBalanceChart {
-  width: 100% !important;
-  height: 100% !important;
-}
-
 /* Estilo para la alerta de error */
 
 #noRecordsWarning {
@@ -376,26 +329,6 @@
     width: 100%;
     margin-bottom: 1.5rem;
   }
-
-  .graficos-balance .card-body canvas {
-    width: 100% !important;
-    height: auto !important;
-  }
-
-  .graficos-balance .card-body {
-    /*background-color: #F2F2F2;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    align-items: center;
-    color: var(--color-primario);*/
-    padding: 0 0 0 0;
-  }
-  .graficos-balance .card {
-    flex: 1;
-    margin-left: 0;
-    margin-top: 1rem;
-    width: 100%;
-  }
 }
 
 /* Media Queries: Ajustes para pantallas muy pequeñas */
@@ -416,11 +349,6 @@
   /* Ajustes para los gráficos */
   .card-chart {
     margin-bottom: 1rem;
-  }
-
-  /* Hacer los gráficos más pequeños en pantallas pequeñas */
-  #averageBalanceChart, #incomeExpenseChart, #categoryBalanceChart {
-    height: 250px !important;
   }
 
   .saldo-title {

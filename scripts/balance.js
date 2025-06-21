@@ -8,6 +8,29 @@ document.addEventListener('DOMContentLoaded', function () {
     const hideElements = document.querySelectorAll('.hide-when-zero');
     const contentElements = document.querySelectorAll('.content');
 
+    const saldoDateElement = document.querySelector('.saldo-date'); 
+    const fechaActual = new Date();
+    const opciones = { month: 'long', year: 'numeric' };
+    const fechaFormateada = fechaActual.toLocaleDateString('es-ES', opciones);
+    saldoDateElement.textContent = fechaFormateada.charAt(0).toUpperCase() + fechaFormateada.slice(1);
+
+    const ingresos = getIngresos();
+    const gastos = getGastos();
+
+    // Función para calcular el saldo
+    function calcularSaldoTotal() {
+        const totalIngresos = ingresos.reduce((total, ingreso) => total + ingreso.monto, 0);
+        const totalGastos = gastos.reduce((total, gasto) => total + gasto.monto, 0);
+
+        const saldo = totalIngresos - totalGastos;
+
+        saldoAmountTotal.textContent = `S/. ${saldo.toFixed(2)}`;
+        saldoAmountCategoria.textContent = `S/. ${saldo.toFixed(2)}`;
+
+        console.log(`Saldo Total: S/. ${saldo.toFixed(2)}`);
+        return saldo;
+    }
+
     // Función para verificar el saldo
     function verificarSaldo() {
         const saldoTotal = parseFloat(saldoAmountTotal.textContent.replace('S/. ', '').replace(',', '').trim());
@@ -51,7 +74,36 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    calcularSaldoTotal();
     verificarSaldo();
+    
 
+    // Obtener los botones de toggle
+    const toggleButtonTotal = document.getElementById('toggle-saldo-total');
+    const toggleButtonCategoria = document.getElementById('toggle-saldo-categoria');
+
+    // Lógica para el toggle del saldo total
+    toggleButtonTotal.addEventListener('click', function() {
+        if (saldoAmountTotal.textContent === `S/. ${calcularSaldoTotal().toFixed(2)}`) {
+            saldoAmountTotal.textContent = '- - - - -';
+        } else {
+            saldoAmountTotal.textContent = `S/. ${calcularSaldoTotal().toFixed(2)}`;
+        }
+
+        // Después de actualizar, verifica si el saldo es 0
+        verificarSaldo();
+    });
+
+    // Lógica para el toggle del saldo por categoría
+    toggleButtonCategoria.addEventListener('click', function() {
+        if (saldoAmountCategoria.textContent === `S/. ${calcularSaldoTotal().toFixed(2)}`) {
+            saldoAmountCategoria.textContent = '- - - - -';
+        } else {
+            saldoAmountCategoria.textContent = `S/. ${calcularSaldoTotal().toFixed(2)}`;
+        }
+
+        // Después de actualizar, verifica si el saldo es 0
+        verificarSaldo();
+    });
 
 });
