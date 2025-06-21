@@ -11,6 +11,23 @@ const usuarios = [
     }
 ]
 
+const idUsuarioActivo = localStorage.getItem('idUsuarioActivo') || 1;
+
+if (!localStorage.getItem('idUsuarioActivo')) {
+    localStorage.setItem('idUsuarioActivo', idUsuarioActivo);
+}
+
+const setUsuarioActivo = (id) => {
+    idUsuarioActivo = id;
+    localStorage.setItem('idUsuarioActivo', id);
+};
+
+const getUsuarioActivo = () => {
+    return usuarios.find(usuario => usuario.id === parseInt(idUsuarioActivo));
+};
+
+console.log('Usuario activo:', getUsuarioActivo());
+
 const gastos = [
     {
         id: 1,
@@ -103,9 +120,10 @@ if (!localStorage.getItem('ingresos')) {
 
 // Obtener todos los ingresos desde localStorage
 function getIngresos() {
-    const ingresos = JSON.parse(localStorage.getItem('ingresos')) || [];
-
-    ingresos.sort((a, b) => {
+    let regIngresos = JSON.parse(localStorage.getItem('ingresos')) || [];
+    let filtradoIngresos = regIngresos.filter(ingreso => ingreso.user_id === parseInt(idUsuarioActivo));
+    //console.log(filtradoIngresos);
+    filtradoIngresos.sort((a, b) => {
         const fechaA = a.fecha.split('/').reverse().join('-');
         const fechaB = b.fecha.split('/').reverse().join('-');
         const fechaComparison = new Date(fechaB) - new Date(fechaA);
@@ -117,9 +135,9 @@ function getIngresos() {
         return new Date(fechaB) - new Date(fechaA);
     });
 
-    //console.log(ingresos);
+    
 
-    return ingresos;
+    return filtradoIngresos;
 }
 
 // Guardar un nuevo ingreso en localStorage
