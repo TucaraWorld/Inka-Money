@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 
-    // Cards de saldo por categoría
+    // Cards de mayor y menor de ingreso/gasto
     //Obtener el mayor y menor ingreso
     const mayorIngreso = ingresos.reduce((max, ingreso) => ingreso.monto > max.monto ? ingreso : max, ingresos[0]);
     const menorIngreso = ingresos.reduce((min, ingreso) => ingreso.monto < min.monto ? ingreso : min, ingresos[0]);
@@ -142,5 +142,20 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('menoresLinesCard').querySelector('img').src = 'assets/icons/profit-lines.png';
     } else {
         document.getElementById('menoresLinesCard').querySelector('img').src = 'assets/icons/loss-lines.png';
+    }
+
+
+    // Cards de saldo por categoría
+    function calcularSaldoCategoria(categoria) {
+        const totalIngresos = ingresos.reduce((total, ingreso) => total + ingreso.monto, 0);
+        const totalGastos = gastos.reduce((total, gasto) => total + gasto.monto, 0);
+
+        const saldo = totalIngresos - totalGastos;
+
+        saldoAmountTotal.textContent = `S/. ${saldo.toFixed(2)}`;
+        saldoAmountCategoria.textContent = `S/. ${saldo.toFixed(2)}`;
+
+        console.log(`Saldo Total: S/. ${saldo.toFixed(2)}`);
+        return saldo;
     }
 });

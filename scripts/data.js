@@ -33,35 +33,35 @@ const gastos = [
         id: 1,
         user_id: 1,
         fecha: "20/04/2025",
-        categoria: "Comida",
+        categoria: 1,
         monto: 50.00
     },
     {
         id: 2,
         user_id: 1,
         fecha: "18/04/2025",
-        categoria: "Transporte",
+        categoria: 2,
         monto: 40.00
     },
     {
         id: 3,
         user_id: 1,
         fecha: "16/04/2025",
-        categoria: "Educación",
+        categoria: 3,
         monto: 50.00
     },
     {
         id: 4,
         user_id: 1,
         fecha: "15/04/2025",
-        categoria: "Salud",
+        categoria: 4,
         monto: 35.00
     },
     {
         id: 5,
         user_id: 1,
         fecha: "14/04/2025",
-        categoria: "Comida",
+        categoria: 1,
         monto: 45.00
     }
 ];
@@ -96,7 +96,7 @@ const ingresos = [
         id: 1,
         user_id: 1,
         fecha: "05/04/2025",
-        categoria: "Educación",
+        categoria: 3,
         monto: 100.00,
         descripcion: "Sin descripción",
         frecuencia: "Única vez"
@@ -105,7 +105,7 @@ const ingresos = [
         id: 2,
         user_id: 1,
         fecha: "01/04/2025",
-        categoria: "Transporte",
+        categoria: 2,
         monto: 50.00,
         descripcion: "Sin descripción",
         frecuencia: "Única vez"
@@ -114,7 +114,7 @@ const ingresos = [
         id: 3,
         user_id: 1,
         fecha: "01/04/2025",
-        categoria: "Comida",
+        categoria: 1,
         monto: 250.00,
         descripcion: "Sin descripción",
         frecuencia: "Única vez"
@@ -123,7 +123,7 @@ const ingresos = [
         id: 4,
         user_id: 1,
         fecha: "15/03/2025",
-        categoria: "Salud",
+        categoria: 4,
         monto: 230.00,
         descripcion: "Sin descripción",
         frecuencia: "Única vez"
@@ -132,7 +132,7 @@ const ingresos = [
         id: 5,
         user_id: 1,
         fecha: "06/03/2025",
-        categoria: "Comida",
+        categoria: 1,
         monto: 50.00,
         descripcion: "Sin descripción",
         frecuencia: "Única vez"
@@ -171,3 +171,58 @@ function guardarIngreso(nuevoIngreso) {
 }
 
 
+const categorias = [
+    {
+        id: 1,
+        user_id: 1,
+        nombre: "Comida",
+        descripcion: "Gastos en alimentos y restaurantes"
+    },
+    {
+        id: 2,
+        user_id: 1,
+        nombre: "Transporte",
+        descripcion: "Movilidad y transporte público"
+    },
+    {
+        id: 3,
+        user_id: 1,
+        nombre: "Educación",
+        descripcion: "Mensualidad, materiales y otros relacionados con lal universidad"
+    },
+    {
+        id: 4,
+        user_id: 1,
+        nombre: "Salud",
+        descripcion: "Citas médicas y medicamentos"
+    }
+];
+
+if (!localStorage.getItem('categorias')) {
+    localStorage.setItem('categorias', JSON.stringify(categorias));
+}
+
+function getCategorias() {
+    let regCategorias = JSON.parse(localStorage.getItem('categorias')) || [];
+    let filtradoCategorias = regCategorias.filter(categoria => categoria.user_id === parseInt(idUsuarioActivo));
+    console.log(filtradoCategorias);
+    filtradoCategorias.sort((a, b) => {
+        const fechaA = a.fecha.split('/').reverse().join('-');
+        const fechaB = b.fecha.split('/').reverse().join('-');
+        const fechaComparison = new Date(fechaB) - new Date(fechaA);
+
+        if (fechaComparison === 0) {
+            return b.id - a.id;
+        }
+
+        return new Date(fechaB) - new Date(fechaA);
+    });
+
+    return filtradoCategorias;
+}
+
+function guardarCategoria(nuevaCategoria) {
+    const categorias = getCategorias(); 
+    categorias.push(nuevaCategoria);
+    localStorage.setItem('categorias', JSON.stringify(categorias));
+}
