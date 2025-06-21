@@ -117,7 +117,7 @@ function getIngresos() {
         return new Date(fechaB) - new Date(fechaA);
     });
 
-    console.log(ingresos);
+    //console.log(ingresos);
 
     return ingresos;
 }
