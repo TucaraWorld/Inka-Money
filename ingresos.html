@@ -19,6 +19,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/ingresos.css" />
+    <link rel="stylesheet" href="styles/formulario-ingresos.css" />
     <link rel="stylesheet" href="styles/filtrar-calendario.css" />
 </head>
 <body class="layout-wrapper">
@@ -78,7 +79,7 @@
         <!-- TÍTULO Y BOTÓN -->
         <header class="d-flex justify-content-between align-items-center mb-4 encabezado-principal">
           <h2>Ingresos</h2>
-          <a href="formulario-ingreso.html" class="btn btn-warning fw-bold rounded-pill px-4 boton-agregar-ingreso">
+          <a class="btn btn-warning fw-bold rounded-pill px-4 boton-agregar-ingreso"  id="btnAgregarIngreso">
             + Agregar ingreso
           </a>
         </header>
@@ -125,45 +126,13 @@
                 <th>FECHA</th>
                 <th>CATEGORÍA</th>
                 <th>CANTIDAD</th>
+                <th>DESCRIPCIÓN</th>
+                <th>ADQUIRIDO CADA</th>
                 <th></th>
               </tr>
             </thead>
             <tbody class="text-center align-middle cuerpo-tabla" id="cuerpoTablaIngresos">
-              <tr>
-                <td><i class="bi bi-pencil editar-fila" style="cursor:pointer"></i></td>
-                <td>05/04/2025</td>
-                <td>Educación</td>
-                <td>S/. 100.00</td>
-                <td><i class="bi bi-trash eliminar-fila" style="cursor: pointer;"></i></td>
-              </tr>
-              <tr>
-                <td><i class="bi bi-pencil editar-fila" style="cursor:pointer"></i></td>
-                <td>01/04/2025</td>
-                <td>Transporte</td>
-                <td>S/. 50.00</td>
-                <td><i class="bi bi-trash eliminar-fila" style="cursor: pointer;"></i></td>
-              </tr>
-              <tr>
-                <td><i class="bi bi-pencil editar-fila" style="cursor:pointer"></i></td>
-                <td>01/04/2025</td>
-                <td>Comida</td>
-                <td>S/. 250.00</td>
-                <td><i class="bi bi-trash eliminar-fila" style="cursor: pointer;"></i></td>
-              </tr>
-              <tr>
-                <td><i class="bi bi-pencil editar-fila" style="cursor:pointer"></i></td>
-                <td>15/03/2025</td>
-                <td>Salud</td>
-                <td>S/. 230.00</td>
-                <td><i class="bi bi-trash eliminar-fila" style="cursor: pointer;"></i></td>
-              </tr>
-              <tr>
-                <td><i class="bi bi-pencil editar-fila" style="cursor:pointer"></i></td>
-                <td>06/03/2025</td>
-                <td>Comida</td>
-                <td>S/. 50.00</td>
-                <td><i class="bi bi-trash eliminar-fila" style="cursor: pointer;"></i></td>
-              </tr>
+              
             </tbody>
           </table>
         </section>
@@ -220,6 +189,69 @@
   </div>
  </template>
 
+     <!-- Modal para agregar ingreso -->
+    <div class="modal fade" id="modalAgregarIngreso" tabindex="-1" aria-labelledby="modalAgregarIngresoLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form id="formAgregarIngreso" autocomplete="off">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalAgregarIngresoLabel">Agregar Ingreso</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label class="form-label">Monto de ingreso*</label>
+                <input type="text" class="form-control campo" id="agregar-monto" />
+                <div class="text-danger mensaje-error" id="error-monto"></div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Categoría de ingreso*</label>
+                <select class="form-select campo" id="agregar-categoria">
+                  <option value="">Seleccione una opción</option>
+                  <option>Transporte</option>
+                  <option>Comida</option>
+                  <option>Salud</option>
+                  <option>Educación</option>
+                </select>
+                <div class="text-danger mensaje-error" id="error-categoria"></div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Descripción</label>
+                <textarea class="form-control campo" id="agregar-descripcion"></textarea>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Frecuencia de adquisición</label>
+                <select class="form-select campo" id="agregar-frecuencia">
+                  <option selected>Única vez</option>
+                  <option>Cada quincena</option>
+                  <option>Cada mes</option>
+                  <option>Cada año</option>
+                </select>
+                <div class="text-danger mensaje-error" id="error-frecuencia"></div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-warning">Registrar ingreso</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast de éxito -->
+    <template id="register-income-template">
+      <div class="toast-exito shadow rounded d-flex align-items-center justify-content-between p-3 notificacion-toast">
+        <div class="check-circle rounded-circle me-3 d-flex justify-content-center align-items-center">
+          <i class="bi bi-check-lg"></i>
+        </div>        
+        <span class="text-white fw-bold">¡Ingreso registrado exitosamente!</span>
+      </div>
+    </template>
+
     <!-- Modal para editar ingreso -->
     <div class="modal fade" id="modalEditarIngreso" tabindex="-1" aria-labelledby="modalEditarIngresoLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -272,6 +304,8 @@
     </div>
 
     <!-- Custom JS -->
+    <script src="scripts/data.js"></script>
+    <script src="scripts/ingresos.js"></script>
     <script src="scripts/filtrar-ingresos.js"></script>
     <!-- jQuery (requerido para Bootstrap Datepicker) -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
