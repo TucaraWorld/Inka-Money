@@ -106,4 +106,41 @@ document.addEventListener('DOMContentLoaded', function () {
         verificarSaldo();
     });
 
+
+    // Cards de saldo por categoría
+    //Obtener el mayor y menor ingreso
+    const mayorIngreso = ingresos.reduce((max, ingreso) => ingreso.monto > max.monto ? ingreso : max, ingresos[0]);
+    const menorIngreso = ingresos.reduce((min, ingreso) => ingreso.monto < min.monto ? ingreso : min, ingresos[0]);
+
+    //Obtener el mayor y menor gasto
+    const mayorGasto = gastos.reduce((max, gasto) => gasto.monto > max.monto ? gasto : max, gastos[0]);
+    const menorGasto = gastos.reduce((min, gasto) => gasto.monto < min.monto ? gasto : min, gastos[0]);
+
+    //Actualizar elementos de mayor ingreso/gasto
+    document.getElementById('mayorIngresoCard').querySelector('h6').textContent = `S/. ${mayorIngreso.monto.toFixed(2)}`;
+    document.getElementById('mayorIngresoCard').querySelector('p').textContent = `Para ${mayorIngreso.categoria}`;
+
+    document.getElementById('mayorGastoCard').querySelector('h6').textContent = `S/. ${mayorGasto.monto.toFixed(2)}`;
+    document.getElementById('mayorGastoCard').querySelector('p').textContent = `Para ${mayorGasto.categoria}`;
+
+    //Icono
+    if (mayorIngreso.monto > mayorGasto.monto) {
+        document.getElementById('mayoresLinesCard').querySelector('img').src = 'assets/icons/profit-lines.png';
+    } else {
+        document.getElementById('mayoresLinesCard').querySelector('img').src = 'assets/icons/loss-lines.png';
+    }
+
+    //Actualizar elementos de menor ingreso/gasto
+    document.getElementById('menorIngresoCard').querySelector('h6').textContent = `S/. ${menorIngreso.monto.toFixed(2)}`;
+    document.getElementById('menorIngresoCard').querySelector('p').textContent = `Para ${menorIngreso.categoria}`;
+    
+    document.getElementById('menorGastoCard').querySelector('h6').textContent = `S/. ${menorGasto.monto.toFixed(2)}`;
+    document.getElementById('menorGastoCard').querySelector('p').textContent = `Para ${menorGasto.categoria}`;
+
+    //Icono
+    if (menorIngreso.monto > menorGasto.monto) {
+        document.getElementById('menoresLinesCard').querySelector('img').src = 'assets/icons/profit-lines.png';
+    } else {
+        document.getElementById('menoresLinesCard').querySelector('img').src = 'assets/icons/loss-lines.png';
+    }
 });
