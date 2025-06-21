@@ -106,30 +106,25 @@ function getIngresos() {
     const ingresos = JSON.parse(localStorage.getItem('ingresos')) || [];
 
     ingresos.sort((a, b) => {
-        // Convertir las fechas a formato ISO (yyyy-MM-dd)
         const fechaA = a.fecha.split('/').reverse().join('-');
         const fechaB = b.fecha.split('/').reverse().join('-');
-
-        // Primero ordenar por fecha
         const fechaComparison = new Date(fechaB) - new Date(fechaA);
 
-        // Si las fechas son iguales, ordenar por ID (o cualquier otro criterio adicional)
         if (fechaComparison === 0) {
-            return b.id - a.id;  // Si las fechas son iguales, el ingreso con el ID más alto aparece primero
+            return b.id - a.id;
         }
 
-        // Ordenar las fechas en orden descendente
         return new Date(fechaB) - new Date(fechaA);
     });
 
-    console.log(ingresos);  // Verifica el orden de los ingresos
+    console.log(ingresos);
 
     return ingresos;
 }
 
 // Guardar un nuevo ingreso en localStorage
 function guardarIngreso(nuevoIngreso) {
-    const ingresos = getIngresos();  // Obtener los ingresos actuales
-    ingresos.push(nuevoIngreso);  // Agregar el nuevo ingreso
-    localStorage.setItem('ingresos', JSON.stringify(ingresos));  // Guardar el arreglo actualizado
+    const ingresos = getIngresos(); 
+    ingresos.push(nuevoIngreso);
+    localStorage.setItem('ingresos', JSON.stringify(ingresos));
 }

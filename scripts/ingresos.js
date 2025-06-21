@@ -20,15 +20,12 @@ renderIngresos(getIngresos());
 
 // Función para mostrar el Toast de éxito
 function mostrarToastExitoRegistro() {
-    // Eliminar cualquier toast previo antes de mostrar uno nuevo
     const prev = document.querySelector('.toast-exito');
-    if (prev) prev.remove(); // Eliminar el toast de éxito existente
+    if (prev) prev.remove();
 
-    // Clonar el template del toast
-    const template = document.getElementById('register-income-template'); // Obtener el template del toast
-    const toastElement = template.content.cloneNode(true).children[0];// Clonar el contenido del template
+    const template = document.getElementById('register-income-template'); 
+    const toastElement = template.content.cloneNode(true).children[0];
 
-    // Agregar el nuevo toast al contenedor (body o donde desees)
     document.body.appendChild(toastElement);
 
     setTimeout(() => toastElement.remove(), 5000);
@@ -76,8 +73,6 @@ formAgregarIngreso.addEventListener('submit', function (e) {
     }
 
     if (errores === 0) {
-        //exito.classList.remove('d-none');
-        //this.reset();
         const nuevoIngreso = {
             id: getIngresos().length + 1,
             user_id: 1, //Asumiendo que el usuario activo tiene user_id = 1
