@@ -130,13 +130,15 @@ formAgregarIngreso.addEventListener('submit', function (e) {
     if (errores === 0) {
         const nuevoIngreso = {
             id: getIngresos().length + 1,
-            user_id: 1, //Asumiendo que el usuario activo tiene user_id = 1
+            user_id: parseInt(idUsuarioActivo),
             fecha: new Date().toLocaleDateString('es-ES'),
             categoria: categoria.value,
             monto: parseFloat(monto.value),
             descripcion: descripcion.value,
             frecuencia: frecuencia.value
         }
+
+        console.log(nuevoIngreso);
 
         guardarIngreso(nuevoIngreso);            
         renderIngresos();
