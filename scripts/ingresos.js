@@ -20,7 +20,7 @@ function renderIngresos(pagina = 1) {
         <tr>
             <td><i class="bi bi-pencil editar-fila" style="cursor:pointer"></i></td>
             <td>${ingreso.fecha}</td>
-            <td>${ingreso.categoria}</td>
+            <td>${categorias.find(cat => cat.id === ingreso.categoria)?.nombre ?? 'Sin categoría'}</td>
             <td>S/. ${ingreso.monto.toFixed(2)}</td>
             <td>${ingreso.descripcion}</td>
             <td>${ingreso.frecuencia}</td>
@@ -92,8 +92,19 @@ const formAgregarIngreso = document.getElementById('formAgregarIngreso');
 
 // Abrir modal para agregar
 document.getElementById('btnAgregarIngreso').addEventListener('click', function () {
-  formAgregarIngreso.reset();
-  new bootstrap.Modal(document.getElementById('modalAgregarIngreso')).show();
+    formAgregarIngreso.reset();
+    const selectAgregarCategoria = document.getElementById('agregar-categoria');
+    selectAgregarCategoria.innerHTML = '<option value="">Seleccione una opción</option>';
+    categorias.forEach(categoria => {
+        if (categoria.user_id === parseInt(idUsuarioActivo)) {
+            const option = document.createElement('option');
+            option.value = categoria.id;
+            option.textContent = categoria.nombre;
+            selectAgregarCategoria.appendChild(option);
+        }
+    }
+    );
+    new bootstrap.Modal(document.getElementById('modalAgregarIngreso')).show();
 });
 
 formAgregarIngreso.addEventListener('submit', function (e) {
@@ -132,7 +143,7 @@ formAgregarIngreso.addEventListener('submit', function (e) {
             id: getIngresos().length + 1,
             user_id: parseInt(idUsuarioActivo),
             fecha: new Date().toLocaleDateString('es-ES'),
-            categoria: categoria.value,
+            categoria: parseInt(categoria.value),
             monto: parseFloat(monto.value),
             descripcion: descripcion.value,
             frecuencia: frecuencia.value

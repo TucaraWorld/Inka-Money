@@ -81,7 +81,6 @@
                             <a href="#total" class="nav-option active" id="total-tab" data-bs-toggle="pill" data-bs-target="#total-content" role="tab" aria-controls="total-content" aria-selected="true">Total</a>
                             <a href="#presupuesto-content" class="nav-option" id="presupuesto-tab" data-bs-toggle="pill" data-bs-target="#presupuesto-content" role="tab" aria-controls="presupuesto-content" aria-selected="false">Presupuesto</a>
                             <a href="#categoria" class="nav-option" id="categoria-tab" data-bs-toggle="pill" data-bs-target="#categoria-content" role="tab" aria-controls="categoria-content" aria-selected="false">Categoría</a>
-                            <a href="#graficos" class="nav-option" id="graficos-tab" data-bs-toggle="pill" data-bs-target="#graficos-content" role="tab" aria-controls="graficos-content" aria-selected="false">Gráficos</a>
                         </div>
                         <script>
                             // JavaScript for switching tabs with custom behavior
@@ -141,10 +140,10 @@
                                             <h3 class="saldo-title">Saldo actual</h3>
                                         </div>
 
-                                        <h2 class="saldo-amount total" id="saldoAmountTotal">S/. 250.00</h2>
+                                        <h2 class="saldo-amount total" id="saldoAmountTotal"></h2>
 
                                         <div class="saldo-footer">
-                                            <small class="saldo-date">Abril del 2025</small>
+                                            <small class="saldo-date"></small>
                                             <button class="btn btn-link" id="toggle-saldo-total">Ocultar saldo <i class="bi bi-eye-slash"></i></button>
                                         </div>            
                                         
@@ -153,33 +152,33 @@
                                 </div>
                             
                                 <div class="cards-row hide-when-zero">
-                                    <div class="card">
+                                    <div class="card" id="mayorIngresoCard">
                                         <h5>Mayor ingreso</h5>
                                         <p>Para educación</p>
                                         <h6>S/. 3,000.00</h6>
                                     </div>
-                                    <div class="card">
+                                    <div class="card" id="mayorGastoCard">
                                         <h5>Mayor gasto</h5>
                                         <p>Para educación</p>
                                         <h6>S/. 1,700.00</h6>
                                     </div>
-                                    <div class="card icon">
+                                    <div class="card icon" id="mayoresLinesCard">
                                         <img src="assets/icons/profit-lines.png" alt="Profit Lines Icon" class="card-icon">
                                     </div>
                                 </div>
 
                                 <div class="cards-row hide-when-zero">
-                                    <div class="card">
+                                    <div class="card" id="menorIngresoCard">
                                         <h5>Menor ingreso</h5>
                                         <p>Para transporte</p>
                                         <h6>S/. 200.00</h6>
                                     </div>
-                                    <div class="card">
+                                    <div class="card" id="menorGastoCard">
                                         <h5>Menor gasto</h5>
                                         <p>Para transporte</p>
                                         <h6>S/. 220.00</h6>
                                     </div>
-                                    <div class="card icon">
+                                    <div class="card icon" id="menoresLinesCard">
                                         <img src="assets/icons/loss-lines.png" alt="Loss Lines Icon" class="card-icon">
                                     </div>
                                 </div>
@@ -265,7 +264,7 @@
                                             <h3 class="saldo-title">Saldo actual</h3>
                                         </div>
 
-                                        <h2 class="saldo-amount categoria" id="saldoAmountCategoria">S/. 250.00</h2>
+                                        <h2 class="saldo-amount categoria" id="saldoAmountCategoria"></h2>
 
                                         <div class="saldo-footer">
                                             <small class="saldo-date">Abril del 2025</small>
@@ -278,29 +277,18 @@
                                     <div class="card text">
                                         <h5>Saldo por categoría</h5>
                                     </div>
-                                    <div class="card">
+                                    <div class="card" id="categoriaCard1">
                                         <h5>Comida</h5>
                                         <h6>S/. 250.00</h6>
                                     </div>
-                                    <div class="card">
+                                    <div class="card" id="categoriaCard2">
                                         <h5>Educación</h5>
                                         <h6>S/. 1,300.00</h6>
                                     </div>
                                 </div>
 
-                                <div class="cards-row hide-when-zero">
-                                    <div class="card">
-                                        <h5>Salud</h5>
-                                        <h6>S/. 100.00</h6>
-                                    </div>
-                                    <div class="card">
-                                        <h5>Transporte</h5>
-                                        <h6>S/. 20.00</h6>
-                                    </div>
-                                    <div class="card">
-                                        <h5>Hobbies</h5>
-                                        <h6>S/. 30.00</h6>
-                                    </div>
+                                <div id="containerCardsCategoria" class="hide-when-zero">
+
                                 </div>
 
                                 <div class="advertencia-text">
@@ -308,132 +296,6 @@
                                 </div>
                             </section>
                         </div>
-
-                        <!-- BALANCE GRAFICOS -->
-                        <div class="tab-pane fade" id="graficos-content" role="tabpanel" aria-labelledby="graficos-tab">
-                            <section class="graficos-balance hide-when-zero">
-                                <div class="balance-average">
-                                    <div class="user-profile">
-                                        <img src="assets/img/user-avatar.png" alt="User Avatar">
-                                    </div>      
-
-                                    <!-- Grafico de Saldo Actual -->
-                                    <div class="card shadow-sm">
-                                        <div class="card-body">
-                                            <h5 class="card-title"><i class="bi bi-coin"></i> Saldo promedio</h5>
-                                            <canvas id="averageBalanceChart"></canvas>
-                                        </div>
-
-                                        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                                        <script>
-                                            // Saldo promedio chart
-                                            var ctx1 = document.getElementById('averageBalanceChart').getContext('2d');
-                                            new Chart(ctx1, {
-                                                type: 'line',
-                                                data: {
-                                                labels: ['Ago', 'Set', 'Oct', 'Nov', 'Dic', 'Ene', 'Feb', 'Mar', 'Abr'],
-                                                datasets: [{
-                                                    label: 'Saldo Promedio',
-                                                    data: [1500, 2000, 2300, 3000, 1000, 1550, 1360, 2600, 1800],
-                                                    borderColor: '#FFD100',
-                                                    backgroundColor: 'rgba(255, 209, 0, 0.1)',
-                                                    fill: true
-                                                }]
-                                                },
-                                                options: {
-                                                    responsive: true,
-                                                    scales: {
-                                                    y: {
-                                                        beginAtZero: false,
-                                                        min: 0,
-                                                        ticks: {
-                                                        stepSize: 500
-                                                        }
-                                                    }
-                                                    }
-                                                }
-                                            });
-                                        </script>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <!-- Income vs Expense Chart -->
-                                    <div class="col-md-6 mb-4">
-                                        <div class="card-chart shadow-sm">
-                                            <div class="card-body">
-                                                <h5 class="card-title"><i class="bi bi-credit-card"></i> Ingresos y gastos</h5>
-                                                <canvas id="incomeExpenseChart"></canvas>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Category Balance Chart -->
-                                    <div class="col-md-6 mb-4">
-                                        <div class="card-chart shadow-sm">
-                                            <div class="card-body">
-                                                <h5 class="card-title"><i class="bi bi-grid-fill"></i> Saldo por categoría</h5>
-                                                <canvas id="categoryBalanceChart"></canvas>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <script>
-                                    // Ingresos y gastos chart
-                                    var ctx2 = document.getElementById('incomeExpenseChart').getContext('2d');
-                                    new Chart(ctx2, {
-                                        type: 'bar',
-                                        data: {
-                                            labels: ['Nov', 'Dic', 'Ene', 'Feb', 'Mar', 'Abr'],
-                                            datasets: [{
-                                                label: 'Ingresos',
-                                                data: [5000, 6000, 7000, 5500, 6500, 8000],
-                                                backgroundColor: 'rgba(0, 123, 255, 0.5)',
-                                            }, {
-                                                label: 'Gastos',
-                                                data: [4500, 4800, 5000, 4600, 5500, 6000],
-                                                backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                                            }]
-                                        }
-                                    });
-
-                                    // Saldo por categoría chart
-                                    var ctx3 = document.getElementById('categoryBalanceChart').getContext('2d');
-                                    new Chart(ctx3, {
-                                        type: 'pie',
-                                        data: {
-                                            labels: ['Educación', 'Comida', 'Salud', 'Hobbies', 'Transporte'],
-                                            datasets: [{
-                                                data: [76.47, 14.71, 5.88, 1.76, 1.18],
-                                                backgroundColor: ['#6f42c1', '#0d6efd', '#198754', '#fd7e14', '#dc3545'],
-                                            }]
-                                        }
-                                    });
-                                    </script>
-                                </div>
-                            </section>
-                        </div>
-
-                        <script>
-                            const saldoAmountTotal = document.querySelector('.saldo-amount.total');
-                            const saldoAmountCategoria = document.querySelector('.saldo-amount.categoria');
-                            const toggleButtonTotal = document.getElementById('toggle-saldo-total');
-                            const toggleButtonCategoria = document.getElementById('toggle-saldo-categoria');
-                            toggleButtonTotal.addEventListener('click', function() {
-                            if (saldoAmountTotal.textContent === 'S/. 250.00') {
-                                saldoAmountTotal.textContent = '- - - - -';
-                            } else {
-                                saldoAmountTotal.textContent = 'S/. 250.00';
-                            }
-                            });
-                            toggleButtonCategoria.addEventListener('click', function() {
-                            if (saldoAmountCategoria.textContent === 'S/. 250.00') {
-                                saldoAmountCategoria.textContent = '- - - - -';
-                            } else {
-                                saldoAmountCategoria.textContent = 'S/. 250.00';
-                            }
-                            });
-                        </script>
 
                     </div>
                     
@@ -485,6 +347,7 @@
             }
         });
     </script>
+    <script src="scripts/data.js"></script>
     <script src="scripts/balance-alerts.js"></script>
     <script src="scripts/balance.js"></script>
 </body>
