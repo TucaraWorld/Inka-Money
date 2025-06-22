@@ -183,6 +183,11 @@ function guardarIngreso(nuevoIngreso) {
     localStorage.setItem('ingresos', JSON.stringify(ingresos));
 }
 
+function eliminarIngreso(id) {
+    let ingresos = JSON.parse(localStorage.getItem('ingresos')) || [];
+    ingresos = ingresos.filter(ingreso => ingreso.id !== id);
+    localStorage.setItem('ingresos', JSON.stringify(ingresos));
+}
 
 const categorias = [
     {
