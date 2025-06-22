@@ -113,3 +113,12 @@
   font-weight: lighter;
   color: black;
 }
+
+#tagFiltrarFechas i.oculto {
+  display: none;
+}
+
+#tagFiltrarFechas i.visible {
+  display: inline;
+  font-size: 1rem;
+}

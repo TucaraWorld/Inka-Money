@@ -30,8 +30,8 @@ function renderIngresos(pagina = 1) {
 }
 
 // Función para renderizar los botones de paginación
-function renderPaginacion() {
-    const totalPaginas = Math.ceil(getIngresos().length / registrosPorPagina);
+function renderPaginacion(regIngresos = getIngresos()) {
+    const totalPaginas = Math.ceil(regIngresos.length / registrosPorPagina);
     //console.log(`Total de páginas: ${totalPaginas}`);
     const paginacion = document.querySelector('.pagination');
     paginacion.innerHTML = '';

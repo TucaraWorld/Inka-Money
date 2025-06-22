@@ -35,47 +35,60 @@ document.addEventListener('DOMContentLoaded', function() {
     const startDate = inputStartDate.value ? new Date(inputStartDate.value.split('/').reverse().join('/')) : null;
     const endDate = inputEndDate.value ? new Date(inputEndDate.value.split('/').reverse().join('/')) : null;
     
-    filterRowsByDate(startDate, endDate);
-    
+    filtroPorFecha(1, startDate, endDate);
     updateFilterButtonText(startDate, endDate);
     
     calendarContainer.style.display = 'none';
   });
 
-  //Filtrar las filas según la fecha seleccionada
-  function filterRowsByDate(startDate, endDate) {
-    const rows = document.querySelectorAll('#cuerpoTablaIngresos tr');
-    let anyRowVisible = false;
+  
+  function filtroPorFecha(pagina = 1, startDate, endDate) {
+      const ingresosPagina = obtenerPaginaFiltroFecha(pagina, startDate, endDate);
+      const ingresosBody = document.getElementById('cuerpoTablaIngresos');
 
-    rows.forEach(row => {
-      const rowDate = row.cells[1].textContent;
-      const rowDateObject = new Date(rowDate.split('/').reverse().join('-'));
+      ingresosBody.innerHTML = '';
 
-      let showRow = true;
+      ingresosBody.innerHTML = ingresosPagina.map(ingreso => `
+          <tr>
+              <td><i class="bi bi-pencil editar-fila" style="cursor:pointer"></i></td>
+              <td>${ingreso.fecha}</td>
+              <td>${categorias.find(cat => cat.id === ingreso.categoria)?.nombre ?? 'Sin categoría'}</td>
+              <td>S/. ${ingreso.monto.toFixed(2)}</td>
+              <td>${ingreso.descripcion}</td>
+              <td>${ingreso.frecuencia}</td>
+              <td><i class="bi bi-trash eliminar-fila" style="cursor: pointer;"></i></td>
+          </tr>
+      `).join('');
 
-      if (startDate && rowDateObject < startDate) {
-        showRow = false;
-      }
-
-      if (endDate && rowDateObject > endDate) {
-        showRow = false;
-      }
-
-      if (showRow) {
-        row.style.display = '';
-        anyRowVisible = true;
+      const warningMessage = document.getElementById('noRecordsWarning');
+      if (ingresosPagina.length === 0) {
+        warningMessage.style.display = 'block';
       } else {
-        row.style.display = 'none';
+        warningMessage.style.display = 'none';
       }
+
+      renderPaginacion(ingresosPagina);
+  }
+
+  function obtenerPaginaFiltroFecha(pagina, startDate, endDate) {
+    const todosLosIngresos = getIngresos();
+
+    // Filtrar por fecha si se proporciona rango
+    const ingresosFiltrados = todosLosIngresos.filter(ingreso => {
+      const ingresoDate = new Date(ingreso.fecha.split('/').reverse().join('-'));
+
+      if (startDate && ingresoDate < startDate) return false;
+      if (endDate && ingresoDate > endDate) return false;
+
+      return true;
     });
 
-    // Mostrar o ocultar el mensaje de advertencia
-    const warningMessage = document.getElementById('noRecordsWarning');
-    if (anyRowVisible) {
-      warningMessage.style.display = 'none';  // Ocultar el mensaje si hay registros
-    } else {
-      warningMessage.style.display = 'block';  // Mostrar el mensaje si no hay registros
-    }
+    console.log('Filtrados: ', ingresosFiltrados);
+
+    const inicio = (pagina - 1) * registrosPorPagina;
+    const fin = pagina * registrosPorPagina;
+    return ingresosFiltrados.slice(inicio, fin);
+
   }
 
   //Actualizar el texto del botón "Todas las fechas"
@@ -90,7 +103,11 @@ document.addEventListener('DOMContentLoaded', function() {
       filterText = `Hasta: ${formatDate(endDate)}`;
     }
 
-    tagFiltrarFechas.textContent = filterText; // Actualiza el texto del botón
+    tagFiltrarFechas.textContent = filterText;
+
+    const icono = tagFiltrarFechas.querySelector('i');
+    icono.classList.remove('oculto');
+    icono.classList.add('visible');
   }
 
   //Dar formato a la fecha
