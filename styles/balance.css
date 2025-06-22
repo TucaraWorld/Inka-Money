@@ -206,53 +206,60 @@
   color: var(--color-primario);
 }
 
-/* Graficos */
-.graficos-balance .card-title {
-  font-size: 1.5rem;
-  text-align: left;
+/* Estilo para la alerta de error */
+
+#noRecordsWarning {
+  display: none;
+  background-color: #d1ecf1;
   color: var(--color-primario);
-}
-
-.graficos-balance .card {
-  flex: 0.8;
-  padding: 1.5rem;
-  margin-left: 2rem;
-  width: 48%;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  display: flex;
-  justify-content: space-between;
-  align-items: stretch;
-  text-align: left;
-}
-
-.graficos-balance .card-chart {
-  background-color: #F2F2F2;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  align-items: center;
-  color: var(--color-primario);
-  padding: 1.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: stretch;
-  text-align: left;
-  border: #d1d1d1 1px solid;
-}
-
-.graficos-balance .card-body {
   padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  width: 100%;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  border: none;
 }
 
-.graficos-balance .card-title {
+#noRecordsWarning i {
+  font-size: 2rem;
+  margin-right: 1rem;
+}
+
+.alert-text {
+  flex: 1;
+}
+
+.alert-text p {
+  margin: 0; /* Quitar el margen por defecto */
+  font-size: 1rem;
+}
+
+#noRecordsWarning strong {
   font-weight: bold;
+  font-size: 1.2rem;
 }
 
-/* Reducir altura del gráfico */
-#averageBalanceChart, #incomeExpenseChart, #categoryBalanceChart {
-  width: 100% !important;
-  height: 100% !important;
+.saldo-card.gris .saldo-text {
+  color: #404040;
 }
 
+.saldo-card.gris {
+  background-color: #d3d3d3;  /* Gris claro */
+  margin-left: 0;
+
+}
+
+.hide-when-zero.hide {
+    display: none !important;
+}
+
+/* Clase para mostrar los elementos */
+.cards-row.hide-when-zero.show {
+      display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  gap: 1.5rem; /* Espaciado entre tarjetas */
+}
 
 /* Media Queries: Responsividad para pantallas pequeñas */
 @media (max-width: 800px) {
@@ -322,26 +329,6 @@
     width: 100%;
     margin-bottom: 1.5rem;
   }
-
-  .graficos-balance .card-body canvas {
-    width: 100% !important;
-    height: auto !important;
-  }
-
-  .graficos-balance .card-body {
-    /*background-color: #F2F2F2;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    align-items: center;
-    color: var(--color-primario);*/
-    padding: 0 0 0 0;
-  }
-  .graficos-balance .card {
-    flex: 1;
-    margin-left: 0;
-    margin-top: 1rem;
-    width: 100%;
-  }
 }
 
 /* Media Queries: Ajustes para pantallas muy pequeñas */
@@ -364,11 +351,6 @@
     margin-bottom: 1rem;
   }
 
-  /* Hacer los gráficos más pequeños en pantallas pequeñas */
-  #averageBalanceChart, #incomeExpenseChart, #categoryBalanceChart {
-    height: 250px !important;
-  }
-
   .saldo-title {
     font-size: 1.8rem;
   }
@@ -377,3 +359,163 @@
     font-size: 2rem; /* Reducir tamaño */
   }
 }
+
+/*
++ Presupuesto css
+*/
+
+/* Nueva meta button */
+.nueva-meta-btn {
+    border-radius: 12px;
+    border: 1px solid #000; /* Siempre mostrar el borde */
+    display: flex;
+    margin-left: auto;
+}
+
+.nueva-meta-btn:hover {
+  border-radius: 12px;
+  border: 1px solid #000; /* Siempre mostrar el borde */
+  text-decoration: underline;
+  margin-left: auto;
+}
+
+.nueva-meta-icon {
+    font-size: 1.2em;
+}
+
+/* User placeholder image */
+.ahorros-img {
+    width: 10rem;
+    height: 10em;
+    border-radius: 50%;
+    background: #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.ahorros-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+.presupuesto-lista-container {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.presupuesto-lista-container .card {
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  border-radius: 8px;
+  width: auto;
+  min-width: 403px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Presupuesto lista header */
+.presupuesto-lista-header {
+    color: #222;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    display: flex;
+    align-items: left;
+}
+
+/* Presupuesto lista table container */
+.presupuesto-lista-table {
+    max-height: 180px;
+    min-width: 403px;
+    width: 100%;
+    padding: 0;
+    overflow-x: auto;
+    overflow-y: auto;
+    border: 1px solid #dee2e6;
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* Presupuesto lista thead */
+.presupuesto-lista-thead {
+    background: #fffbe6;
+    white-space: nowrap;
+}
+
+.presupuesto-lista-thread th.header{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+.presupuesto-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem; /* equivalent to mb-3 */
+}
+
+.presupuesto-img-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0 1rem 0;
+}
+
+/* Add to the end of balance.css */
+.custom-presupuesto-alert {
+  display: flex;
+  flex-direction: column;
+  background: #eaf4ff;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  padding: 16px 20px 12px 20px;
+  box-shadow: 0 2px 8px #EAF4FF;
+  font-family: 'Inter', Arial, sans-serif;
+  position: relative;
+  animation: fadeInAlert 0.4s;
+}
+.custom-presupuesto-alert .alert-header {
+  display: flex;
+  align-items: center;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+.custom-presupuesto-alert .alert-icon {
+  color: #002C5F;
+  font-size: 1.5em;
+  margin-right: 10px;
+}
+.custom-presupuesto-alert.alert-danger .alert-icon {
+  color: #002C5F;
+}
+.custom-presupuesto-alert .close-alert {
+  background: none;
+  border: none;
+  font-size: 1.3em;
+  color: #888;
+  margin-left: auto;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.custom-presupuesto-alert .close-alert:hover {
+  color: #ff4d4f;
+}
+.custom-presupuesto-alert .alert-body {
+  font-size: 1em;
+  color: #333;
+  margin-left: 2.2em;
+}
+@keyframes fadeInAlert {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+

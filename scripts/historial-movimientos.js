@@ -1,4 +1,6 @@
-document.addEventListener('DOMContentLoaded', function() {
+// Filtro de fechas para historial-movimientos (copiado y adaptado de filtrar-gastos.js)
+
+document.addEventListener('DOMContentLoaded', function () {
   const btnFiltrarPorFecha = document.getElementById('btnFiltrarPorFecha');
   const calendarContainer = document.getElementById('calendarContainer');
   const inputStartDate = document.getElementById('startDate');
@@ -7,8 +9,8 @@ document.addEventListener('DOMContentLoaded', function() {
   const btnCloseCalendar = document.getElementById('closeCalendar');
   const tagFiltrarFechas = document.getElementById('tagFiltrarFechas');
 
-  //Mostrar el calendario cuando se haga clic en el botón de filtro
-  btnFiltrarPorFecha.addEventListener('click', function() {
+  // Mostrar el calendario al hacer clic en el botón de filtro
+  btnFiltrarPorFecha.addEventListener('click', function () {
     calendarContainer.style.display = 'block';
 
     $(inputStartDate).datepicker({
@@ -24,32 +26,42 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  btnCloseCalendar.addEventListener('click', function() {
+  btnCloseCalendar.addEventListener('click', function () {
     calendarContainer.style.display = 'none';
     inputStartDate.value = '';
     inputEndDate.value = '';
   });
 
-  //Aplicar el filtro de fecha
-  btnApplyDateFilter.addEventListener('click', function() {
+  // Aplicar el filtro de fecha
+  btnApplyDateFilter.addEventListener('click', function () {
     const startDate = inputStartDate.value ? new Date(inputStartDate.value.split('/').reverse().join('/')) : null;
     const endDate = inputEndDate.value ? new Date(inputEndDate.value.split('/').reverse().join('/')) : null;
-    
+
     filterRowsByDate(startDate, endDate);
-    
     updateFilterButtonText(startDate, endDate);
-    
+
     calendarContainer.style.display = 'none';
   });
 
-  //Filtrar las filas según la fecha seleccionada
-  function filterRowsByDate(startDate, endDate) {
-    const rows = document.querySelectorAll('#cuerpoTablaIngresos tr');
-    let anyRowVisible = false;
+  // Eliminar el filtro de fechas al hacer clic en la "x"
+  tagFiltrarFechas.addEventListener('click', function (e) {
+    if (e.target.classList.contains('remove-date-filter')) {
+      // Resetear filtro
+      inputStartDate.value = '';
+      inputEndDate.value = '';
+      filterRowsByDate(null, null);
+      updateFilterButtonText(null, null);
+    }
+  });
 
+  // Filtrar las filas según la fecha seleccionada
+  function filterRowsByDate(startDate, endDate) {
+    const rows = document.querySelectorAll('#cuerpoTablaGastos tr');
     rows.forEach(row => {
-      const rowDate = row.cells[1].textContent;
-      const rowDateObject = new Date(rowDate.split('/').reverse().join('-'));
+      const rowDate = row.cells[0].textContent;
+      // Parse as local date: dd/mm/yyyy
+      const [day, month, year] = rowDate.split('/').map(Number);
+      const rowDateObject = new Date(year, month - 1, day); // months are 0-based
 
       let showRow = true;
 
@@ -61,24 +73,11 @@ document.addEventListener('DOMContentLoaded', function() {
         showRow = false;
       }
 
-      if (showRow) {
-        row.style.display = '';
-        anyRowVisible = true;
-      } else {
-        row.style.display = 'none';
-      }
+      row.style.display = showRow ? '' : 'none';
     });
-
-    // Mostrar o ocultar el mensaje de advertencia
-    const warningMessage = document.getElementById('noRecordsWarning');
-    if (anyRowVisible) {
-      warningMessage.style.display = 'none';  // Ocultar el mensaje si hay registros
-    } else {
-      warningMessage.style.display = 'block';  // Mostrar el mensaje si no hay registros
-    }
   }
 
-  //Actualizar el texto del botón "Todas las fechas"
+  // Actualizar el texto del botón "Todas las fechas" y añadir botón para quitar filtro
   function updateFilterButtonText(startDate, endDate) {
     let filterText = 'Todas las fechas';
 
@@ -90,10 +89,15 @@ document.addEventListener('DOMContentLoaded', function() {
       filterText = `Hasta: ${formatDate(endDate)}`;
     }
 
-    tagFiltrarFechas.textContent = filterText; // Actualiza el texto del botón
+    // Si hay filtro, añade la "x" para quitarlo
+    if (startDate || endDate) {
+      tagFiltrarFechas.innerHTML = `${filterText} <span class="remove-date-filter" style="cursor:pointer;margin-left:8px;">&times;</span>`;
+    } else {
+      tagFiltrarFechas.textContent = filterText;
+    }
   }
 
-  //Dar formato a la fecha
+  // Dar formato a la fecha
   function formatDate(date) {
     const dia = String(date.getDate()).padStart(2, '0');
     const mes = String(date.getMonth() + 1).padStart(2, '0');

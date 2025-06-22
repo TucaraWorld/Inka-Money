@@ -1,0 +1,338 @@
+/* Estilos generales */
+body.bienvenido-wrapper {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  font-family: 'Inter', sans-serif;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Rectángulos azules */
+.rectangulo-superior {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 120px;
+  background-color: #002C5F;
+  z-index: 0;
+}
+
+.rectangulo-lateral {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 80px;
+  height: 100%;
+  background-color: #002C5F;
+  z-index: 0;
+}
+
+.rectangulo-inferior {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background-color: #002C5F;
+  z-index: 0;
+}
+
+/* Sidebar */
+.menu-opcion {
+  background-color: #ffc107 !important;
+  color: #ffffff !important;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  transition: background 0.2s, color 0.2s;
+  display: flex;
+  align-items: center;
+}
+
+.menu-opcion.active,
+.menu-opcion:hover {
+  background-color: #ffb300 !important; /* Un poco más oscuro al pasar el mouse o activo */
+  color: #ffffff !important;
+}
+.sidebar {
+  width: 250px;
+  background-color: #002C5F;
+  color: white;
+  padding: 1.5rem;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+.logo h1 {
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 700;
+  font-size: 1.6rem;
+}
+
+.menu .nav-link {
+  color: rgba(255, 255, 255, 0.8);
+  padding: 0.75rem 0;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  transition: all 0.3s;
+  position: relative;
+  z-index: 1;
+}
+
+.menu .nav-link:hover {
+  color: white;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.menu .nav-link.active {
+  color: white;
+  background-color: rgba(255, 255, 255, 0.2);
+  font-weight: 600;
+}
+
+.menu .nav-link i {
+  width: 24px;
+  text-align: center;
+}
+.cerrar-sesion-link {
+  color: #fff !important;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  margin-top: 1.5rem;
+  margin-left: 2rem;
+}
+.cerrar-sesion-icon {
+  font-size: 3rem; /* Aumenta el tamaño del ícono */
+  padding-right: 3rem;
+}
+.cerrar-sesion-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.cerrar-sesion-container {
+  margin-top: 0rem;
+  padding-top: 0rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Contenido principal */
+.content {
+  flex: 1;
+  padding: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.welcome-header {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  height: 78px; /* igual al alto del cabezal azul */
+  background: #002C5F;
+  border-radius: 8px 8px 0 0;
+  z-index: 1;
+}
+.foto-perfil-container {
+  position: absolute;
+  left: 35rem; /* Ajusta según separación deseada */
+  bottom: -100px; /* La mitad de la altura de la imagen */
+  z-index: 2;
+}
+
+.foto-perfil {
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  border: 4px solid #fff;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.saludo-container {
+  background-color: #002C5F;
+  padding: 1.5rem;
+  border-radius: 8px;
+  color: white;
+  margin-top: -60px; /* Para superponer al rectángulo superior */
+}
+.bienvenido-titulo {
+  color: #002C5F;
+  font-weight: 700;
+  font-size: 2.2rem;
+  margin: 0 0 0 2.5rem; /* margen izquierdo para moverlo a la izquierda */
+  text-align: left;     /* alinea el texto a la izquierda */
+}
+.saludo {
+  font-size: 2.2rem;      /* Aumenta el tamaño */
+  font-weight: 700;
+  margin: 0;
+  padding-left: 2.4rem;
+  color: #fff;
+}
+.saludo-container .saludo {
+  color: #ffc107;
+  margin: 0;
+}
+.bienvenido-titulo {
+  color: #002C5F;
+  font-weight: 700;
+  font-size: 2.2rem;
+  padding-right: 43rem; /* en vez de margin-left */
+  margin: 0;
+  text-align: left;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+.bienvenido-titulo-container {
+  background: transparent;
+  padding: 1.5rem 0 0.5rem 0;
+}
+/* Notificaciones */
+.notificaciones-container {
+  background-color: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  position: relative;
+  margin: 2.3rem 0rem 0 0rem;     
+  max-width: 1050px;        /* Limita el ancho */
+
+}
+
+.notificaciones-titulo {
+  color: #002C5F;
+  font-size: 1.28rem;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.notificacion {
+  border-left: 4px solid;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.notificacion-header {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.notificacion-body {
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.alert-warning {
+  border-left-color: #ffc107;
+  background-color: rgba(255, 193, 7, 0.1);
+}
+
+.alert-success {
+  border-left-color: #28a745;
+  background-color: rgba(40, 167, 69, 0.1);
+}
+
+/* Footer */
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 250px; /* Igual al ancho del sidebar */
+  right: 80px; /* Igual al ancho del rectángulo derecho */
+  height: 60px; /* Igual al alto del rectángulo inferior */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.footer-content {
+  background-color: #002C5F;
+  padding: 1rem;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.copyright {
+  color: #ffffff;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* Ajuste del contenido principal para el footer */
+.content {
+  flex: 1;
+  padding: 2rem;
+  padding-bottom: 80px; /* Espacio para el footer */
+  position: relative;
+  z-index: 1;
+}
+.menu-rectangulo {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  padding: 0.8rem 3.3rem 0rem 1.9rem;
+  display: inline-block;
+  margin-bottom: 0rem;
+}
+.menu-rectangulo .nav-item {
+  margin-bottom: 2.5rem; /* Ajusta el valor según el espacio que desees */
+}
+.contenido-bienvenida {
+  background-color: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin: 2.3rem 0 0 0;
+  max-width: 800px;
+}
+
+.lista-bienvenida {
+  margin-bottom: 2rem;
+}
+
+.lista-bienvenida ul {
+  padding-left: 1.5rem;
+}
+
+.lista-bienvenida li {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.5;
+}
+
+/* Preguntas frecuentes */
+.preguntas-frecuentes {
+  border-top: 1px solid #eee;
+  padding-top: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.preguntas-titulo {
+  color: #002C5F;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.preguntas-texto {
+  color: #666;
+  font-size: 0.95rem;
+  margin-bottom: 0;
+}

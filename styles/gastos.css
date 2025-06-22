@@ -49,6 +49,35 @@
   color: white;
 }
 
+.toast-registro {
+  position: fixed;
+  bottom: 2rem;
+  left: 45%;
+  z-index: 9999;
+  background-color: var(--color-primario);
+  color: white;
+  min-width: 280px;
+  max-width: 350px;
+  border-radius: 14px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+}
+
+.toast-registro .check-circle {
+  width: 40px;
+  height: 40px;
+  background-color: white;
+  color: var(--color-primario);
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
 .layout-wrapper {
   display: flex;
   flex-direction: column;
@@ -75,4 +104,41 @@
 .table td:nth-child(4),
 .table th:nth-child(4) {
   font-family: 'Space Mono', monospace; /* Para montos */
+}
+
+/* Estilo para el mensaje de advertencia */
+#noRecordsWarning {
+  background-color: #EAF4FF;
+  font-size: 1rem;
+  display: flex;    
+  flex-direction: row;     
+  color: var(--color-primario);
+  font-weight: bold;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  align-items: flex-start;   
+  display: block;
+}
+
+/* Estilo para el contenedor del texto (alert-text) */
+#noRecordsWarning .alert-text {
+  display: flex;
+  flex-direction: column;     
+  justify-content: flex-start; 
+  max-width: 80%;             
+}
+
+/* Título de advertencia */
+#noRecordsWarning strong {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem; 
+}
+
+/* Estilo para el párrafo */
+#noRecordsWarning p {
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  font-weight: lighter;
+  color: black;
 }
