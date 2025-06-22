@@ -91,6 +91,19 @@ function getGastos() {
     return filtradoGastos;
 }
 
+function guardarGasto(nuevoGasto) {
+    const gastos = JSON.parse(localStorage.getItem('gastos')) || [];
+    gastos.push(nuevoGasto);
+    localStorage.setItem('gastos', JSON.stringify(gastos));
+}
+
+function eliminarGasto(id) {
+    let gastos = JSON.parse(localStorage.getItem('gastos')) || [];
+    gastos = gastos.filter(gasto => gasto.id !== id);
+    localStorage.setItem('gastos', JSON.stringify(gastos));
+}
+
+
 const ingresos = [
     {
         id: 1,
