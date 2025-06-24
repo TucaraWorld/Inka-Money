@@ -105,9 +105,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     tagFiltrarFechas.textContent = filterText;
 
-    const icono = tagFiltrarFechas.querySelector('i');
-    icono.classList.remove('oculto');
-    icono.classList.add('visible');
   }
 
   //Dar formato a la fecha

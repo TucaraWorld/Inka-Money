@@ -114,11 +114,8 @@
   color: black;
 }
 
-#tagFiltrarFechas i.oculto {
-  display: none;
-}
-
-#tagFiltrarFechas i.visible {
-  display: inline;
-  font-size: 1rem;
+#tagFiltrarFechas, #tagFiltrarCategorias {
+  background-color: #dcdcdc;
+  color: black;
+  font-size: 0.9rem;
 }
