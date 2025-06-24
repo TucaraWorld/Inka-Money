@@ -1,0 +1,105 @@
+.landing-bg {
+  /* Gradient background for the whole page */
+  background: #0a2c53;
+  min-height: 100vh;
+  font-family: 'Inter', 'Poppins', 'Space Mono', 'Urbanist', sans-serif;
+}
+
+.landing-sidebar {
+  width: 260px;
+  background: linear-gradient(160deg, #0a2c53 80%, #ffd100 100%);
+  min-height: 100vh;
+  border-top-right-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+  box-shadow: 2px 0 16px #0a2c5322;
+  position: relative;
+}
+
+.landing-sidebar img {
+  border-radius: 1rem;
+  background: #fff;
+  padding: 0.5rem;
+  box-shadow: 0 2px 8px #ffd10044;
+}
+
+.landing-sidebar h1 {
+  letter-spacing: 1px;
+  text-shadow: 0 2px 8px #0002;
+}
+
+.landing-sidebar .btn-warning {
+  background: linear-gradient(90deg, #ffd100 60%, #ffe066 100%);
+  color: #0a2c53;
+  border: none;
+  box-shadow: 0 2px 8px #ffd10044;
+  transition: background 0.2s, color 0.2s;
+}
+.landing-sidebar .btn-warning:hover {
+  background: #0a2c53;
+  color: #ffd100;
+  border: 2px solid #ffd100;
+}
+
+.landing-card {
+  background: #fff;
+  border-color: #FFD100 !important;
+  max-width: 950px;
+  margin: 2rem auto;
+  border-radius: 2rem;
+  box-shadow: 0 2px 32px #0a2c5344;
+  padding: 2rem 0 0 0;
+  /* Subtle blue background for card */
+  background-image: linear-gradient(120deg, #f8fafc 70%, #e3f0ff 100%);
+}
+
+.landing-card h2, .landing-card h3, .landing-card h5 {
+  color: #0a2c53;
+}
+
+.landing-card .card {
+  background: #f8fafc;
+  border-left: 4px solid #ffd100;
+}
+
+.landing-card .card-body h3 {
+  color: #ffd100 !important;
+}
+
+.landing-footer {
+  background: #0a2c53;
+  color: #fff;
+  border-bottom-left-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+  margin-bottom: -1rem;
+  box-shadow: 0 -2px 16px #0a2c5322;
+}
+
+.entrar-btn {
+  font-size: 1.3rem;
+  background: #FFD100;
+  color: #0a2c53;
+  border: none;
+  box-shadow: 0 2px 8px #ffd10044;
+  transition: background 0.2s, color 0.2s, transform 0.1s;
+}
+.entrar-btn:hover, .entrar-btn:focus {
+  background: #0a2c53;
+  color: #FFD100;
+  border: 2px solid #FFD100;
+  transform: scale(1.04);
+}
+
+@media (max-width: 768px) {
+  .landing-sidebar {
+    display: none;
+  }
+  .landing-card {
+    margin: 1rem;
+    padding: 1rem 0 0 0;
+  }
+  .entrar-btn {
+    width: 100%;
+    font-size: 1.1rem;
+    padding: 0.75rem 0;
+  }
+}
