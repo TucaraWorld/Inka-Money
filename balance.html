@@ -189,7 +189,7 @@
                         <div class="tab-pane fade" id="presupuesto-content" role="tabpanel" aria-labelledby="presupuesto-tab">
                             <section class="presupuesto-balance">
                                 <div class="presupuesto-header">
-                                    <button class="btn nueva-meta-btn btn-warning fw-bold" onclick="window.location.href='formulario-presupuesto.html'">
+                                    <button class="btn nueva-meta-btn btn-warning fw-bold" id="btnAgregarPresupuesto" type="button">
                                         + Nuevo presupuesto <span class="nueva-meta-icon"></span>
                                     </button>
                                 </div>
@@ -309,6 +309,53 @@
         </div>
     </div>
 
+    <!-- Modal para agregar presupuesto -->
+<div class="modal fade" id="modalAgregarPresupuesto" tabindex="-1" aria-labelledby="modalAgregarPresupuestoLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="formAgregarPresupuesto" autocomplete="off">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalAgregarPresupuestoLabel">Registrar presupuesto</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Selecciona la categoría</label>
+            <select class="form-select campo" id="presupuesto-categoria">
+              <option value="">Selecciona la categoría</option>
+              <option>Transporte</option>
+              <option>Comida</option>
+              <option>Salud</option>
+              <option>Educación</option>
+            </select>
+            <div class="text-danger mensaje-error" id="error-presupuesto-categoria"></div>
+          </div>
+          <div class="mb-4">
+            <label class="form-label">Monto del presupuesto</label>
+            <input type="number" min="0" class="form-control campo" id="presupuesto-monto" />
+            <div class="text-danger mensaje-error" id="error-presupuesto-monto"></div>
+          </div>
+          <div class="alert alert-primary d-none" id="mensaje-exito-presupuesto">
+            <i class="bi bi-check-circle-fill me-2"></i> ¡Presupuesto registrado exitosamente!
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-warning w-100 fw-bold">Registrar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Toast de éxito para presupuesto -->
+<template id="toast-presupuesto-template">
+  <div class="toast-exito shadow rounded d-flex align-items-center p-3 notificacion-toast show" style="position: fixed; bottom: 32px; right: 32px; z-index: 9999; min-width: 280px; background: #28a745; color: #fff;">
+    <div class="check-circle rounded-circle me-3 d-flex justify-content-center align-items-center" style="background: #fff; color: #28a745; width: 32px; height: 32px;">
+      <i class="bi bi-check-lg"></i>
+    </div>
+    <span class="text-white fw-bold">¡Presupuesto registrado exitosamente!</span>
+  </div>
+</template>
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -346,6 +393,65 @@
                 if (tab) tab.click();
             }
         });
+
+        // Presupuesto Modal Logic
+const btnAgregarPresupuesto = document.getElementById('btnAgregarPresupuesto');
+const modalAgregarPresupuesto = new bootstrap.Modal(document.getElementById('modalAgregarPresupuesto'));
+const formAgregarPresupuesto = document.getElementById('formAgregarPresupuesto');
+const exitoPresupuesto = document.getElementById('mensaje-exito-presupuesto');
+
+btnAgregarPresupuesto.addEventListener('click', function () {
+    formAgregarPresupuesto.reset();
+    document.querySelectorAll('#modalAgregarPresupuesto .mensaje-error').forEach(el => el.textContent = '');
+    exitoPresupuesto.classList.add('d-none');
+    modalAgregarPresupuesto.show();
+});
+
+formAgregarPresupuesto.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const categoria = document.getElementById('presupuesto-categoria');
+    const monto = document.getElementById('presupuesto-monto');
+    let errores = 0;
+    document.getElementById('error-presupuesto-categoria').textContent = '';
+    document.getElementById('error-presupuesto-monto').textContent = '';
+    exitoPresupuesto.classList.add('d-none');
+    if (!categoria.value.trim()) {
+        document.getElementById('error-presupuesto-categoria').textContent = 'Selecciona una categoría';
+        errores++;
+    }
+    if (!monto.value.trim() || isNaN(monto.value) || Number(monto.value) <= 0) {
+        document.getElementById('error-presupuesto-monto').textContent = 'El monto es obligatorio y debe ser mayor a 0';
+        errores++;
+    }
+    if (errores === 0) {
+        // Guardar en localStorage
+        const stored = localStorage.getItem('presupuestos');
+        let presupuestos = stored ? JSON.parse(stored) : [];
+        presupuestos.push({
+            categoria: categoria.value,
+            limite: Number(monto.value),
+            actual: 0
+        });
+        localStorage.setItem('presupuestos', JSON.stringify(presupuestos));
+        // Actualizar tabla
+        renderPresupuestosFromStorage();
+        // Mostrar toast
+        mostrarToastPresupuesto();
+        modalAgregarPresupuesto.hide();
+    }
+});
+function mostrarToastPresupuesto() {
+    const prev = document.querySelector('.toast-exito');
+    if (prev) prev.remove();
+    const template = document.getElementById('toast-presupuesto-template');
+    const toastElement = template.content.cloneNode(true).children[0];
+    document.body.appendChild(toastElement);
+    setTimeout(() => {
+        toastElement.classList.remove('show');
+        toastElement.classList.add('hide');
+        setTimeout(() => toastElement.remove(), 500);
+    }, 3000);
+}
     </script>
     <script src="scripts/data.js"></script>
     <script src="scripts/balance-alerts.js"></script>
