@@ -18,14 +18,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const gastos = getGastos();
 
     // Función para calcular el saldo
-    function calcularSaldoTotal() {
+    function calcularSaldoTotal(opt) {
         const totalIngresos = ingresos.reduce((total, ingreso) => total + ingreso.monto, 0);
         const totalGastos = gastos.reduce((total, gasto) => total + gasto.monto, 0);
 
         const saldo = totalIngresos - totalGastos;
 
-        saldoAmountTotal.textContent = `S/. ${saldo.toFixed(2)}`;
-        saldoAmountCategoria.textContent = `S/. ${saldo.toFixed(2)}`;
+        if (opt === 1) saldoAmountTotal.textContent = `S/. ${saldo.toFixed(2)}`;
+        else saldoAmountCategoria.textContent = `S/. ${saldo.toFixed(2)}`;
 
         //console.log(`Saldo Total: S/. ${saldo.toFixed(2)}`);
         return saldo;
@@ -77,33 +77,57 @@ document.addEventListener('DOMContentLoaded', function () {
     calcularSaldoTotal();
     verificarSaldo();
     
-
+    // Ocultar el saldo desde el inicio
+    saldoAmountTotal.textContent = '- - - - -';
+    saldoAmountCategoria.textContent = '- - - - -';
     // Obtener los botones de toggle
     const toggleButtonTotal = document.getElementById('toggle-saldo-total');
     const toggleButtonCategoria = document.getElementById('toggle-saldo-categoria');
+    // Cambiar el texto y el icono del botón según el estado del saldo total
+    function actualizarToggleButtonTotal() {
+        if (saldoAmountTotal.textContent === '- - - - -') {
+            toggleButtonTotal.innerHTML = 'Mostrar saldo <i class="bi bi-eye"></i>';
+        } else {
+            toggleButtonTotal.innerHTML = 'Ocultar saldo <i class="bi bi-eye-slash"></i>';
+        }
+    }
 
+    // Cambiar el texto y el icono del botón según el estado del saldo por categoría
+    function actualizarToggleButtonCategoria() {
+        if (saldoAmountCategoria.textContent === '- - - - -') {
+            toggleButtonCategoria.innerHTML = 'Mostrar saldo <i class="bi bi-eye"></i>';
+        } else {
+            toggleButtonCategoria.innerHTML = 'Ocultar saldo <i class="bi bi-eye-slash"></i>';
+        }
+    }
+
+    // Inicializar el texto de los botones
+    actualizarToggleButtonTotal();
+    actualizarToggleButtonCategoria();
     // Lógica para el toggle del saldo total
     toggleButtonTotal.addEventListener('click', function() {
-        if (saldoAmountTotal.textContent === `S/. ${calcularSaldoTotal().toFixed(2)}`) {
-            saldoAmountTotal.textContent = '- - - - -';
+        if (saldoAmountTotal.textContent === `- - - - -`) {
+            saldoAmountTotal.textContent = `S/. ${calcularSaldoTotal(1).toFixed(2)}`;
         } else {
-            saldoAmountTotal.textContent = `S/. ${calcularSaldoTotal().toFixed(2)}`;
+            saldoAmountTotal.textContent = `- - - - -`;
         }
 
         // Después de actualizar, verifica si el saldo es 0
         verificarSaldo();
+        actualizarToggleButtonTotal();
     });
 
     // Lógica para el toggle del saldo por categoría
     toggleButtonCategoria.addEventListener('click', function() {
-        if (saldoAmountCategoria.textContent === `S/. ${calcularSaldoTotal().toFixed(2)}`) {
-            saldoAmountCategoria.textContent = '- - - - -';
+        if (saldoAmountCategoria.textContent === `- - - - -`) {
+            saldoAmountCategoria.textContent = `S/. ${calcularSaldoTotal(2).toFixed(2)}`;
         } else {
-            saldoAmountCategoria.textContent = `S/. ${calcularSaldoTotal().toFixed(2)}`;
+            saldoAmountCategoria.textContent = `- - - - -`;
         }
 
         // Después de actualizar, verifica si el saldo es 0
         verificarSaldo();
+        actualizarToggleButtonCategoria();
     });
 
 
