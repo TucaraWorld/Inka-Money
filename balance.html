@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -10,14 +11,17 @@
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter&family=Poppins:wght@600&family=Space+Mono&family=Urbanist:wght@700&display=swap" rel="stylesheet" />
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter&family=Poppins:wght@600&family=Space+Mono&family=Urbanist:wght@700&display=swap"
+        rel="stylesheet" />
+
     <link rel="icon" type="image/png" href="assets/logo.png">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/balance.css" />
 </head>
+
 <body class="layout-wrapper">
 
     <!-- HEADER -->
@@ -25,47 +29,58 @@
 
     <!-- CONTENEDOR PRINCIPAL -->
     <div class="d-flex flex-grow-1 contenedor-general">
-    
+
         <!-- SIDEBAR -->
         <aside class="sidebar d-flex flex-column p-3 menu-lateral" aria-label="Menú lateral">
-        <div class="logo mb-4 d-flex align-items-center text-white logo-aplicacion">
-            <img src="assets/logo.png" alt="Logo de Inka Money" class="me-2" width="32" height="32" />
-            <strong>Inka Money</strong>
-        </div>
+            <div class="logo mb-4 d-flex align-items-center text-white logo-aplicacion">
+                <img src="assets/logo.png" alt="Logo de Inka Money" class="me-2" width="32" height="32" />
+                <strong>Inka Money</strong>
+            </div>
 
-        <nav aria-label="Navegación principal">
-            <ul class="nav nav-pills flex-column mb-auto lista-navegacion">
-            <li class="nav-item"><a href="home.html" class="nav-link text-white"><i class="bi bi-house me-2"></i>Inicio</a></li>
-            <li>
-                <a class="nav-link text-white d-flex justify-content-between align-items-center enlace-registros" data-bs-toggle="collapse" href="#submenuRegistros" role="button" aria-expanded="true">
-                <span><i class="bi bi-currency-dollar me-2"></i>Registros</span>
-                <i class="bi bi-caret-down-fill"></i>
-                </a>
-                <div class="collapse show" id="submenuRegistros">
-                <ul class="nav flex-column ms-4 mt-2 submenu-registros">
-                    <li><a href="ingresos.html" class="nav-link text-white"><i class="bi bi-plus-lg me-2"></i>Ingresos</a></li>
-                    <li><a href="gastos.html" class="nav-link text-white"><i class="bi bi-dash-lg me-2"></i>Gastos</a></li>
-                    <li><a href="balance.html" class="nav-link nav-balance"><i class="bi bi-bar-chart me-2"></i>Balance</a></li>
+            <nav aria-label="Navegación principal">
+                <ul class="nav nav-pills flex-column mb-auto lista-navegacion">
+                    <li class="nav-item"><a href="home.html" class="nav-link text-white"><i
+                                class="bi bi-house me-2"></i>Inicio</a></li>
+                    <li>
+                        <a class="nav-link text-white d-flex justify-content-between align-items-center enlace-registros"
+                            data-bs-toggle="collapse" href="#submenuRegistros" role="button" aria-expanded="true">
+                            <span><i class="bi bi-currency-dollar me-2"></i>Registros</span>
+                            <i class="bi bi-caret-down-fill"></i>
+                        </a>
+                        <div class="collapse show" id="submenuRegistros">
+                            <ul class="nav flex-column ms-4 mt-2 submenu-registros">
+                                <li><a href="ingresos.html" class="nav-link text-white"><i
+                                            class="bi bi-plus-lg me-2"></i>Ingresos</a></li>
+                                <li><a href="gastos.html" class="nav-link text-white"><i
+                                            class="bi bi-dash-lg me-2"></i>Gastos</a></li>
+                                <li><a href="balance.html" class="nav-link nav-balance"><i
+                                            class="bi bi-bar-chart me-2"></i>Balance</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li><a href="metas-ahorro.html" class="nav-link text-white"><i
+                                class="bi bi-pie-chart me-2"></i>Metas de ahorro</a></li>
+                    <li>
+                        <a class="nav-link text-white d-flex justify-content-between align-items-center enlace-visualizacion"
+                            data-bs-toggle="collapse" href="#submenuVisualizacion" role="button" aria-expanded="false">
+                            <span><i class="bi bi-graph-up me-2"></i>Visualización</span>
+                            <i class="bi bi-caret-down-fill"></i>
+                        </a>
+                        <div class="collapse" id="submenuVisualizacion">
+                            <ul class="nav flex-column ms-4 mt-2 submenu-visualizacion">
+                                <li><a href="vista-categorias.html" class="nav-link text-white"><i
+                                            class="bi bi-pie-chart me-2"></i>Categorías</a></li>
+                                <li><a href="visualizacion.html" class="nav-link text-white"><i
+                                            class="bi bi-bar-chart me-2"></i>Resumen</a></li>
+                                <li><a href="historial-movimientos.html" class="nav-link text-white"><i
+                                            class="bi bi-clock-history me-2"></i>Historial</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li><a href="#" class="nav-link text-white"><i class="bi bi-box-arrow-left me-2"></i>Cerrar
+                            sesión</a></li>
                 </ul>
-                </div>
-            </li>
-            <li><a href="metas-ahorro.html" class="nav-link text-white"><i class="bi bi-pie-chart me-2"></i>Metas de ahorro</a></li>
-            <li>
-                <a class="nav-link text-white d-flex justify-content-between align-items-center enlace-visualizacion" data-bs-toggle="collapse" href="#submenuVisualizacion" role="button" aria-expanded="false">
-                <span><i class="bi bi-graph-up me-2"></i>Visualización</span>
-                <i class="bi bi-caret-down-fill"></i>
-                </a>
-                <div class="collapse" id="submenuVisualizacion">
-                <ul class="nav flex-column ms-4 mt-2 submenu-visualizacion">
-                    <li><a href="vista-categorias.html" class="nav-link text-white"><i class="bi bi-pie-chart me-2"></i>Categorías</a></li>
-                    <li><a href="visualizacion.html" class="nav-link text-white"><i class="bi bi-bar-chart me-2"></i>Resumen</a></li>
-                    <li><a href="historial-movimientos.html" class="nav-link text-white"><i class="bi bi-clock-history me-2"></i>Historial</a></li>
-                </ul>
-                </div>
-            </li>
-            <li><a href="#" class="nav-link text-white"><i class="bi bi-box-arrow-left me-2"></i>Cerrar sesión</a></li>
-            </ul>
-        </nav>
+            </nav>
         </aside>
 
         <!-- SECCIÓN PRINCIPAL -->
@@ -78,9 +93,15 @@
                             <h1 class="balance-title">Balance</h1>
                         </div>
                         <div class="nav nav-pills mt-3 budget-nav" id="balanceTabs" role="tablist">
-                            <a href="#total" class="nav-option active" id="total-tab" data-bs-toggle="pill" data-bs-target="#total-content" role="tab" aria-controls="total-content" aria-selected="true">Total</a>
-                            <a href="#presupuesto-content" class="nav-option" id="presupuesto-tab" data-bs-toggle="pill" data-bs-target="#presupuesto-content" role="tab" aria-controls="presupuesto-content" aria-selected="false">Presupuesto</a>
-                            <a href="#categoria" class="nav-option" id="categoria-tab" data-bs-toggle="pill" data-bs-target="#categoria-content" role="tab" aria-controls="categoria-content" aria-selected="false">Categoría</a>
+                            <a href="#total" class="nav-option active" id="total-tab" data-bs-toggle="pill"
+                                data-bs-target="#total-content" role="tab" aria-controls="total-content"
+                                aria-selected="true">Total</a>
+                            <a href="#presupuesto-content" class="nav-option" id="presupuesto-tab" data-bs-toggle="pill"
+                                data-bs-target="#presupuesto-content" role="tab" aria-controls="presupuesto-content"
+                                aria-selected="false">Presupuesto</a>
+                            <a href="#categoria" class="nav-option" id="categoria-tab" data-bs-toggle="pill"
+                                data-bs-target="#categoria-content" role="tab" aria-controls="categoria-content"
+                                aria-selected="false">Categoría</a>
                         </div>
                         <script>
                             // JavaScript for switching tabs with custom behavior
@@ -88,24 +109,24 @@
                             const tabContents = document.querySelectorAll('.tab-pane');
 
                             tabs.forEach(tab => {
-                            tab.addEventListener('click', function() {
-                                // Remove active class from all tabs and content
-                                tabs.forEach(t => t.classList.remove('active'));
-                                tabContents.forEach(content => content.classList.remove('show', 'active'));
+                                tab.addEventListener('click', function () {
+                                    // Remove active class from all tabs and content
+                                    tabs.forEach(t => t.classList.remove('active'));
+                                    tabContents.forEach(content => content.classList.remove('show', 'active'));
 
-                                // Add active class to the clicked tab and corresponding content
-                                tab.classList.add('active');
-                                const targetContent = document.querySelector(tab.getAttribute('data-bs-target'));
-                                targetContent.classList.add('show', 'active');
-                                // Update hash for deep linking
-                                if (tab.getAttribute('data-bs-target')) {
-                                    window.location.hash = tab.getAttribute('data-bs-target');
-                                }
-                            });
+                                    // Add active class to the clicked tab and corresponding content
+                                    tab.classList.add('active');
+                                    const targetContent = document.querySelector(tab.getAttribute('data-bs-target'));
+                                    targetContent.classList.add('show', 'active');
+                                    // Update hash for deep linking
+                                    if (tab.getAttribute('data-bs-target')) {
+                                        window.location.hash = tab.getAttribute('data-bs-target');
+                                    }
+                                });
                             });
 
                             // Activate tab based on hash on page load
-                            document.addEventListener('DOMContentLoaded', function() {
+                            document.addEventListener('DOMContentLoaded', function () {
                                 if (window.location.hash) {
                                     const hash = window.location.hash;
                                     // Only match hashes that correspond to tab content
@@ -121,17 +142,19 @@
                             <i class="bi bi-exclamation-circle-fill"></i>
                             <div class="alert-text">
                                 <strong>¡Advertencia!</strong>
-                                <p>No se han registrado ingresos, gastos o movimientos. ¿Desearía realizar algún movimiento?</p>
+                                <p>No se han registrado ingresos, gastos o movimientos. ¿Desearía realizar algún
+                                    movimiento?</p>
                             </div>
                         </div>
 
                         <!-- BALANCE TOTAL -->
-                        <div class="tab-pane fade show active" id="total-content" role="tabpanel" aria-labelledby="total-tab">
+                        <div class="tab-pane fade show active" id="total-content" role="tabpanel"
+                            aria-labelledby="total-tab">
                             <section class="total-balance">
                                 <div class="balance-average">
                                     <div class="user-profile hide-when-zero">
                                         <img src="assets/img/user-avatar.png" alt="User Avatar">
-                                    </div>      
+                                    </div>
 
                                     <!-- Tarjeta de Saldo Actual -->
                                     <div class="saldo-card" id="saldoCardTotal">
@@ -144,13 +167,14 @@
 
                                         <div class="saldo-footer">
                                             <small class="saldo-date"></small>
-                                            <button class="btn btn-link" id="toggle-saldo-total">Ocultar saldo <i class="bi bi-eye-slash"></i></button>
-                                        </div>            
-                                        
+                                            <button class="btn btn-link" id="toggle-saldo-total">Ocultar saldo <i
+                                                    class="bi bi-eye-slash"></i></button>
+                                        </div>
+
 
                                     </div>
                                 </div>
-                            
+
                                 <div class="cards-row hide-when-zero">
                                     <div class="card" id="mayorIngresoCard">
                                         <h5>Mayor ingreso</h5>
@@ -163,7 +187,8 @@
                                         <h6>S/. 1,700.00</h6>
                                     </div>
                                     <div class="card icon" id="mayoresLinesCard">
-                                        <img src="assets/icons/profit-lines.png" alt="Profit Lines Icon" class="card-icon">
+                                        <img src="assets/icons/profit-lines.png" alt="Profit Lines Icon"
+                                            class="card-icon">
                                     </div>
                                 </div>
 
@@ -186,10 +211,12 @@
                         </div>
 
                         <!-- PRESUPUESTO -->
-                        <div class="tab-pane fade" id="presupuesto-content" role="tabpanel" aria-labelledby="presupuesto-tab">
+                        <div class="tab-pane fade" id="presupuesto-content" role="tabpanel"
+                            aria-labelledby="presupuesto-tab">
                             <section class="presupuesto-balance">
                                 <div class="presupuesto-header">
-                                    <button class="btn nueva-meta-btn btn-warning fw-bold" onclick="window.location.href='formulario-presupuesto.html'">
+                                    <button class="btn nueva-meta-btn btn-warning fw-bold" id="btnAgregarPresupuesto"
+                                        type="button">
                                         + Nuevo presupuesto <span class="nueva-meta-icon"></span>
                                     </button>
                                 </div>
@@ -250,12 +277,13 @@
                         </div>
 
                         <!-- BALANCE POR CATEGORÍA -->
-                        <div class="tab-pane fade" id="categoria-content" role="tabpanel" aria-labelledby="categoria-tab">
+                        <div class="tab-pane fade" id="categoria-content" role="tabpanel"
+                            aria-labelledby="categoria-tab">
                             <section class="categoria-balance">
                                 <div class="balance-average">
                                     <div class="user-profile hide-when-zero">
                                         <img src="assets/img/user-avatar.png" alt="User Avatar">
-                                    </div>      
+                                    </div>
 
                                     <!-- Tarjeta de Saldo Actual -->
                                     <div class="saldo-card" id="saldoCardCategoria">
@@ -268,7 +296,8 @@
 
                                         <div class="saldo-footer">
                                             <small class="saldo-date">Abril del 2025</small>
-                                            <button class="btn btn-link" id="toggle-saldo-categoria">Ocultar saldo <i class="bi bi-eye-slash"></i></button>
+                                            <button class="btn btn-link" id="toggle-saldo-categoria">Ocultar saldo <i
+                                                    class="bi bi-eye-slash"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -298,8 +327,18 @@
                         </div>
 
                     </div>
-                    
+
                 </div>
+                <!-- Toast de éxito Presupuesto (dentro de main) -->
+                <template id="toast-presupuesto-template">
+                    <div
+                        class="toast-exito shadow rounded d-flex align-items-center justify-content-between p-3 notificacion-toast">
+                        <div class="check-circle rounded-circle me-3 d-flex justify-content-center align-items-center">
+                            <i class="bi bi-check-lg"></i>
+                        </div>
+                        <span class="text-white fw-bold">¡Presupuesto registrado exitosamente!</span>
+                    </div>
+                </template>
             </main>
 
             <!-- FOOTER -->
@@ -309,46 +348,50 @@
         </div>
     </div>
 
+    <!-- Modal para agregar presupuesto -->
+    <div class="modal fade" id="modalAgregarPresupuesto" tabindex="-1" aria-labelledby="modalAgregarPresupuestoLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="formAgregarPresupuesto" autocomplete="off">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalAgregarPresupuestoLabel">Registrar presupuesto</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Selecciona la categoría</label>
+                            <select class="form-select campo" id="presupuesto-categoria">
+                                <option value="">Selecciona la categoría</option>
+                                <option>Transporte</option>
+                                <option>Comida</option>
+                                <option>Salud</option>
+                                <option>Educación</option>
+                            </select>
+                            <div class="text-danger mensaje-error" id="error-presupuesto-categoria"></div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label">Monto del presupuesto</label>
+                            <input type="number" min="0" class="form-control campo" id="presupuesto-monto" />
+                            <div class="text-danger mensaje-error" id="error-presupuesto-monto"></div>
+                        </div>
+                        <div class="alert alert-primary d-none" id="mensaje-exito-presupuesto">
+                            <i class="bi bi-check-circle-fill me-2"></i> ¡Presupuesto registrado exitosamente!
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-warning w-100 fw-bold">Registrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Load presupuestos from localStorage and render them
-        function renderPresupuestosFromStorage() {
-            const tableBody = document.getElementById('presupuestoTableBody');
-            // Keep the initial hardcoded rows
-            // Remove any rows previously added by JS
-            Array.from(tableBody.querySelectorAll('tr[data-storage="true"]')).forEach(tr => tr.remove());
-
-            const stored = localStorage.getItem('presupuestos');
-            if (stored) {
-                const presupuestos = JSON.parse(stored);
-                presupuestos.forEach(p => {
-                    const row = document.createElement('tr');
-                    row.setAttribute('data-storage', 'true');
-                    row.innerHTML = `
-                        <td>${p.categoria}</td>
-                        <td>S/. ${Number(p.limite).toLocaleString('es-PE', {minimumFractionDigits: 2})}</td>
-                        <td>S/. ${Number(p.actual).toLocaleString('es-PE', {minimumFractionDigits: 2})}</td>
-                    `;
-                    tableBody.appendChild(row);
-                });
-            }
-        }
-
-        // Call on page load
-        renderPresupuestosFromStorage();
-
-        // --- NUEVO: Activar pestaña "Presupuesto" si el hash es #presupuesto-content ---
-        document.addEventListener('DOMContentLoaded', function() {
-            if (window.location.hash === '#presupuesto-content') {
-                // Activar la pestaña "Presupuesto"
-                const tab = document.querySelector('.nav-option#presupuesto-tab');
-                if (tab) tab.click();
-            }
-        });
-    </script>
     <script src="scripts/data.js"></script>
     <script src="scripts/balance-alerts.js"></script>
     <script src="scripts/balance.js"></script>
 </body>
+
 </html>

@@ -230,3 +230,101 @@ document.addEventListener('DOMContentLoaded', function () {
     
 
 });
+
+// Renderizar presupuestos desde localStorage
+function renderPresupuestosFromStorage() {
+    const tableBody = document.getElementById('presupuestoTableBody');
+    // Elimina filas previas agregadas por JS
+    Array.from(tableBody.querySelectorAll('tr[data-storage="true"]')).forEach(tr => tr.remove());
+
+    const stored = localStorage.getItem('presupuestos');
+    if (stored) {
+        const presupuestos = JSON.parse(stored);
+        presupuestos.forEach(p => {
+            const row = document.createElement('tr');
+            row.setAttribute('data-storage', 'true');
+            row.innerHTML = `
+                <td>${p.categoria}</td>
+                <td>S/. ${Number(p.limite).toLocaleString('es-PE', { minimumFractionDigits: 2 })}</td>
+                <td>S/. ${Number(p.actual).toLocaleString('es-PE', { minimumFractionDigits: 2 })}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+    }
+}
+
+// Mostrar toast de éxito para presupuesto
+function mostrarToastPresupuesto() {
+    const prev = document.querySelector('.toast-exito');
+    if (prev) prev.remove();
+    const template = document.getElementById('toast-presupuesto-template');
+    if (!template) return;
+    const toastElement = template.content.cloneNode(true).children[0];
+    // Insertar el toast dentro de balance-container
+    const container = document.querySelector('.balance-container');
+    if (container) {
+        container.appendChild(toastElement);
+    } else {
+        document.body.appendChild(toastElement);
+    }
+    setTimeout(() => toastElement.remove(), 3000);
+}
+
+// Inicialización de presupuestos y eventos del modal
+
+document.addEventListener('DOMContentLoaded', function () {
+    renderPresupuestosFromStorage();
+
+    // Activar pestaña "Presupuesto" si el hash es #presupuesto-content
+    if (window.location.hash === '#presupuesto-content') {
+        const tab = document.querySelector('.nav-option#presupuesto-tab');
+        if (tab) tab.click();
+    }
+
+    // Lógica del modal de presupuesto
+    const btnAgregarPresupuesto = document.getElementById('btnAgregarPresupuesto');
+    const modalAgregarPresupuesto = new bootstrap.Modal(document.getElementById('modalAgregarPresupuesto'));
+    const formAgregarPresupuesto = document.getElementById('formAgregarPresupuesto');
+    const exitoPresupuesto = document.getElementById('mensaje-exito-presupuesto');
+
+    btnAgregarPresupuesto.addEventListener('click', function () {
+        formAgregarPresupuesto.reset();
+        document.querySelectorAll('#modalAgregarPresupuesto .mensaje-error').forEach(el => el.textContent = '');
+        exitoPresupuesto.classList.add('d-none');
+        modalAgregarPresupuesto.show();
+    });
+
+    formAgregarPresupuesto.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const categoria = document.getElementById('presupuesto-categoria');
+        const monto = document.getElementById('presupuesto-monto');
+        let errores = 0;
+        document.getElementById('error-presupuesto-categoria').textContent = '';
+        document.getElementById('error-presupuesto-monto').textContent = '';
+        exitoPresupuesto.classList.add('d-none');
+        if (!categoria.value.trim()) {
+            document.getElementById('error-presupuesto-categoria').textContent = 'Selecciona una categoría';
+            errores++;
+        }
+        if (!monto.value.trim() || isNaN(monto.value) || Number(monto.value) <= 0) {
+            document.getElementById('error-presupuesto-monto').textContent = 'El monto es obligatorio y debe ser mayor a 0';
+            errores++;
+        }
+        if (errores === 0) {
+            // Guardar en localStorage
+            const stored = localStorage.getItem('presupuestos');
+            let presupuestos = stored ? JSON.parse(stored) : [];
+            presupuestos.push({
+                categoria: categoria.value,
+                limite: Number(monto.value),
+                actual: 0
+            });
+            localStorage.setItem('presupuestos', JSON.stringify(presupuestos));
+            // Actualizar tabla
+            renderPresupuestosFromStorage();
+            // Mostrar toast
+            mostrarToastPresupuesto();
+            modalAgregarPresupuesto.hide();
+        }
+    });
+});
