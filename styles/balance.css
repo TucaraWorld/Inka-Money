@@ -517,3 +517,33 @@
 }
 
 
+.toast-exito {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  background-color: var(--color-primario);
+  color: white;
+  max-width: 450px;
+  width: 90%;
+}
+
+.toast-exito .check-circle {
+  width: 32px;
+  height: 32px;
+  background-color: white;
+  color: var(--color-primario);
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.toast-exito .check-circle i {
+  color: var(--color-primario);
+}
+
+.toast-exito span {
+  color: white;
+}
