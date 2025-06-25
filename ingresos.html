@@ -109,6 +109,19 @@
             <button id="applyDateFilter" class="btn btn-primary">Aplicar filtro</button>
         </div>
 
+        <!-- Selector de categoría (oculto por defecto, tipo mini formulario) -->
+        <form class="mb-4" style="display: none;" id="categoriaSelect">
+          <label class="form-label fw-bold">Filtrar por categoría:</label>
+          <div>
+            <select class="form-select mb-2" id="categoriaFiltro">
+            </select>
+            <div class="d-flex gap-2">
+              <button type="submit" class="btn btn-primary btn-sm">Aplicar</button>
+              <button type="button" class="btn btn-secondary btn-sm" id="cancelarCategoriaFiltro">Cancelar</button>
+            </div>
+          </div>
+        </form>
+
         <div id="noRecordsWarning" class="alert alert-info" style="display: none;">
             <i class="bi bi-exclamation-circle-fill"></i>
             <div class="alert-text">

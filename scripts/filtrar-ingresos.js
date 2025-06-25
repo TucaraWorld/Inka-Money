@@ -1,11 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
   const btnFiltrarPorFecha = document.getElementById('btnFiltrarPorFecha');
+  const btnFiltrarPorCategoria = document.getElementById('btnFiltrarPorCategoria');
   const calendarContainer = document.getElementById('calendarContainer');
   const inputStartDate = document.getElementById('startDate');
   const inputEndDate = document.getElementById('endDate');
   const btnApplyDateFilter = document.getElementById('applyDateFilter');
   const btnCloseCalendar = document.getElementById('closeCalendar');
   const tagFiltrarFechas = document.getElementById('tagFiltrarFechas');
+  const tagFiltrarCategorias = document.getElementById('tagFiltrarCategorias');
 
   //Mostrar el calendario cuando se haga clic en el botón de filtro
   btnFiltrarPorFecha.addEventListener('click', function() {
@@ -114,4 +116,107 @@ document.addEventListener('DOMContentLoaded', function() {
     const año = date.getFullYear();
     return `${dia}/${mes}/${año}`;
   }
+
+  
+
+  const categoriaSelect = document.getElementById('categoriaSelect');
+  const categoriaFiltro = document.getElementById('categoriaFiltro');
+  const cancelarCategoriaFiltro = document.getElementById('cancelarCategoriaFiltro');
+
+  btnFiltrarPorCategoria.addEventListener('click', function() {
+    // Limpiar opciones previas, dejar solo la opción "Todas las categorías"
+    categoriaFiltro.innerHTML = '<option value=""></option>';
+    // Agregar opciones dinámicamente si tienes un array de categorías
+    categorias.forEach(categoria => {
+        // Si quieres filtrar por usuario activo, descomenta la siguiente línea y asegúrate de tener idUsuarioActivo definido
+        if (categoria.user_id === parseInt(idUsuarioActivo)) {
+            const option = document.createElement('option');
+            option.value = categoria.id;
+            option.textContent = categoria.nombre;
+            categoriaFiltro.appendChild(option);
+        }
+    });
+    // Mostrar el formulario
+    categoriaSelect.style.display = 'block';
+  });
+
+  if (categoriaSelect && categoriaFiltro) {
+    categoriaSelect.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const categoriaId = categoriaFiltro.value;
+
+      console.log("Id: ", categoriaId);
+
+      filtroPorCategoria(1, categoriaId);
+      updateCategoriaFilterButtonText(categoriaId);
+      categoriaSelect.classList.add('visually-hidden');
+    });
+      
+
+      if (cancelarCategoriaFiltro) {
+        cancelarCategoriaFiltro.addEventListener('click', function() {
+        categoriaSelect.classList.add('visually-hidden');
+        tagFiltrarCategorias.textContent = "Todas las categorías";
+        renderIngresos(paginaActual);
+        renderPaginacion();
+        });
+      }
+      // Mostrar el formulario correctamente quitando la clase visually-hidden
+      btnFiltrarPorCategoria.addEventListener('click', function() {
+        categoriaSelect.classList.remove('visually-hidden');
+      });
+  }
+  
+
+  function filtroPorCategoria(pagina = 1, categoriaId) {
+    const ingresosPagina = obtenerPaginaFiltroCategoria(pagina, categoriaId);
+    const ingresosBody = document.getElementById('cuerpoTablaIngresos');
+
+    ingresosBody.innerHTML = '';
+
+    ingresosBody.innerHTML = ingresosPagina.map(ingreso => `
+        <tr>
+            <td><i class="bi bi-pencil editar-fila" style="cursor:pointer"></i></td>
+            <td>${ingreso.fecha}</td>
+            <td>${categorias.find(cat => cat.id === ingreso.categoria)?.nombre ?? 'Sin categoría'}</td>
+            <td>S/. ${ingreso.monto.toFixed(2)}</td>
+            <td>${ingreso.descripcion}</td>
+            <td>${ingreso.frecuencia}</td>
+            <td><i class="bi bi-trash eliminar-fila" style="cursor: pointer;"></i></td>
+        </tr>
+    `).join('');
+
+    const warningMessage = document.getElementById('noRecordsWarning');
+    if (ingresosPagina.length === 0) {
+      warningMessage.querySelector('p').textContent = 'No se han registrado ingresos en la categoría seleccionada, ¿desearía registrar algún ingreso? Haga clic en "Agregar ingreso".';
+      warningMessage.style.display = 'block';
+    } else {
+      warningMessage.style.display = 'none';
+    }
+
+    renderPaginacion(ingresosPagina);
+  }
+
+  function obtenerPaginaFiltroCategoria(pagina, categoriaId) {
+    const todosLosIngresos = getIngresos();
+
+    // Filtrar por categoría si se proporciona
+    const ingresosFiltrados = categoriaId != "" ? todosLosIngresos.filter(ingreso => ingreso.categoria === parseInt(categoriaId)) : todosLosIngresos;
+
+
+    const inicio = (pagina - 1) * registrosPorPagina;
+    const fin = pagina * registrosPorPagina;
+    return ingresosFiltrados.slice(inicio, fin);
+  }
+
+  function updateCategoriaFilterButtonText(categoriaId) {
+    let filterText = 'Todas las categorías';
+    if (categoriaId && categoriaId !== '') {
+      console.log("Cats: ", categorias);
+      console.log("CATID: ", categoriaId);
+      filterText = "Categoría: " + categorias.find(cat => cat.id === parseInt(categoriaId)).nombre;
+    }
+    tagFiltrarCategorias.textContent = filterText;
+  }
+
 });
