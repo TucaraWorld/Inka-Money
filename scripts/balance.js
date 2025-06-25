@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
         saldoAmountTotal.textContent = `S/. ${saldo.toFixed(2)}`;
         saldoAmountCategoria.textContent = `S/. ${saldo.toFixed(2)}`;
 
-        console.log(`Saldo Total: S/. ${saldo.toFixed(2)}`);
+        //console.log(`Saldo Total: S/. ${saldo.toFixed(2)}`);
         return saldo;
     }
 
@@ -151,11 +151,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const totalGastos = gastos.reduce((total, gasto) => gasto.categoria === categoriaId ? total + gasto.monto : total + 0, 0);
 
         const saldo = totalIngresos - totalGastos;
-
-        console.log(`totalIngresos: ${totalIngresos}`);
-        console.log(`totalGastos: ${totalGastos}`);
-        console.log(`Saldo: ${saldo}`);
-        console.log(`Saldo Total: S/. ${saldo.toFixed(2)}`);
         return `S/. ${saldo.toFixed(2)}`;
     }
 
@@ -163,7 +158,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const regCategorias = getCategorias();   
         if (regCategorias.length >= 1) {
             const saldoCategoria1 = document.getElementById('categoriaCard1');
-            console.log('Saldo cat 1: ', regCategorias[0]);
             saldoCategoria1.querySelector('h6').textContent = calcularSaldoCategoria(regCategorias[0].id);
             saldoCategoria1.querySelector('h5').textContent = regCategorias[0].nombre;
         }
@@ -172,7 +166,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         if (regCategorias.length >= 2) {
             const saldoCategoria2 = document.getElementById('categoriaCard2');
-            console.log('Saldo cat 2: ', regCategorias[1]);
             saldoCategoria2.querySelector('h6').textContent = calcularSaldoCategoria(regCategorias[1].id);
             saldoCategoria2.querySelector('h5').textContent = regCategorias[1].nombre;
         }

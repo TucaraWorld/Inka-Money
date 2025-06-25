@@ -22,8 +22,8 @@ function renderGastos(pagina = 1) {
     `).join('');
 }
 
-function renderPaginacionGastos() {
-    const totalPaginas = Math.ceil(getGastos().length / registrosPorPagina);
+function renderPaginacionGastos(regIngresos = getGastos()) {
+    const totalPaginas = Math.ceil(regIngresos.length / registrosPorPagina);
     const paginacion = document.querySelector('.pagination');
     paginacion.innerHTML = '';
 
