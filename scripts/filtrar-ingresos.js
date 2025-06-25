@@ -128,7 +128,6 @@ document.addEventListener('DOMContentLoaded', function() {
     categoriaFiltro.innerHTML = '<option value=""></option>';
     // Agregar opciones dinámicamente si tienes un array de categorías
     categorias.forEach(categoria => {
-        // Si quieres filtrar por usuario activo, descomenta la siguiente línea y asegúrate de tener idUsuarioActivo definido
         if (categoria.user_id === parseInt(idUsuarioActivo)) {
             const option = document.createElement('option');
             option.value = categoria.id;
