@@ -13,24 +13,18 @@
   <link rel="icon" type="image/png" href="assets/logo.png">
   <!-- Custom CSS -->
   <link rel="stylesheet" href="styles/styles.css">
+  <link rel="stylesheet" href="styles/landing.css">
 </head>
-<body style="background: #f8f9fa;">
-  <div class="container py-5">
-    <div class="shadow rounded-4 border border-3" style="border-color: #0a2c53 !important; background: #fff;">
-      <header class="text-center mb-5 pt-5">
-        <div class="mx-auto mb-3" style="max-width: 420px;">
-          <div style="background: #0a2c53; border-radius: 1.5rem; padding: 2rem 1rem 1.5rem 1rem; box-shadow: 0 2px 16px #0a2c5322;">
-            <img src="assets/logo.png" alt="Logo Inka Money" width="80" height="80" class="mb-3">
-            <h1 class="display-4 fw-bold mb-0" style="color: #fff;">Inka Money</h1>
-          </div>
-        </div>
-        <p class="lead text-secondary mt-4">Tu aliado para la inclusión financiera y la gestión inteligente de tu dinero.</p>
-        <a href="home.html" class="btn btn-warning fw-bold rounded-pill px-4 mt-3" style="font-size: 1.2rem;">
-          Entrar a la aplicación <i class="bi bi-arrow-right ms-2"></i>
-        </a>
-      </header>
-      <section class="mb-5 px-4">
-        <h2 class="h4 fw-bold mb-3">¿Qué es Inka Money?</h2>
+<body class="landing-bg">
+  <div class="d-flex justify-content-center align-items-center min-vh-100">
+    <div class="landing-card shadow rounded-4 border border-3">
+      <div class="text-center mb-4 pt-4">
+        <img src="assets/logo.png" alt="Logo Inka Money" width="72" height="72" class="mb-3">
+        <h2 class="display-5 fw-bold mb-2" style="color: #0a2c53;">Bienvenido a <span style="color: #FFD100;">Inka Money</span></h2>
+        <p class="lead text-secondary mt-2">Tu aliado para la inclusión financiera y la gestión inteligente de tu dinero.</p>
+      </div>
+      <section class="mb-4 px-4">
+        <h2 class="h5 fw-bold mb-3" style="color: #FFD100;">¿Qué es Inka Money?</h2>
         <p>
           Inka Money es una fintech propuesta por estudiantes de la carrera de Ciencias de la Computación en la Universidad Peruana de Ciencias Aplicadas (UPC). El startup tiene como objetivo reducir la brecha de inclusión financiera en el Perú, brindando soluciones digitales simples y accesibles para mejorar la gestión financiera personal.
         </p>
@@ -44,12 +38,12 @@
           A largo plazo, Inka Money aspira a incorporar funcionalidades más avanzadas, como recomendaciones personalizadas y reconocimiento de patrones de consumo, manteniendo siempre una experiencia accesible, clara y adaptada al contexto del usuario que le brinde una asistencia financiera inteligente, accesible y personalizable.
         </p>
       </section>
-      <section class="mb-5 px-4">
+      <section class="mb-4 px-4">
         <div class="row g-4">
           <div class="col-md-6">
-            <div class="card shadow-sm h-100">
+            <div class="card shadow-sm h-100 border-0 rounded-3">
               <div class="card-body">
-                <h3 class="h5 fw-bold mb-3" style="color: #FFD100;">Misión</h3>
+                <h3 class="h6 fw-bold mb-2" style="color: #FFD100;">Misión</h3>
                 <p>
                   Brindar acceso simple, útil y personalizado a herramientas digitales que permitan a jóvenes y trabajadores con ingresos variables organizar su economía personal, fomentar el ahorro y tomar mejores decisiones financieras, a través de soluciones accesibles y adaptadas a su realidad.
                 </p>
@@ -57,9 +51,9 @@
             </div>
           </div>
           <div class="col-md-6">
-            <div class="card shadow-sm h-100">
+            <div class="card shadow-sm h-100 border-0 rounded-3">
               <div class="card-body">
-                <h3 class="h5 fw-bold mb-3" style="color: #FFD100;">Visión</h3>
+                <h3 class="h6 fw-bold mb-2" style="color: #FFD100;">Visión</h3>
                 <p>
                   Ser una startup reconocida por impulsar la inclusión financiera en el Perú, facilitando que más personas puedan desarrollar hábitos económicos saludables mediante tecnología comprensible, cercana y confiable.
                 </p>
@@ -68,7 +62,12 @@
           </div>
         </div>
       </section>
-      <footer class="text-center mt-5 text-secondary pb-4">
+      <div class="d-flex justify-content-end px-4 pb-4">
+        <a href="inicio-sesion-correo.html" class="btn btn-warning btn-lg fw-bold rounded-pill px-5 entrar-btn">
+          Entrar <i class="bi bi-arrow-right ms-2"></i>
+        </a>
+      </div>
+      <footer class="text-center mt-2 text-white py-3 rounded-bottom landing-footer">
         <small>Inka Money &copy; 2025. Todos los derechos reservados.</small>
       </footer>
     </div>

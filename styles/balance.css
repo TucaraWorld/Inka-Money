@@ -206,53 +206,6 @@
   color: var(--color-primario);
 }
 
-/* Graficos */
-.graficos-balance .card-title {
-  font-size: 1.5rem;
-  text-align: left;
-  color: var(--color-primario);
-}
-
-.graficos-balance .card {
-  flex: 0.8;
-  padding: 1.5rem;
-  margin-left: 2rem;
-  width: 48%;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  display: flex;
-  justify-content: space-between;
-  align-items: stretch;
-  text-align: left;
-}
-
-.graficos-balance .card-chart {
-  background-color: #F2F2F2;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  align-items: center;
-  color: var(--color-primario);
-  padding: 1.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: stretch;
-  text-align: left;
-  border: #d1d1d1 1px solid;
-}
-
-.graficos-balance .card-body {
-  padding: 1rem;
-}
-
-.graficos-balance .card-title {
-  font-weight: bold;
-}
-
-/* Reducir altura del gráfico */
-#averageBalanceChart, #incomeExpenseChart, #categoryBalanceChart {
-  width: 100% !important;
-  height: 100% !important;
-}
-
 /* Estilo para la alerta de error */
 
 #noRecordsWarning {
@@ -376,26 +329,6 @@
     width: 100%;
     margin-bottom: 1.5rem;
   }
-
-  .graficos-balance .card-body canvas {
-    width: 100% !important;
-    height: auto !important;
-  }
-
-  .graficos-balance .card-body {
-    /*background-color: #F2F2F2;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    align-items: center;
-    color: var(--color-primario);*/
-    padding: 0 0 0 0;
-  }
-  .graficos-balance .card {
-    flex: 1;
-    margin-left: 0;
-    margin-top: 1rem;
-    width: 100%;
-  }
 }
 
 /* Media Queries: Ajustes para pantallas muy pequeñas */
@@ -418,11 +351,6 @@
     margin-bottom: 1rem;
   }
 
-  /* Hacer los gráficos más pequeños en pantallas pequeñas */
-  #averageBalanceChart, #incomeExpenseChart, #categoryBalanceChart {
-    height: 250px !important;
-  }
-
   .saldo-title {
     font-size: 1.8rem;
   }
@@ -439,14 +367,12 @@
 /* Nueva meta button */
 .nueva-meta-btn {
     border-radius: 12px;
-    border: 1px solid #000; /* Siempre mostrar el borde */
     display: flex;
     margin-left: auto;
 }
 
 .nueva-meta-btn:hover {
   border-radius: 12px;
-  border: 1px solid #000; /* Siempre mostrar el borde */
   text-decoration: underline;
   margin-left: auto;
 }
@@ -591,3 +517,33 @@
 }
 
 
+.toast-exito {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  background-color: var(--color-primario);
+  color: white;
+  max-width: 450px;
+  width: 90%;
+}
+
+.toast-exito .check-circle {
+  width: 32px;
+  height: 32px;
+  background-color: white;
+  color: var(--color-primario);
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.toast-exito .check-circle i {
+  color: var(--color-primario);
+}
+
+.toast-exito span {
+  color: white;
+}

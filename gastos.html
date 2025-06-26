@@ -67,7 +67,7 @@
               </ul>
             </div>
           </li>
-          <li><a href="#" class="nav-link text-white"><i class="bi bi-box-arrow-left me-2"></i>Cerrar sesión</a></li>
+          <li><a href="index.html" class="nav-link text-white"><i class="bi bi-box-arrow-left me-2"></i>Cerrar sesión</a></li>
         </ul>
       </nav>
     </aside>
@@ -79,10 +79,12 @@
         <!-- TÍTULO Y BOTÓN -->
         <header class="d-flex justify-content-between align-items-center mb-4 encabezado-principal">
           <h2>Gastos</h2>
-          <a href="formulario-gasto.html" class="btn btn-warning fw-bold rounded-pill px-4 boton-agregar-gasto">
+          <a class="btn btn-warning fw-bold rounded-pill px-4 boton-agregar-gasto" 
+            id="btnAgregarGasto">
             + Agregar gasto
           </a>
         </header>
+
 
         <!-- FILTROS RÁPIDOS -->
         <section class="mb-3 d-flex gap-2 flex-wrap align-items-center filtros-rapidos" aria-label="Filtros rápidos">
@@ -109,6 +111,18 @@
           <button id="applyDateFilter" class="btn btn-primary">Aplicar filtro</button>
         </div>
 
+        <!-- Selector de categoría (oculto por defecto, tipo mini formulario) -->
+        <form class="mb-4" style="display: none;" id="categoriaSelect">
+          <label class="form-label fw-bold">Filtrar por categoría:</label>
+          <div>
+            <select class="form-select mb-2" id="categoriaFiltro">
+            </select>
+            <div class="d-flex gap-2">
+              <button type="submit" class="btn btn-primary btn-sm">Aplicar</button>
+              <button type="button" class="btn btn-secondary btn-sm" id="cancelarCategoriaFiltro">Cancelar</button>
+            </div>
+          </div>
+        </form>
 
         <div id="noRecordsWarning" class="alert alert-info" style="display: none;">
             <i class="bi bi-exclamation-circle-fill"></i>
@@ -118,7 +132,7 @@
             </div>
         </div>
 
-        <!-- TABLA DE GASTOS -->
+         <!-- TABLA DE GASTOS -->
         <section class="table-responsive shadow-sm rounded bg-white contenedor-tabla" aria-label="Tabla de gastos">
           <table class="table table-bordered mb-0" id="tablaGastos">
             <thead class="table-light text-center">
@@ -130,42 +144,8 @@
                 <th></th>
               </tr>
             </thead>
-            <tbody class="text-center align-middle cuerpo-tabla"  id="cuerpoTablaGastos">
-              <tr>
-                <td><i class="bi bi-pencil"></i></td>
-                <td>20/04/2025</td>
-                <td>Comida</td>
-                <td>S/. 50.00</td>
-                <td><i class="bi bi-trash eliminar-fila" style="cursor: pointer;"></i></td>
-              </tr>
-              <tr>
-                <td><i class="bi bi-pencil"></i></td>
-                <td>18/04/2025</td>
-                <td>Transporte</td>
-                <td>S/. 40.00</td>
-                <td><i class="bi bi-trash eliminar-fila" style="cursor: pointer;"></i></td>
-              </tr>
-              <tr>
-                <td><i class="bi bi-pencil"></i></td>
-                <td>16/04/2025</td>
-                <td>Educación</td>
-                <td>S/. 50.00</td>
-                <td><i class="bi bi-trash eliminar-fila" style="cursor: pointer;"></i></td>
-              </tr>
-              <tr>
-                <td><i class="bi bi-pencil"></i></td>
-                <td>15/04/2025</td>
-                <td>Salud</td>
-                <td>S/. 35.00</td>
-                <td><i class="bi bi-trash eliminar-fila" style="cursor: pointer;"></i></td>
-              </tr>
-              <tr>
-                <td><i class="bi bi-pencil"></i></td>
-                <td>14/04/2025</td>
-                <td>Comida</td>
-                <td>S/. 45.00</td>
-                <td><i class="bi bi-trash eliminar-fila" style="cursor: pointer;"></i></td>
-              </tr>
+            <tbody class="text-center align-middle cuerpo-tabla" id="cuerpoTablaGastos">
+              <!-- Dinámico -->
             </tbody>
           </table>
         </section>
@@ -191,22 +171,6 @@
       </footer>
     </div>
   </div>
-
-  <!-- Custom JS -->
-  <script src="scripts/filtrar-gastos.js"></script>
-  <!-- jQuery (requerido para Bootstrap Datepicker) -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <!-- Bootstrap JS (requerido para la funcionalidad de Bootstrap) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Bootstrap Datepicker JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/locales/bootstrap-datepicker.es.min.js"></script>
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Custom JS -->
-  <script src="scripts/eliminar-gasto.js"></script>
-  <script src="scripts/filtrar-gastos.js"></script>
-  <script src="scripts/editar-gasto.js"></script>
 
   <!-- Confirmación -->
   <template id="confirmacion-template">
@@ -237,6 +201,48 @@
       </div>
     </div>
   </template>
+  <!-- Modal para agregar gasto -->
+  <div class="modal fade" id="modalAgregarGasto" tabindex="-1" aria-labelledby="modalAgregarGastoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form id="formAgregarGasto" autocomplete="off">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalAgregarGastoLabel">Agregar Gasto</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+         </div>
+          <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Monto de gasto*</label>
+            <input type="text" class="form-control campo" id="agregar-monto-gasto" />
+            <div class="text-danger mensaje-error" id="error-monto-gasto"></div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Categoría de gasto*</label>
+            <select class="form-select campo" id="agregar-categoria-gasto">
+              <option value="">Seleccione una opción</option>
+            </select>
+            <div class="text-danger mensaje-error" id="error-categoria-gasto"></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-warning">Registrar gasto</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Toast de éxito -->
+<template id="register-expense-template">
+  <div class="toast-registro shadow rounded d-flex align-items-center justify-content-between p-3 notificacion-toast">
+    <div class="check-circle rounded-circle me-3 d-flex justify-content-center align-items-center">
+      <i class="bi bi-check-lg"></i>
+    </div>        
+    <span class="text-white fw-bold">¡Gasto registrado exitosamente!</span>
+  </div>
+</template>
 
   <!-- Modal para editar gasto -->
   <div class="modal fade" id="modalEditarGasto" tabindex="-1" aria-labelledby="modalEditarGastoLabel" aria-hidden="true">
@@ -280,6 +286,23 @@
       </div>
     </div>
   </div>
+
+  <!-- Custom JS -->
+  <script src="scripts/data.js"></script>
+  <script src="scripts/gastos.js"></script>
+  <script src="scripts/filtrar-gastos.js"></script>
+  <!-- jQuery (requerido para Bootstrap Datepicker) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Bootstrap JS (requerido para la funcionalidad de Bootstrap) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Bootstrap Datepicker JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/locales/bootstrap-datepicker.es.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Custom JS -->
+  <script src="scripts/eliminar-gasto.js"></script>
+  <script src="scripts/editar-gasto.js"></script>
 
 </body>
 </html>

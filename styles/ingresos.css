@@ -113,3 +113,9 @@
   font-weight: lighter;
   color: black;
 }
+
+#tagFiltrarFechas, #tagFiltrarCategorias {
+  background-color: #dcdcdc;
+  color: black;
+  font-size: 0.9rem;
+}
