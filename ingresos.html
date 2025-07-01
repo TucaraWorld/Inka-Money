@@ -79,7 +79,7 @@
         <!-- TÍTULO Y BOTÓN -->
         <header class="d-flex justify-content-between align-items-center mb-4 encabezado-principal">
           <h2>Ingresos</h2>
-          <a class="btn btn-warning fw-bold rounded-pill px-4 boton-agregar-ingreso"  id="btnAgregarIngreso">
+          <a href="registrar-ingreso.html" class="btn btn-warning fw-bold rounded-pill px-4 boton-agregar-ingreso"> <!--id="btnAgregarIngreso"-->
             + Agregar ingreso
           </a>
         </header>
@@ -202,69 +202,6 @@
   </div>
  </template>
 
-     <!-- Modal para agregar ingreso -->
-    <div class="modal fade" id="modalAgregarIngreso" tabindex="-1" aria-labelledby="modalAgregarIngresoLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <form id="formAgregarIngreso" autocomplete="off">
-            <div class="modal-header">
-              <h5 class="modal-title" id="modalAgregarIngresoLabel">Agregar Ingreso</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-            </div>
-            <div class="modal-body">
-              <div class="mb-3">
-                <label class="form-label">Monto de ingreso*</label>
-                <input type="text" class="form-control campo" id="agregar-monto" />
-                <div class="text-danger mensaje-error" id="error-monto"></div>
-              </div>
-
-              <div class="mb-3">
-                <label class="form-label">Categoría de ingreso*</label>
-                <select class="form-select campo" id="agregar-categoria">
-                  <option value="">Seleccione una opción</option>
-                  <option>Transporte</option>
-                  <option>Comida</option>
-                  <option>Salud</option>
-                  <option>Educación</option>
-                </select>
-                <div class="text-danger mensaje-error" id="error-categoria"></div>
-              </div>
-
-              <div class="mb-3">
-                <label class="form-label">Descripción</label>
-                <textarea class="form-control campo" id="agregar-descripcion"></textarea>
-              </div>
-
-              <div class="mb-3">
-                <label class="form-label">Frecuencia de adquisición</label>
-                <select class="form-select campo" id="agregar-frecuencia">
-                  <option selected>Única vez</option>
-                  <option>Cada quincena</option>
-                  <option>Cada mes</option>
-                  <option>Cada año</option>
-                </select>
-                <div class="text-danger mensaje-error" id="error-frecuencia"></div>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-              <button type="submit" class="btn btn-warning">Registrar ingreso</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <!-- Toast de éxito -->
-    <template id="register-income-template">
-      <div class="toast-exito shadow rounded d-flex align-items-center justify-content-between p-3 notificacion-toast">
-        <div class="check-circle rounded-circle me-3 d-flex justify-content-center align-items-center">
-          <i class="bi bi-check-lg"></i>
-        </div>        
-        <span class="text-white fw-bold">¡Ingreso registrado exitosamente!</span>
-      </div>
-    </template>
-
     <!-- Modal para editar ingreso -->
     <div class="modal fade" id="modalEditarIngreso" tabindex="-1" aria-labelledby="modalEditarIngresoLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -297,6 +234,7 @@
                 <label class="form-label">Frecuencia de adquisición</label>
                 <select class="form-select" id="editarFrecuencia">
                   <option>Única vez</option>
+                  <option>Cada semana</option>
                   <option>Cada quincena</option>
                   <option>Cada mes</option>
                   <option>Cada año</option>
