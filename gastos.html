@@ -79,7 +79,7 @@
         <!-- TÍTULO Y BOTÓN -->
         <header class="d-flex justify-content-between align-items-center mb-4 encabezado-principal">
           <h2>Gastos</h2>
-          <a class="btn btn-warning fw-bold rounded-pill px-4 boton-agregar-gasto" 
+          <a href="registrar-gasto.html" class="btn btn-warning fw-bold rounded-pill px-4 boton-agregar-gasto" 
             id="btnAgregarGasto">
             + Agregar gasto
           </a>
@@ -201,49 +201,6 @@
       </div>
     </div>
   </template>
-  <!-- Modal para agregar gasto -->
-  <div class="modal fade" id="modalAgregarGasto" tabindex="-1" aria-labelledby="modalAgregarGastoLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <form id="formAgregarGasto" autocomplete="off">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modalAgregarGastoLabel">Agregar Gasto</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-         </div>
-          <div class="modal-body">
-          <div class="mb-3">
-            <label class="form-label">Monto de gasto*</label>
-            <input type="text" class="form-control campo" id="agregar-monto-gasto" />
-            <div class="text-danger mensaje-error" id="error-monto-gasto"></div>
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label">Categoría de gasto*</label>
-            <select class="form-select campo" id="agregar-categoria-gasto">
-              <option value="">Seleccione una opción</option>
-            </select>
-            <div class="text-danger mensaje-error" id="error-categoria-gasto"></div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="submit" class="btn btn-warning">Registrar gasto</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-<!-- Toast de éxito -->
-<template id="register-expense-template">
-  <div class="toast-registro shadow rounded d-flex align-items-center justify-content-between p-3 notificacion-toast">
-    <div class="check-circle rounded-circle me-3 d-flex justify-content-center align-items-center">
-      <i class="bi bi-check-lg"></i>
-    </div>        
-    <span class="text-white fw-bold">¡Gasto registrado exitosamente!</span>
-  </div>
-</template>
-
   <!-- Modal para editar gasto -->
   <div class="modal fade" id="modalEditarGasto" tabindex="-1" aria-labelledby="modalEditarGastoLabel" aria-hidden="true">
     <div class="modal-dialog">
