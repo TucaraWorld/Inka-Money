@@ -21,7 +21,7 @@
 .toast-exito {
   position: fixed;
   bottom: 20px;
-  left: 50%;
+  left: 55%;
   transform: translateX(-50%);
   z-index: 9999;
   background-color: var(--color-primario);
@@ -52,7 +52,7 @@
 .toast-registro {
   position: fixed;
   bottom: 2rem;
-  left: 45%;
+  left: 55%;
   z-index: 9999;
   background-color: var(--color-primario);
   color: white;
