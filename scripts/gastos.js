@@ -1,3 +1,11 @@
+let filtrosGast = {
+    fechaInicio: null,
+    fechaFin: null,
+    categoria: null
+};
+
+setFiltrosGastos(filtrosGast);
+
 const registrosPorPagina = 5;
 let paginaActual = 1;
 
@@ -42,19 +50,19 @@ function obtenerGastosFiltrados(filtrosGas = {}) {
       const gastos = getGastos();
       // Filtrar por fecha
 
-      console.log("Filtros de gastos:", filtrosGas);
+      //console.log("Filtros de gastos:", filtrosGas);
 
       if (filtrosGas.fechaInicio || filtrosGas.fechaFin) {
-        console.log("Filtrando por fecha:", filtrosGas.fechaInicio, filtrosGas.fechaFin);
+        //console.log("Filtrando por fecha:", filtrosGas.fechaInicio, filtrosGas.fechaFin);
           return gastos.filter(gasto => {
                 const fecha = new Date(gasto.fecha.split('/').reverse().join('/'));
-                console.log("Fecha de gasto:", fecha);
+                //console.log("Fecha de gasto:", fecha);
 
                 const fechaInicio = filtrosGas.fechaInicio ? new Date(filtrosGas.fechaInicio) : null;
                 const fechaFin = filtrosGas.fechaFin ? new Date(filtrosGas.fechaFin) : null;
 
-                console.log("Fecha inicio:", filtrosGas.fechaInicio)
-                console.log("Fecha fin:", filtrosGas.fechaFin);
+                //console.log("Fecha inicio:", filtrosGas.fechaInicio)
+                //console.log("Fecha fin:", filtrosGas.fechaFin);
                 
                 let valido = true;
                 if (fechaInicio && fecha < fechaInicio) valido = false;
@@ -68,7 +76,7 @@ function obtenerGastosFiltrados(filtrosGas = {}) {
           return gastos.filter(gasto => gasto.categoria === parseInt(filtrosGas.categoria));
       }
 
-      console.log("Gastos sin filtro:", gastos);
+      //console.log("Gastos sin filtro:", gastos);
 
       return gastos;
   }

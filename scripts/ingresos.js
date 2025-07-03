@@ -1,3 +1,12 @@
+let filtrosIng = {
+    fechaInicio: null,
+    fechaFin: null,
+    categoria: null
+};
+
+setFiltros(filtrosIng);
+
+
 // Número de registros por página
 const registrosPorPagina = 5;
 
@@ -19,10 +28,10 @@ function obtenerPagina(pagina) {
 // Función para renderizar los ingresos en la tabla
 function renderIngresos(pagina = 1) {
     const filtrosIngresos = getFiltros();  // Obtenemos los filtros desde localStorage
-    console.log("Filtros obtenidos:", filtrosIngresos);
+    //console.log("Filtros obtenidos:", filtrosIngresos);
 
     const ingresosFiltrados = obtenerIngresosFiltrados(filtrosIngresos);
-    console.log("Ingresos filtrados:", ingresosFiltrados);
+    //console.log("Ingresos filtrados:", ingresosFiltrados);
     const ingresosPagina = obtenerPagina(pagina, ingresosFiltrados);
     const ingresosBody = document.getElementById('cuerpoTablaIngresos');
     //const ingresosPagina = obtenerPagina(pagina, regIngresos);
@@ -60,20 +69,20 @@ function renderIngresos(pagina = 1) {
       const ingresos = getIngresos();
       // Filtrar por fecha
 
-        console.log("Filtros de ingresos:", filtrosIngresos);
+        //console.log("Filtros de ingresos:", filtrosIngresos);
 
       if (filtrosIngresos.fechaInicio || filtrosIngresos.fechaFin) {
-        console.log("Filtrando por fecha:", filtrosIngresos.fechaInicio, filtrosIngresos.fechaFin);
+        //console.log("Filtrando por fecha:", filtrosIngresos.fechaInicio, filtrosIngresos.fechaFin);
           return ingresos.filter(ingreso => {
                 const fecha = new Date(ingreso.fecha.split('/').reverse().join('/'));
-                console.log("Fecha de ingreso:", fecha);
+                //console.log("Fecha de ingreso:", fecha);
 
                 const fechaInicio = filtrosIngresos.fechaInicio ? new Date(filtrosIngresos.fechaInicio) : null;
                 const fechaFin = filtrosIngresos.fechaFin ? new Date(filtrosIngresos.fechaFin) : null;
 
-                console.log("Fecha inicio:", filtrosIngresos.fechaInicio)
-                console.log("Fecha fin:", filtrosIngresos.fechaFin);
-                
+                //console.log("Fecha inicio:", filtrosIngresos.fechaInicio)
+                //console.log("Fecha fin:", filtrosIngresos.fechaFin);
+
                 let valido = true;
                 if (fechaInicio && fecha < fechaInicio) valido = false;
                 if (fechaFin && fecha > fechaFin) valido = false;
@@ -86,7 +95,7 @@ function renderIngresos(pagina = 1) {
           return ingresos.filter(ingreso => ingreso.categoria === parseInt(filtrosIngresos.categoria));
       }
 
-      console.log("Ingresos sin filtro:", ingresos);
+      //console.log("Ingresos sin filtro:", ingresos);
 
       return ingresos;  // Si no hay filtro, se devuelven todos los ingresos
   }
@@ -94,7 +103,7 @@ function renderIngresos(pagina = 1) {
 // Función para renderizar los botones de paginación
 function renderPaginacion() {
     const filtrosIngresos = getFiltros();  // Obtenemos los filtros desde localStorage
-    console.log("Filtros en renderPaginacion:", filtrosIngresos);
+    //console.log("Filtros en renderPaginacion:", filtrosIngresos);
 
     const ingresosFiltrados = obtenerIngresosFiltrados(filtrosIngresos);  // Filtramos los ingresos
     const totalPaginas = Math.ceil(ingresosFiltrados.length / registrosPorPagina);
