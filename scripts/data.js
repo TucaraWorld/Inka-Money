@@ -240,3 +240,21 @@ function guardarCategoria(nuevaCategoria) {
     categorias.push(nuevaCategoria);
     localStorage.setItem('categorias', JSON.stringify(categorias));
 }
+
+function setFiltros(filtros) {
+    localStorage.setItem('filtros', JSON.stringify(filtros));  // Guardamos los filtros en el localStorage
+}
+
+// Función para obtener los filtros desde localStorage
+function getFiltros() {
+    const filtrosGuardados = localStorage.getItem('filtros');
+    return filtrosGuardados ? JSON.parse(filtrosGuardados) : { fechaInicio: null, fechaFin: null, categoria: null };  // Si no hay filtros, devolvemos un objeto vacío
+}
+
+let filtros = {
+    fechaInicio: null,
+    fechaFin: null,
+    categoria: null
+};
+
+setFiltros(filtros);  // Inicializamos los filtros en localStorage
