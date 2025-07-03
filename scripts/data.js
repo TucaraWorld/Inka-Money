@@ -258,3 +258,22 @@ let filtros = {
 };
 
 setFiltros(filtros);  // Inicializamos los filtros en localStorage
+
+
+function setFiltrosGastos(filtros) {
+    localStorage.setItem('filtrosGastos', JSON.stringify(filtros));  // Guardamos los filtros en el localStorage
+}
+
+// Función para obtener los filtros desde localStorage
+function getFiltrosGastos() {
+    const filtrosGuardados = localStorage.getItem('filtrosGastos');
+    return filtrosGuardados ? JSON.parse(filtrosGuardados) : { fechaInicio: null, fechaFin: null, categoria: null };  // Si no hay filtros, devolvemos un objeto vacío
+}
+
+let filtrosGastos = {
+    fechaInicio: null,
+    fechaFin: null,
+    categoria: null
+};
+
+setFiltros(filtrosGastos);  // Inicializamos los filtros en localStorage

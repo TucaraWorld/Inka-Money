@@ -1,15 +1,30 @@
 const registrosPorPagina = 5;
 let paginaActual = 1;
 
-function obtenerPaginaGastos(pagina) {
+function obtenerPaginaGastos(pagina, gastosFiltrados) {
     const inicio = (pagina - 1) * registrosPorPagina;
     const fin = pagina * registrosPorPagina;
-    return getGastos().slice(inicio, fin);
+    return gastosFiltrados.slice(inicio, fin);
 }
 
 function renderGastos(pagina = 1) {
-    const gastosPagina = obtenerPaginaGastos(pagina);
+    const filtrosGas = getFiltrosGastos();
+    const gastosFiltrados = obtenerGastosFiltrados(filtrosGas);
+    const gastosPagina = obtenerPaginaGastos(pagina, gastosFiltrados);
     const gastosBody = document.getElementById('cuerpoTablaGastos');
+
+    gastosBody.innerHTML = '';
+
+    // Verificar si hay registros después de aplicar los filtros
+    if (gastosPagina.length === 0) {
+        // Mostrar el mensaje de advertencia si no hay registros
+        const warningMessage = document.getElementById('noRecordsWarning');
+        warningMessage.style.display = 'block';
+    } else {
+        // Ocultar el mensaje de advertencia si hay registros
+        const warningMessage = document.getElementById('noRecordsWarning');
+        warningMessage.style.display = 'none';
+    }
 
     gastosBody.innerHTML = gastosPagina.map(gasto => `
         <tr>
@@ -22,8 +37,46 @@ function renderGastos(pagina = 1) {
     `).join('');
 }
 
-function renderPaginacionGastos(regIngresos = getGastos()) {
-    const totalPaginas = Math.ceil(regIngresos.length / registrosPorPagina);
+  // Función para obtener los ingresos filtrados por fecha y categoría
+function obtenerGastosFiltrados(filtrosGas = {}) {
+      const gastos = getGastos();
+      // Filtrar por fecha
+
+      console.log("Filtros de gastos:", filtrosGas);
+
+      if (filtrosGas.fechaInicio || filtrosGas.fechaFin) {
+        console.log("Filtrando por fecha:", filtrosGas.fechaInicio, filtrosGas.fechaFin);
+          return gastos.filter(gasto => {
+                const fecha = new Date(gasto.fecha.split('/').reverse().join('/'));
+                console.log("Fecha de gasto:", fecha);
+
+                const fechaInicio = filtrosGas.fechaInicio ? new Date(filtrosGas.fechaInicio) : null;
+                const fechaFin = filtrosGas.fechaFin ? new Date(filtrosGas.fechaFin) : null;
+
+                console.log("Fecha inicio:", filtrosGas.fechaInicio)
+                console.log("Fecha fin:", filtrosGas.fechaFin);
+                
+                let valido = true;
+                if (fechaInicio && fecha < fechaInicio) valido = false;
+                if (fechaFin && fecha > fechaFin) valido = false;
+                return valido;
+          });
+      }
+
+      // Filtrar por categoría
+      if (filtrosGas.categoria) {
+          return gastos.filter(gasto => gasto.categoria === parseInt(filtrosGas.categoria));
+      }
+
+      console.log("Gastos sin filtro:", gastos);
+
+      return gastos;
+  }
+
+function renderPaginacionGastos() {
+    const filtrosGas = getFiltrosGastos();
+    const gastosFiltrados = obtenerGastosFiltrados(filtrosGas);
+    const totalPaginas = Math.ceil(gastosFiltrados.length / registrosPorPagina);
     const paginacion = document.querySelector('.pagination');
     paginacion.innerHTML = '';
 
