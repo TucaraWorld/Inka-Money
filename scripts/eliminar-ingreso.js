@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const indexEnPagina = [...fila.parentNode.children]
         .filter(tr => tr.tagName === 'TR' && !tr.classList.contains('fila-confirmacion'))
         .indexOf(fila);
-      const ingresosPagina = obtenerPagina(paginaActual);
+      const ingresosPagina = obtenerPagina(paginaActual, getIngresos());
       const ingreso = ingresosPagina[indexEnPagina];
 
       if (!ingreso) return;

@@ -28,24 +28,17 @@ function obtenerPagina(pagina) {
 // Función para renderizar los ingresos en la tabla
 function renderIngresos(pagina = 1) {
     const filtrosIngresos = getFiltros();  // Obtenemos los filtros desde localStorage
-    //console.log("Filtros obtenidos:", filtrosIngresos);
-
     const ingresosFiltrados = obtenerIngresosFiltrados(filtrosIngresos);
-    //console.log("Ingresos filtrados:", ingresosFiltrados);
     const ingresosPagina = obtenerPagina(pagina, ingresosFiltrados);
     const ingresosBody = document.getElementById('cuerpoTablaIngresos');
-    //const ingresosPagina = obtenerPagina(pagina, regIngresos);
-    //const ingresosBody = document.getElementById('cuerpoTablaIngresos');
 
     ingresosBody.innerHTML = '';
 
     // Verificar si hay registros después de aplicar los filtros
     if (ingresosPagina.length === 0) {
-        // Mostrar el mensaje de advertencia si no hay registros
         const warningMessage = document.getElementById('noRecordsWarning');
         warningMessage.style.display = 'block';
     } else {
-        // Ocultar el mensaje de advertencia si hay registros
         const warningMessage = document.getElementById('noRecordsWarning');
         warningMessage.style.display = 'none';
     }
@@ -102,16 +95,11 @@ function renderIngresos(pagina = 1) {
 
 // Función para renderizar los botones de paginación
 function renderPaginacion() {
-    const filtrosIngresos = getFiltros();  // Obtenemos los filtros desde localStorage
-    //console.log("Filtros en renderPaginacion:", filtrosIngresos);
+    const filtrosIngresos = getFiltros();
 
-    const ingresosFiltrados = obtenerIngresosFiltrados(filtrosIngresos);  // Filtramos los ingresos
+    const ingresosFiltrados = obtenerIngresosFiltrados(filtrosIngresos);
     const totalPaginas = Math.ceil(ingresosFiltrados.length / registrosPorPagina);
     const paginacion = document.querySelector('.pagination');
-
-    //const totalPaginas = Math.ceil(regIngresos.length / registrosPorPagina);
-    ////console.log(`Total de páginas: ${totalPaginas}`);
-    //const paginacion = document.querySelector('.pagination');
     paginacion.innerHTML = '';
 
     // Crear el botón "anterior"
