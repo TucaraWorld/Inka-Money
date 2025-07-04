@@ -248,3 +248,201 @@ h2 {
   color: #084298;
   border-left: 6px solid #0d6efd;
 }
+
+.franja-hamburguesa {
+  display: none;
+  background-color: var(--color-primario);
+  height: 60px;
+  width: 100%;
+  align-items: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1002;
+}
+
+
+.btn-hamburguesa {
+  display: none;
+  font-size: 1.8rem;
+  background-color: var(--color-secundario);
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  height: 38px;
+  width: 38px;
+  min-width: 38px;
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.area-filtros {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 1rem 2rem auto; /* <-- margin auto a la izquierda */
+  flex-wrap: wrap;
+  justify-content: flex-end; /* <-- pegado a la derecha */
+}
+
+.area-filtros .form-select {
+  border: 2px solid #FFD100;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  font-family: var(--fuente-general, inherit);
+  background-color: white;
+  color: black;
+  max-width: 220px;
+}
+
+.filtro-label {
+  font-weight: bold;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
+
+
+
+
+
+@media screen and (max-width: 768px) {
+  /* Header con botón hamburguesa y logo */
+  .franja-hamburguesa {
+    display: flex;
+    align-items: center;
+    background-color: var(--color-primario);
+    height: 60px;
+    width: 100vw;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1002;
+  }
+
+  .btn-hamburguesa {
+    font-size: 2rem;
+    background-color: var(--color-secundario);
+    border: none;
+    border-radius: 12px;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.8rem;
+  }
+
+  .logo-img {
+    height: 28px;
+    margin-right: 0.4rem;
+  }
+
+  .logo-text {
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 800;
+  }
+
+  /* Sidebar oculto por defecto */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    height: 100%;
+    width: 250px;
+    background-color: var(--color-primario);
+    transition: left 0.3s ease;
+    z-index: 1000;
+  }
+  .sidebar.activo {
+    left: 0;
+  }
+
+  /* Espacio para franja superior */
+  .area-contenido {
+    padding-top: 80px !important; /* Ajusta según la altura real de tu barra */
+  }
+
+  h2 {
+    text-align: left;
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+    padding-left: 1rem;
+  }
+
+  h2 + .boton-agregar-meta {
+    float: none;
+    display: inline-block;
+    margin: 0.8rem 1rem 1.2rem auto;
+    font-size: 1rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 30px;
+    font-weight: bold;
+  }
+
+
+  /* Centrar foto más chica */
+  .user-profile-photo {
+    width: 160px;
+    height: 160px;
+    margin: 0 auto 1.2rem auto;
+    display: block;
+  }
+
+  /* Filtros en columna, uno debajo del otro */
+  section.mb-4.d-flex {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.8rem;
+    padding: 0 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* El texto "+ Agregar Filtro" */
+    .area-filtros {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    margin: 1rem;
+  }
+
+  .filtro-label {
+    margin-bottom: 0.2rem;
+    text-align: left;
+  }
+
+  .area-filtros .form-select {
+    width: 100%;
+    max-width: none;
+  }
+
+
+  /* Tabla responsive */
+  .contenedor-tabla {
+    overflow-x: auto;
+  }
+  .contenedor-tabla table {
+    min-width: 600px;
+  }
+
+  /* Ajustar paginación centrada */
+  .paginacion-tabla {
+    justify-content: center;
+    padding-bottom: 1rem;
+  }
+
+  .footer {
+    flex-shrink: 0;
+    position: relative;
+    margin-top: auto;
+  }
+}
