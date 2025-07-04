@@ -19,7 +19,12 @@
   <link rel="stylesheet" href="styles/visualizacion.css">
 </head>
 <body class="layout-wrapper">
-
+   <!-- Barra hamburguesa móvil -->
+  <div class="franja-hamburguesa">
+    <button class="btn-hamburguesa" id="toggleSidebar">&#9776;</button>
+      <img src="assets/logo.png" alt="Logo de Inka Money" class="logo-img" width="32" height="32" />
+      <span class="logo-text">InkaMoney</span>
+  </div>
   <!-- HEADER -->
   <header class="top-header"></header>
 
@@ -159,10 +164,7 @@
             </div>
             </section>
 
-            <button id="btn-sin-datos" class="btn btn-warning position-fixed" style="bottom: 60px; right: 10px; z-index: 999;"
-            onclick="window.location.href='sin-datos.html'">
-             Sin datos
-        </button>
+        
       </main>
       
 
@@ -177,5 +179,6 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <!-- Custom JS -->
   <script src="scripts/visualizaciones.js"></script>
+  <script src="scripts/sidebar.js"></script>
 </body>
 </html>
