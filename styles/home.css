@@ -336,6 +336,20 @@ body.bienvenido-wrapper {
 }
 
 /* Botón hamburguesa */
+.franja-hamburguesa {
+  display: none;
+  background-color: var(--color-primario);
+  height: 60px;
+  width: 100%;
+  align-items: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1002;
+}
+
 .btn-hamburguesa {
   display: none;
   font-size: 1.8rem;
@@ -344,20 +358,28 @@ body.bienvenido-wrapper {
   border-radius: 8px;
   padding: 0.5rem 1rem;
   cursor: pointer;
-}
-.franja-hamburguesa {
-  display: none;
-  background-color: var(--color-primario);
-  height: 60px;
-  width: 100%;
+  height: 38px;
+  width: 38px;
+  min-width: 38px;
+  min-height: 38px;
+  display: flex;
   align-items: center;
-  padding-left: 1rem;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1002;
+  justify-content: center;
 }
 
+.logo-img {
+  margin-left: 0.5rem;
+  margin-right: 0.3rem;
+  height: 30px;
+  width: 30px;
+}
+
+.logo-text {
+  color: #fff;
+  font-size: 1.18rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
 
 
 /* ================== MEDIA QUERY RESPONSIVE ================== */
@@ -507,22 +529,10 @@ body.bienvenido-wrapper {
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   }
 
-  .btn-hamburguesa {
-    padding: 0.1rem 0.5rem;
-    font-size: 1.6rem;      /* Ícono más grande */
-    height: 38px;           /* Más compacto */
-    width: 38px;
-    min-width: 38px;
-    min-height: 38px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
   .franja-hamburguesa {
     display: flex;
     align-items: center;
-    background-color: #002C5F;
+    background-color: var(--color-primario);
     height: 60px;
     width: 100vw;
     padding-left: 1rem;
@@ -532,17 +542,29 @@ body.bienvenido-wrapper {
     left: 0;
     z-index: 1002;
   }
-  .logo-img {
-    margin-left: 0.5rem;
-    margin-right: 0.3rem;
-    height: 30px;
-    width: 30px;
+
+  .btn-hamburguesa {
+    font-size: 1.6rem;
+    background-color: var(--color-secundario);
+    border: none;
+    border-radius: 8px;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.6rem;
   }
+
+  .logo-img {
+    height: 28px;
+    margin-right: 0.4rem;
+  }
+
   .logo-text {
-    color: #fff;
-    font-size: 1.18rem;
+    color: white;
+    font-size: 1.2rem;
     font-weight: 800;
-    letter-spacing: 0.5px;
   }
   .rectangulo-superior {
     display: none !important;
