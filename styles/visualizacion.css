@@ -254,3 +254,138 @@
   margin-right: 1rem;
   margin-top: 100px;
 }
+
+.franja-hamburguesa {
+  display: none;
+  background-color: var(--color-primario);
+  height: 60px;
+  width: 100%;
+  align-items: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1002;
+}
+
+.btn-hamburguesa {
+  display: none;
+  font-size: 1.8rem;
+  background-color: var(--color-secundario);
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  height: 38px;
+  width: 38px;
+  min-width: 38px;
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-img {
+  margin-left: 0.5rem;
+  margin-right: 0.3rem;
+  height: 30px;
+  width: 30px;
+}
+
+.logo-text {
+  color: #fff;
+  font-size: 1.18rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+@media screen and (max-width: 768px) {
+  /* Header con botón hamburguesa y logo */
+  .franja-hamburguesa {
+    display: flex;
+    align-items: center;
+    background-color: var(--color-primario);
+    height: 60px;
+    width: 100vw;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1002;
+  }
+
+  .btn-hamburguesa {
+    font-size: 1.6rem;
+    background-color: var(--color-secundario);
+    border: none;
+    border-radius: 8px;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.6rem;
+  }
+
+  .logo-img {
+    height: 28px;
+    margin-right: 0.4rem;
+  }
+
+  .logo-text {
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 800;
+  }
+
+  /* Sidebar oculto por defecto */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    height: 100%;
+    width: 250px;
+    background-color: var(--color-primario);
+    transition: left 0.3s ease;
+    z-index: 1000;
+  }
+
+  .sidebar.activo {
+    left: 0;
+  }
+
+  /* Espacio para franja */
+  .area-contenido {
+    padding-top: 80px !important;
+  }
+
+  /* Título y botón */
+  /* Título y botón */
+  h2 {
+    text-align: left;
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+    padding-left: 1rem;
+  }
+
+  .layout-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .contenedor-general,
+  .seccion-principal,
+  .area-contenido {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+  }
+  .footer {
+    flex-shrink: 0;
+    position: relative;
+    margin-top: auto;
+  }
+
+}
