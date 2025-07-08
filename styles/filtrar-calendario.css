@@ -60,3 +60,60 @@
   cursor: pointer;
   line-height: 1;
 }
+
+
+#categoriaSelect {
+  display: none;
+  position: absolute;
+  top: 35%;
+  right: 5rem;
+  left: auto;
+  transform: none;
+  background-color: #fff;
+  padding: 2.5rem 1rem 1rem 1rem;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 300px;
+  z-index: 9999;
+}
+
+#categoriaSelect label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+#categoriaSelect .d-flex {
+  gap: 0.5rem;
+}
+
+#categoriaSelect .form-select {
+  width: 100%;
+  padding: 8px;
+}
+
+#categoriaSelect .btn {
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+#categoriaSelect .btn-primary {
+  background-color: var(--color-primario);
+  color: #fff;
+}
+
+#categoriaSelect .btn-primary:hover {
+  background-color: var(--color-secundario);
+  color: #000;
+}
+
+#categoriaSelect .btn-secondary {
+  background-color: #e0e0e0;
+  color: #000;
+}
+
+#categoriaSelect .btn-secondary:hover {
+  background-color: #bdbdbd;
+}
