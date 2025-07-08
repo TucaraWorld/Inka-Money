@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
   // Selectores de periodo
-  const btnSemanal = document.querySelector('[data-periodo="semanal"]');
-  const btnMensual = document.querySelector('[data-periodo="mensual"]');
+  const tipoResumen = document.getElementById('tipoResumen');
   
   // Datos para los gráficos
   const datos = {
@@ -18,54 +17,81 @@ document.addEventListener('DOMContentLoaded', function() {
       titulo: 'Resumen mensual'
     }
   };
-
+  let graficoBarras = null;
+  function renderizarGraficoBarras(data) {
+  const ctx = document.getElementById('graficoBarras').getContext('2d');
+  if (graficoBarras) {
+    graficoBarras.destroy();
+  }
+  graficoBarras = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Ingresos', 'Gastos', 'Balance'],
+      datasets: [{
+        data: [data.ingresos, data.gastos, data.balance],
+        backgroundColor: ['#7ed6df', '#e056fd', '#686de0'],
+        borderWidth: 2,
+        borderColor: '#222',
+        borderRadius: 6,
+        barPercentage: 0.95,
+        categoryPercentage: 0.7,
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      plugins: {
+        legend: { display: false }
+      },
+      maintainAspectRatio: false,
+      scales: {
+        x: {
+          beginAtZero: true,
+          grid: {
+            color: '#e9ecef',
+            borderDash: [5, 5],
+            lineWidth: 1
+          },
+          ticks: {
+            color: '#222',
+            font: { size: 16 }
+          },
+          max: Math.max(data.ingresos, data.gastos, Math.abs(data.balance), 500)
+        },
+        y: {
+          grid: { display: false },
+          ticks: {
+            color: '#0a2c53',
+            font: { size: 18, style: 'italic' }
+          }
+        }
+      }
+    }
+  });
+}
   // Función para actualizar el gráfico
   function actualizarGrafico(data) {
-    // Calcular el valor máximo para la escala
-    // Calcula el máximo como el siguiente múltiplo de 100 mayor o igual al dato mayor
-let maxVal = Math.max(data.ingresos, data.gastos, Math.abs(data.balance));
-maxVal = Math.ceil(maxVal / 100) * 100;
-if (maxVal < 500) maxVal = 500;
-    
-    // Actualizar resumen
-    document.querySelector('.resumen-container h3').textContent = data.titulo;
-    document.querySelectorAll('.resumen-item .monto')[0].textContent = `S/. ${data.ingresos.toFixed(2)}`;
-    document.querySelectorAll('.resumen-item .monto')[1].textContent = `S/. ${data.gastos.toFixed(2)}`;
-    document.querySelectorAll('.resumen-item .monto')[2].textContent = `S/. ${data.balance.toFixed(2)}`;
-    
-    // Actualizar barras del gráfico
-    document.querySelector('.barra.ingreso').style.width = `${(data.ingresos / maxVal) * 100}%`;
-    document.querySelector('.barra.gasto').style.width = `${(data.gastos / maxVal) * 100}%`;
-    document.querySelector('.barra.balance').style.width = `${(Math.abs(data.balance) / maxVal) * 100}%`;
-    
-    // Actualizar valores numéricos
-    document.querySelectorAll('.valor-barra')[0].textContent = data.ingresos;
-    document.querySelectorAll('.valor-barra')[1].textContent = data.gastos;
-    document.querySelectorAll('.valor-barra')[2].textContent = Math.abs(data.balance);
-    
-    // Actualizar eje X
-    const valoresX = [0, maxVal/5, (maxVal/5)*2, (maxVal/5)*3, (maxVal/5)*4, maxVal];
-    document.querySelectorAll('.valor-x').forEach((el, i) => {
-      el.textContent = valoresX[i];
-    });
-  }
+  // Actualizar resumen
+  document.querySelectorAll('.resumen-item .monto')[0].textContent = `S/. ${data.ingresos.toFixed(2)}`;
+  document.querySelectorAll('.resumen-item .monto')[1].textContent = `S/. ${data.gastos.toFixed(2)}`;
+  document.querySelectorAll('.resumen-item .monto')[2].textContent = `S/. ${data.balance.toFixed(2)}`;
+  // Actualizar gráfico
+  renderizarGraficoBarras(data);
+}
 
   // Event listeners para los botones
-  btnSemanal.addEventListener('click', function() {
-    if (!this.classList.contains('active')) {
+  const btnsPeriodo = document.querySelectorAll('.btn-periodo');
+  btnsPeriodo.forEach(btn => {
+    btn.addEventListener('click', function() {
+      btnsPeriodo.forEach(b => b.classList.remove('active'));
       this.classList.add('active');
-      btnMensual.classList.remove('active');
-      actualizarGrafico(datos.semanal);
-    }
+      if (this.dataset.periodo === 'semanal') {
+        actualizarGrafico(datos.semanal);
+      } else {
+        actualizarGrafico(datos.mensual);
+      }
+    });
   });
-
-  btnMensual.addEventListener('click', function() {
-    if (!this.classList.contains('active')) {
-      this.classList.add('active');
-      btnSemanal.classList.remove('active');
-      actualizarGrafico(datos.mensual);
-    }
-  });
+  
 
   // Inicializar con vista semanal
   actualizarGrafico(datos.semanal);
