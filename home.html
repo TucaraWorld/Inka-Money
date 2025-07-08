@@ -87,6 +87,20 @@
     <div class="bienvenido-titulo-container">
         <h1 class="bienvenido-titulo text-center">BIENVENIDO!</h1>   
     </div>
+    <div class="saldo-card" id="saldoCardTotal">
+        <div class="saldo-text">
+            <i class="bi bi-cash-coin saldo-icon"></i>
+            <h3 class="saldo-title">Saldo actual</h3>
+        </div>
+
+        <h2 class="saldo-amount total" id="saldoAmountTotal"></h2>
+
+        <div class="saldo-footer">
+            <small class="saldo-date"></small>
+            <button class="btn btn-link" id="toggle-saldo-total">Ocultar saldo <i
+                    class="bi bi-eye-slash"></i></button>
+        </div>
+    </div>
     <!-- Notificaciones -->
     <section class="notificaciones-container">
       <h3 class="notificaciones-titulo">Últimas notificaciones:</h3>
@@ -126,6 +140,7 @@
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="scripts/home.js"></script>
   <script src="scripts/sidebar.js"></script>
 </body>
 </html>
