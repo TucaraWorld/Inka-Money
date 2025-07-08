@@ -635,7 +635,7 @@ body.bienvenido-wrapper {
   }
 }
 
-@media screen and (max-height: 600px) {
+@media screen and (max-width: 768px) {
   .foto-perfil-container {
     display: none !important;
   }
