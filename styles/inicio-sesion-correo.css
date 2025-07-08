@@ -119,7 +119,7 @@ body.login-wrapper {
   margin-bottom: 1rem;
   font-size: 1rem;
   position: relative;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 8px rgba(112, 26, 26, 0.05);
   display: flex;
   align-items: center;
   gap: 0.7rem;
@@ -131,4 +131,19 @@ body.login-wrapper {
   font-size: 0.7rem;
   color: #842029;
   opacity: 0.7;
+}
+
+#togglePassword {
+  border-color: #FFD100!important; 
+  background-color: #FFD100 !important; 
+}
+#togglePassword:hover,
+#togglePassword:focus {
+  border-color: #ffe066  !important; 
+  background-color: #ffe066  !important; 
+  box-shadow: none !important; 
+}
+
+#togglePassword i {
+  color: #000000; 
 }

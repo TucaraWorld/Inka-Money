@@ -27,6 +27,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // Si todo está bien, simula inicio de sesión
     window.location.href = 'home.html';
   });
+  const togglePassword = document.getElementById('togglePassword');
+  const passwordInput = document.getElementById('password');
+
+  if (togglePassword) {
+    togglePassword.addEventListener('click', function() {
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+      this.querySelector('i').classList.toggle('bi-eye-slash');
+    });
+  }
 
   function showError(msg) {
   // Elimina alertas previas si existen
