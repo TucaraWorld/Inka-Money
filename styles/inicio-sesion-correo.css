@@ -63,22 +63,22 @@ body.login-wrapper {
 .form-label {
   display: block;
   margin-bottom: 0.5rem;
-  color: #555;
+  color: #333;
   font-weight: 500;
 }
 
 .form-control {
   width: 100%;
   padding: 0.75rem 1rem;
-  border: 1px solid #ddd;
+  border: 1px solid #FFD100;
   border-radius: 8px;
   font-size: 1rem;
   max-width: 100%;
 }
 
 .form-control:focus {
-  border-color: #002C5F;
-  box-shadow: 0 0 0 2px rgba(0, 44, 95, 0.2);
+  border: 2px solid #FFD100;
+  box-shadow: none;
 }
 
 /* Checkbox */
@@ -97,23 +97,38 @@ body.login-wrapper {
 
 /* Botón */
 .btn-inka {
-  background-color: #002C5F !important;
-  border-color: #002C5F !important;
-  color: #fff !important;
+  background-color: #FFD100 !important;
+  border-color: #FFD100 !important;
+  color: #000000 !important;
+  font-weight: bold;
 }
 .btn-inka:hover, .btn-inka:focus {
-  background-color: #001a36 !important;
-  border-color: #001a36 !important;
-  color: #fff !important;
+  background-color: #ffe066 !important;
+  border-color: #ffe066 !important;
+  color: #002C5F !important;
 }
 /* Mensaje de error */
-.error-message {
-  color: #dc3545;
-  background-color: #f8d7da;
-  border: 1px solid #f5c6cb;
-  padding: 0.75rem;
+
+/* Notificación de error tipo alerta */
+.alerta-error {
+  border-left: 4px solid #dc3545; 
+  background-color: #f8d7da;      
+  color: #842029;                 
   border-radius: 8px;
+  padding: 0.75rem;
   margin-bottom: 1rem;
-  text-align: center;
-  font-size: 0.9rem;
+  font-size: 1rem;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.alerta-error .btn-close {
+  position: absolute;
+  top: -1rem;
+  right: -0.88rem;
+  font-size: 0.7rem;
+  color: #842029;
+  opacity: 0.7;
 }
