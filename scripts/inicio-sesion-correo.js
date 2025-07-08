@@ -36,21 +36,17 @@ document.addEventListener('DOMContentLoaded', function() {
     // Crea la alerta Bootstrap personalizada
     const alertDiv = document.createElement('div');
     alertDiv.id = 'alertaEmergente';
-    alertDiv.className = 'alert alert-dismissible fade show position-fixed start-50 translate-middle-x';
+    alertDiv.className = 'alerta-error alert alert-dismissible fade show position-fixed start-50 translate-middle-x';
     alertDiv.style.zIndex = '2000';
-    alertDiv.style.top = '289px'; 
+    alertDiv.style.top = '385px';
     alertDiv.style.left = '50%';
     alertDiv.style.transform = 'translateX(-50%)';
-    alertDiv.style.backgroundColor = '#D9D9D9';
-    alertDiv.style.color = '#002C5F';
-    alertDiv.style.fontSize = '1.9rem';
-    alertDiv.style.fontWeight = 'bold';
-    alertDiv.style.border = '2px solid #002C5F';
     alertDiv.style.maxWidth = '378px';
     alertDiv.role = 'alert';
     alertDiv.innerHTML = `
-      ${msg}
-      <button type="button" class="btn-close" style="font-size:1rem;" data-bs-dismiss="alert" aria-label="Close"></button>
+      <i class="bi bi-exclamation-triangle-fill me-2"></i>
+      <span>${msg}</span>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     `;
 
     document.body.appendChild(alertDiv);
