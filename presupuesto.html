@@ -132,23 +132,23 @@
                             <section class="mb-4 d-flex justify-content-end align-items-center gap-2 flex-wrap filtros-avanzados" aria-label="Agregar filtros">
                               <select class="form-select form-select-sm mx-2" style="width:auto;" id="categoriaFiltroPresupuesto"></select>
                             </section>
-                            <div class="presupuesto-lista-container">
-                                <div class="table-responsive presupuesto-lista-table">
-                                    <table class="table table-bordered mb-0">
-                                        <thead class="presupuesto-lista-thead table-light text-center">
-                                            <tr>
-                                                <th></th>
-                                                <th class="header">Categoría</th>
-                                                <th class="header">Límite</th>
-                                                <th class="header">Actual</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="presupuestoTableBody">
-                                            <!-- Las filas se llenarán dinámicamente con JS -->
-                                        </tbody>
-                                    </table>
-                                </div>
+                            <div class="table-responsive contenedor-tabla">
+                                <table class="table table-bordered mb-0">
+                                    <thead class="presupuesto-lista-thead table-light text-center">
+                                        <tr>
+                                            <th></th>
+                                            <th class="header">Categoría</th>
+                                            <th class="header">Límite</th>
+                                            <th class="header">Actual</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="presupuestoTableBody">
+                                        <!-- Las filas se llenarán dinámicamente con JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                                
 
                                 <!-- Modal para editar presupuesto -->
                                 <div class="modal fade" id="modalEditarPresupuesto" tabindex="-1"
@@ -199,11 +199,10 @@
                 </template>
             </main>
 
-            <!-- FOOTER -->
-            <footer class="footer text-center py-3 text-white pie-pagina" aria-label="Pie de página">
+        </div>
+        <footer class="footer text-center py-3 text-white pie-pagina" aria-label="Pie de página">
                 Inka Money © 2025
             </footer>
-        </div>
     </div>
 
     <!-- Modal para agregar presupuesto -->
