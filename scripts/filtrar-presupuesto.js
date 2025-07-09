@@ -36,7 +36,15 @@ document.addEventListener('DOMContentLoaded', function() {
       if (catObj) nombreCategoria = catObj.nombre;
     }
     setNoRecordsWarningTextPresupuesto(nombreCategoria);
-    updateFilterButtonTextPresupuesto(categoriaId);
+    // Actualiza el tag con el nombre de la categoría seleccionada
+    const tag = document.getElementById('tagFiltrarCategoriasPresupuesto');
+    if (categoriaId && nombreCategoria) {
+      tag.textContent = `Categoría: ${nombreCategoria}`;
+    } else {
+      tag.textContent = 'Todas las categorías';
+    }
+    // También actualiza el texto de los botones de filtro (por si acaso)
+    updateFilterButtonTextPresupuesto(null, null, categoriaId);
   }
 
   categoriaFiltro.addEventListener('change', filtrarCategoriaPresupuesto);
@@ -120,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (categoriaId && categoriaId !== '') {
       const catObj = categorias.find(cat => cat.id === parseInt(categoriaId));
       if (catObj) {
-        filterTextCat = "Categoría: " + catObj.nombre;
+        filterTextCat = `Categoría: ${catObj.nombre}`;
       }
     }
     tagFiltrarCategorias.textContent = filterTextCat;
