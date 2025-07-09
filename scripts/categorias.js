@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const cuerpo = document.getElementById('cuerpoTablaCategorias');
   let editando = null;
 
-  // Only add event listeners if the table exists
+  // Solo si existe la tabla
   if (cuerpo) {
     // Abrir modal para editar
     cuerpo.addEventListener('click', function (e) {
@@ -35,14 +35,17 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Abrir modal para agregar
-  document.getElementById('btnAgregarCategoria').addEventListener('click', function () {
-    editando = null;
-    document.getElementById('modalCategoriaLabel').textContent = 'Agregar Categoría';
-    document.getElementById('formCategoria').reset();
-    document.getElementById('colorCategoria').value = '#7ed6df';
-    new bootstrap.Modal(document.getElementById('modalCategoria')).show();
-  });
+  // Abrir modal para agregar (opcional: limpia el formulario)
+  const btnAgregar = document.getElementById('btnAgregarCategoria');
+  if (btnAgregar) {
+    btnAgregar.addEventListener('click', function () {
+      editando = null;
+      document.getElementById('modalCategoriaLabel').textContent = 'Agregar Categoría';
+      document.getElementById('formCategoria').reset();
+      document.getElementById('colorCategoria').value = '#7ed6df';
+      new bootstrap.Modal(document.getElementById('modalCategoria')).show();
+    });
+  }
 
   // Guardar categoría (agregar o editar)
   document.getElementById('formCategoria').addEventListener('submit', function (e) {
@@ -58,8 +61,10 @@ document.addEventListener('DOMContentLoaded', function () {
     } else {
       saveCategoria(nombre, descripcion, color);
     }
-    bootstrap.Modal.getInstance(document.getElementById('modalCategoria')).hide();
-    location.reload(); // This will refresh the charts and legend
+    // Cierra el modal y recarga después de un pequeño delay
+    const modal = bootstrap.Modal.getInstance(document.getElementById('modalCategoria'));
+    if (modal) modal.hide();
+    setTimeout(() => location.reload(), 300);
   });
 
   function eliminarConfirmacionExistente() {
