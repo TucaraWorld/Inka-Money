@@ -1,7 +1,19 @@
-const categorias = ['Comida', 'Transporte', 'Educación', 'Salud', 'Hobbies'];
-//categorias = []
-const colores = ['#7ed6df', '#e056fd', '#686de0', '#f6e58d', '#30336b'];
-const gastos = [250, 20, 1300, 100, 30];
+// Default colors for categories
+const defaultColors = [
+  '#FFD100', '#7ed6df', '#e17055', '#00b894', '#fd79a8',
+  '#0984e3', '#fdcb6e', '#636e72', '#00cec9', '#fab1a0'
+];
+
+// Get categories from localStorage
+const categoriasData = JSON.parse(localStorage.getItem('categorias')) || [];
+const categorias = categoriasData.map(c => c.nombre);
+const colores = categoriasData.map((c, i) =>
+  (c.color && /^#([0-9A-F]{3}){1,2}$/i.test(c.color))
+    ? c.color
+    : defaultColors[i % defaultColors.length]
+);
+// For demo, generate random gastos or fetch real data if you have it:
+const gastos = categorias.map(() => Math.floor(Math.random() * 1000) + 10);
 
 // Handle empty state
 if (categorias.length === 0) {
