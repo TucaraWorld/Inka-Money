@@ -69,7 +69,7 @@ function obtenerPresupuestosFiltrados(filtros = {}) {
     const presupuestos = getPresupuestos();
     let resultado = presupuestos;
     if (filtros.categoria) {
-        resultado = resultado.filter(p => p.categoria === filtros.categoria);
+        resultado = resultado.filter(p => p.categoria === Number(filtros.categoria));
     }
     // Filtrar por fecha si hay campos de fecha en presupuestos
     if (filtros.fechaInicio || filtros.fechaFin) {
