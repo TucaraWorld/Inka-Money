@@ -42,11 +42,11 @@ document.addEventListener('DOMContentLoaded', function() {
         // Loop through table rows (skip header)
         Array.from(tableBody.querySelectorAll('tr')).forEach(tr => {
             const tds = tr.querySelectorAll('td');
-            if (tds.length < 3) return;
-            const categoria = tds[0].textContent.trim();
-
-            const limite = parseFloat(tds[1].textContent.slice(4));
-            const actual = parseFloat(tds[2].textContent.slice(4));
+            if (tds.length < 4) return;
+            // Ahora la columna 1 es editar, columna 2 es nombre de categoría, 3 es límite, 4 es actual
+            const categoria = tds[1].textContent.trim();
+            const limite = parseFloat(tds[2].textContent.replace('S/.', '').replace(',', '').trim());
+            const actual = parseFloat(tds[3].textContent.replace('S/.', '').replace(',', '').trim());
 
             if (isNaN(limite) || isNaN(actual)) return;
             if (actual > limite) {
