@@ -1,3 +1,51 @@
+// ---- PRESUPUESTOS ----
+const presupuestos = [
+    // Ejemplo de estructura, puedes poblar dinámicamente
+    { id: 1, user_id: 1, categoria: 1, limite: 9500, actual: 8400 },
+    { id: 2, user_id: 1, categoria: 2, limite: 8300, actual: 8400 },
+    { id: 3, user_id: 1, categoria: 3, limite: 5000, actual: 3200 },
+    { id: 4, user_id: 1, categoria: 4, limite: 2000, actual: 1500 },
+    { id: 5, user_id: 1, categoria: 3, limite: 1200, actual: 900 },
+    { id: 6, user_id: 1, categoria: 2, limite: 1200, actual: 400 }
+];
+
+if (!localStorage.getItem('presupuestos')) {
+    localStorage.setItem('presupuestos', JSON.stringify(presupuestos));
+}
+
+function getPresupuestos() {
+    let regPresupuestos = JSON.parse(localStorage.getItem('presupuestos')) || [];
+    let filtrado = regPresupuestos.filter(p => p.user_id === parseInt(idUsuarioActivo));
+    return filtrado;
+}
+
+function guardarPresupuesto(nuevoPresupuesto) {
+    const presupuestos = JSON.parse(localStorage.getItem('presupuestos')) || [];
+    presupuestos.push(nuevoPresupuesto);
+    localStorage.setItem('presupuestos', JSON.stringify(presupuestos));
+}
+
+function actualizarPresupuesto(id, nuevoLimite) {
+    let presupuestos = JSON.parse(localStorage.getItem('presupuestos')) || [];
+    presupuestos = presupuestos.map(p => p.id === Number(id) ? { ...p, limite: Number(nuevoLimite) } : p);
+    localStorage.setItem('presupuestos', JSON.stringify(presupuestos));
+}
+
+function eliminarPresupuesto(id) {
+    let presupuestos = JSON.parse(localStorage.getItem('presupuestos')) || [];
+    presupuestos = presupuestos.filter(p => p.id !== Number(id));
+    localStorage.setItem('presupuestos', JSON.stringify(presupuestos));
+}
+
+// Filtros para presupuesto
+function setFiltrosPresupuesto(filtros) {
+    localStorage.setItem('filtrosPresupuesto', JSON.stringify(filtros));
+}
+
+function getFiltrosPresupuesto() {
+    const filtrosGuardados = localStorage.getItem('filtrosPresupuesto');
+    return filtrosGuardados ? JSON.parse(filtrosGuardados) : { categoria: null, fechaInicio: null, fechaFin: null };
+}
 const usuarios = [
     {
         id: 1,

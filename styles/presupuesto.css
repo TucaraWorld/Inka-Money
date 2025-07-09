@@ -1,3 +1,63 @@
+/* Centrar vertical y horizontalmente el contenido de la tabla de presupuestos */
+.table-bordered th,
+.table-bordered td {
+  text-align: center;
+  vertical-align: middle !important;
+}
+/* Forzar que el datepicker siempre se muestre sobre todo y alineado al input */
+.datepicker {
+  z-index: 2000 !important;
+}
+
+/* Asegurar que los filtros no corten el datepicker */
+.filtros-avanzados, .presupuesto-lista-table {
+  overflow: visible !important;
+}
+/* Estilo para el mensaje de advertencia igual a gastos */
+#noRecordsWarning {
+  background-color: #EAF4FF;
+  font-size: 1rem;
+  display: flex;
+  flex-direction: row;
+  color: var(--color-primario);
+  font-weight: bold;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  align-items: flex-start;
+  display: block;
+}
+
+#noRecordsWarning .alert-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  max-width: 80%;
+}
+
+#noRecordsWarning strong {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+#noRecordsWarning p {
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  font-weight: lighter;
+  color: black;
+}
+/* Paginación Presupuesto igual a gastos */
+.pagination-presupuesto .page-link {
+  border-radius: 10px;
+  color: #000;
+}
+
+.pagination-presupuesto .active .page-link {
+  background-color: var(--color-secundario);
+  border-color: var(--color-secundario);
+  color: #000;
+  font-weight: bold;
+}
 /* balance.css */
 
 /* Encabezado */
@@ -411,3 +471,50 @@
   }
 }
 
+
+/* Navbar lateral fijo */
+
+@media (min-width: 769px) {
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+  }
+  /* El contenido principal se desplaza a la derecha del navbar */
+  .layout-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-left: 240px; /* igual al ancho del sidebar */
+  }
+}
+
+/* Footer siempre abajo y ocupando todo el ancho */
+.footer {
+  margin-top: auto;
+}
+
+
+/* Botón filtro igual a gastos */
+#tagFiltrarCategoriasPresupuesto {
+  background-color: #dcdcdc;
+  color: black;
+  font-size: 1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 999px;
+  padding: 0.5rem 1.5rem;
+  box-shadow: none;
+  outline: none;
+  transition: background 0.2s;
+  display: inline-block;
+}
+#tagFiltrarCategoriasPresupuesto:focus, #tagFiltrarCategoriasPresupuesto:hover {
+  background-color: #cfcfcf;
+  color: black;
+}
+
+
+.table td:nth-child(3),
+.table td:nth-child(4) {
+  font-family: 'Space Mono', monospace; /* Para montos */
+}
