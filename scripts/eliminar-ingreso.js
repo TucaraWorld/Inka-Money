@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
-  const tabla = document.getElementById('tablaIngresos');
+  const tbody = document.getElementById('cuerpoTablaIngresos');
   const templateConfirmacion = document.getElementById('confirmacion-template');
   const templateToast = document.getElementById('toast-template');
 
   let ingresoEliminado = null;
   let paginaPrevia = 1;
 
-  tabla.addEventListener('click', function (e) {
+  tbody.addEventListener('click', function (e) {
     if (e.target.classList.contains('eliminar-fila')) {
       const fila = e.target.closest('tr');
       mostrarConfirmacion(fila);
@@ -29,24 +29,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Confirmar
     filaConfirmacion.querySelector('.confirmar-eliminacion').addEventListener('click', () => {
-      // Obtener el índice de la fila en la página actual
+      const filtrosIngresos = typeof getFiltros === 'function' ? getFiltros() : {};
+      const ingresosFiltrados = obtenerIngresosFiltrados(filtrosIngresos);
+      const ingresosPagina = obtenerPagina(paginaActual, ingresosFiltrados);
+
       const indexEnPagina = [...fila.parentNode.children]
         .filter(tr => tr.tagName === 'TR' && !tr.classList.contains('fila-confirmacion'))
         .indexOf(fila);
-      const ingresosPagina = obtenerPagina(paginaActual);
-      const ingreso = ingresosPagina[indexEnPagina];
 
+      const ingreso = ingresosPagina[indexEnPagina];
       if (!ingreso) return;
 
-      // Eliminar del localStorage usando data.js
       eliminarIngreso(ingreso.id);
 
-      // Guardar para deshacer
       ingresoEliminado = ingreso;
       paginaPrevia = paginaActual;
 
       // --- Lógica para evitar páginas vacías ---
-      const totalIngresos = getIngresos().length;
+      const totalIngresos = ingresosFiltrados.length - 1; // -1 porque ya eliminaste uno
       const registrosPorPagina = 5; // Cambia si usas otro valor
       const totalPaginas = Math.ceil(totalIngresos / registrosPorPagina);
 
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.body.appendChild(toast);
 
     // Botón deshacer
-    toast.querySelector('.btn-deshacer').addEventListener('click', function () {
+    toast.querySelector('.btn-deshacer')?.addEventListener('click', function () {
       if (ingresoEliminado) {
         guardarIngreso(ingresoEliminado);
         renderIngresos(paginaPrevia);

@@ -30,18 +30,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Confirmar
     filaConfirmacion.querySelector('.confirmar-eliminacion').addEventListener('click', () => {
-      const indexEnPagina = [...fila.parentNode.children].filter(tr => tr.tagName === 'TR' && !tr.classList.contains('fila-confirmacion')).indexOf(fila);
-      const gastosPagina = obtenerPaginaGastos(paginaActual);
-      const gasto = gastosPagina[indexEnPagina];
+      // --- CORRECCIÓN: obtener gastos filtrados y pasarlos a la paginación ---
+      const filtrosGastos = typeof getFiltrosGastos === 'function' ? getFiltrosGastos() : {};
+      const gastosFiltrados = obtenerGastosFiltrados(filtrosGastos);
+      const gastosPagina = obtenerPaginaGastos(paginaActual, gastosFiltrados);
 
+      const indexEnPagina = [...fila.parentNode.children]
+        .filter(tr => tr.tagName === 'TR' && !tr.classList.contains('fila-confirmacion'))
+        .indexOf(fila);
+
+      const gasto = gastosPagina[indexEnPagina];
       if (!gasto) return;
 
-      // Eliminar usando la función centralizada
       eliminarGasto(gasto.id);
 
-      // Guardar el eliminado para posible deshacer
       gastoEliminado = gasto;
       paginaPrevia = paginaActual;
+
+      // --- Lógica para evitar páginas vacías ---
+      const totalGastos = gastosFiltrados.length - 1; // -1 porque ya eliminaste uno
+      const registrosPorPagina = 5; // Cambia si usas otro valor
+      const totalPaginas = Math.ceil(totalGastos / registrosPorPagina);
+
+      if (paginaActual > totalPaginas) {
+        paginaActual = totalPaginas > 0 ? totalPaginas : 1;
+      }
+      // ----------------------------------------
 
       renderGastos(paginaActual);
       renderPaginacionGastos();
@@ -65,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(toast);
 
     // Botón deshacer
-    toast.querySelector('.btn-deshacer').addEventListener('click', () => {
+    toast.querySelector('.btn-deshacer')?.addEventListener('click', () => {
       if (gastoEliminado) {
         guardarGasto(gastoEliminado);
 
