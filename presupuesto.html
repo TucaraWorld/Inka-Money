@@ -207,45 +207,6 @@
             </footer>
     </div>
 
-    <!-- Modal para agregar presupuesto -->
-    <div class="modal fade" id="modalAgregarPresupuesto" tabindex="-1" aria-labelledby="modalAgregarPresupuestoLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form id="formAgregarPresupuesto" autocomplete="off">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modalAgregarPresupuestoLabel">Registrar presupuesto</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label class="form-label">Selecciona la categoría</label>
-                            <select class="form-select campo" id="presupuesto-categoria">
-                                <option value="">Selecciona la categoría</option>
-                                <option>Transporte</option>
-                                <option>Comida</option>
-                                <option>Salud</option>
-                                <option>Educación</option>
-                            </select>
-                            <div class="text-danger mensaje-error" id="error-presupuesto-categoria"></div>
-                        </div>
-                        <div class="mb-4">
-                            <label class="form-label">Monto del presupuesto</label>
-                            <input type="number" min="0" class="form-control campo" id="presupuesto-monto" />
-                            <div class="text-danger mensaje-error" id="error-presupuesto-monto"></div>
-                        </div>
-                        <div class="alert alert-primary d-none" id="mensaje-exito-presupuesto">
-                            <i class="bi bi-check-circle-fill me-2"></i> ¡Presupuesto registrado exitosamente!
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-warning w-100 fw-bold">Registrar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
     <!-- jQuery (requerido para datepicker) -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Bootstrap JS -->
