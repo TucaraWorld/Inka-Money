@@ -8,6 +8,8 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap Datepicker CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"/>
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <!-- Google Fonts -->
@@ -60,8 +62,8 @@
                                             class="bi bi-dash-lg me-2"></i>Gastos</a></li>
                                 <li><a href="presupuesto.html" class="nav-link nav-balance"><i
                                             class="bi bi-bar-chart me-2"></i>Presupuesto</a></li>
-                                <li><a href="formulario-categoria.html" class="nav-link text-white"><i class="bi bi-tags me-2"></i>Categorías</a></li
-                            </ul>
+                                <li><a href="formulario-categoria.html" class="nav-link text-white"><i
+                                            class="bi bi-tags me-2"></i>Categorías</a></li </ul>
                         </div>
                     </li>
                     <li><a href="metas-ahorro.html" class="nav-link text-white"><i
@@ -94,11 +96,11 @@
             <main class="p-4 w-100 flex-grow-1 area-contenido" role="main">
                 <div class="balance-container">
                     <!-- TÍTULO Y BOTÓN -->
-                     
+
                     <header class="d-flex justify-content-between align-items-center mb-4 encabezado-principal">
                         <h2>Presupuesto</h2>
-                        <button class="btn btn-warning fw-bold rounded-pill px-4 boton-agregar-presupuesto" id="btnAgregarPresupuesto"
-                            type="button">
+                        <button class="btn btn-warning fw-bold rounded-pill px-4 boton-agregar-presupuesto"
+                            id="btnAgregarPresupuesto" type="button">
                             + Agregar presupuesto <span class="nueva-meta-icon"></span>
                         </button>
                     </header>
@@ -108,67 +110,82 @@
                             <i class="bi bi-exclamation-circle-fill"></i>
                             <div class="alert-text">
                                 <strong>¡Advertencia!</strong>
-                                <p>No se han registrado ingresos, gastos o movimientos. ¿Desearía realizar algún
-                                    movimiento?</p>
+                                <p id="noRecordsWarningText">No se han registrado presupuestos.</p>
                             </div>
                         </div>
 
                         <section class="presupuesto-balance">
-                                <!-- Alert container for presupuesto warnings/excess -->
-                                <div id="presupuesto-alert-container"></div>
-                                <div class="presupuesto-img-container">
-                                    <!-- Imagen de usuario (placeholder) -->
-                                    <div class="ahorros-img">
-                                        <img src="assets/img/ahorros.png">
+                            <!-- Alert container for presupuesto warnings/excess -->
+                            <div id="presupuesto-alert-container"></div>
+                            <div class="presupuesto-img-container">
+                                <!-- Imagen de usuario (placeholder) -->
+                                <div class="ahorros-img">
+                                    <img src="assets/img/ahorros.png">
+                                </div>
+                            </div>
+                            <div class="presupuesto-lista-header">
+                                Lista de presupuestos
+                            </div>
+                            <!-- FILTROS RÁPIDOS Y AVANZADOS -->
+                            <section class="mb-3 d-flex gap-2 flex-wrap align-items-center filtros-rapidos" aria-label="Filtros rápidos">
+                            </section>
+                            <section class="mb-4 d-flex justify-content-end align-items-center gap-2 flex-wrap filtros-avanzados" aria-label="Agregar filtros">
+                              <select class="form-select form-select-sm mx-2" style="width:auto;" id="categoriaFiltroPresupuesto"></select>
+                            </section>
+                            <div class="presupuesto-lista-container">
+                                <div class="table-responsive presupuesto-lista-table">
+                                    <table class="table table-bordered mb-0">
+                                        <thead class="presupuesto-lista-thead table-light text-center">
+                                            <tr>
+                                                <th></th>
+                                                <th class="header">Categoría</th>
+                                                <th class="header">Límite</th>
+                                                <th class="header">Actual</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="presupuestoTableBody">
+                                            <!-- Las filas se llenarán dinámicamente con JS -->
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <!-- Modal para editar presupuesto -->
+                                <div class="modal fade" id="modalEditarPresupuesto" tabindex="-1"
+                                    aria-labelledby="modalEditarPresupuestoLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <form id="formEditarPresupuesto" autocomplete="off">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="modalEditarPresupuestoLabel">Editar
+                                                        límite de presupuesto</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Cerrar"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Límite</label>
+                                                        <input type="number" min="0" class="form-control"
+                                                            id="editar-presupuesto-limite" required />
+                                                        <div class="text-danger mensaje-error"
+                                                            id="error-editar-presupuesto-limite"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-warning w-100 fw-bold">Guardar
+                                                        cambios</button>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="presupuesto-lista-header">
-                                    Lista de presupuestos
-                                </div>
-                                <div class="presupuesto-lista-container">
-                                        <div class="table-responsive presupuesto-lista-table">
-                                            <table class="table">
-                                                <thead class="presupuesto-lista-thead table-light text-center">
-                                                    <tr>
-                                                        <th class="header">Categoría</th>
-                                                        <th class="header">Límite</th>
-                                                        <th class="header">Actual</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="presupuestoTableBody">
-                                                    <tr>
-                                                        <td>Viaje</td>
-                                                        <td>S/. 9500.00</td>
-                                                        <td>S/. 8400.00</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Viaje 2</td>
-                                                        <td>S/. 8300.00</td>
-                                                        <td>S/. 8400.00</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Transporte 2</td>
-                                                        <td>S/. 5000.00</td>
-                                                        <td>S/. 3200.00</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Comida</td>
-                                                        <td>S/. 2000.00</td>
-                                                        <td>S/. 1500.00</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Salud</td>
-                                                        <td>S/. 1200.00</td>
-                                                        <td>S/. 900.00</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                </div>
-                            </section>
+                            </div>
+                        </section>
 
                     </div>
-
+                    <nav class="mt-4 mb-4 paginacion-tabla" aria-label="Paginación">
+                        <ul class="pagination pagination-presupuesto justify-content-center mb-0"></ul>
+                    </nav>
                 </div>
                 <!-- Toast de éxito Presupuesto (dentro de main) -->
                 <template id="toast-presupuesto-template">
@@ -228,12 +245,32 @@
         </div>
     </div>
 
+    <!-- jQuery (requerido para datepicker) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap Datepicker JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.es.min.js"></script>
     <script src="scripts/data.js"></script>
     <script src="scripts/sidebar.js"></script>
     <script src="scripts/balance-alerts.js"></script>
     <script src="scripts/balance.js"></script>
+    <script src="scripts/presupuesto.js"></script>
+    <script src="scripts/filtrar-presupuesto.js"></script>
+    <script>
+    // Corrige el mensaje de advertencia para mostrar el nombre de la categoría en vez del id
+    function setNoRecordsWarningTextPresupuesto(nombreCategoria) {
+      const warningText = document.getElementById('noRecordsWarningText');
+      if (nombreCategoria) {
+        warningText.textContent = `No se han registrado presupuestos de ${nombreCategoria}.`;
+      } else {
+        warningText.textContent = 'No se han registrado presupuestos.';
+      }
+    }
+    // Hook para usar desde tu JS de filtrado:
+    // setNoRecordsWarningTextPresupuesto('Comida');
+    </script>
 </body>
 
 </html>

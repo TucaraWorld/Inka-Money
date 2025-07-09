@@ -1,0 +1,58 @@
+/* Filtros de presupuesto, inspirado en ingresos.css */
+
+.filtro-label {
+  font-family: var(--fuente-boton);
+  font-size: 0.9rem;
+  color: #000;
+}
+
+#tagFiltrarFechas, #tagFiltrarCategorias {
+  background-color: #dcdcdc;
+  color: black;
+  font-size: 0.9rem;
+}
+
+#noRecordsWarning {
+  background-color: #EAF4FF;
+  font-size: 1rem;
+  display: flex;
+  flex-direction: row;
+  color: var(--color-primario);
+  font-weight: bold;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  align-items: flex-start;
+  display: block;
+}
+
+#noRecordsWarning .alert-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  max-width: 80%;
+}
+
+#noRecordsWarning strong {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+#noRecordsWarning p {
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  font-weight: lighter;
+  color: black;
+}
+
+@media screen and (max-width: 768px) {
+  .area-filtros {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+  .area-filtros > * {
+    width: 100%;
+  }
+}
