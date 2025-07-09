@@ -54,6 +54,7 @@
                   </a>
                 </li>
                 <li><a href="presupuesto.html" class="nav-link text-white"><i class="bi bi-bar-chart me-2"></i>Presupuesto</a></li>
+                <li><a href="formulario-categoria.html" class="nav-link text-white"><i class="bi bi-tags me-2"></i>Categorías</a></li>
               </ul>
             </div>
           </li>
@@ -101,7 +102,7 @@
       <main class="p-4 w-100 flex-grow-1 area-contenido" role="main">
         <header class="d-flex justify-content-between align-items-center mb-4 encabezado-principal">
           <h2>Gastos por Categoría</h2>
-          <a href="formulario-categoria.html" class="btn btn-warning fw-bold rounded-pill px-4" id="btnAgregarCategoria">
+          <a href="#" class="btn btn-warning fw-bold rounded-pill px-4" id="btnAgregarCategoria" data-bs-toggle="modal" data-bs-target="#modalCategoria">
             + Agregar categoría
           </a>
         </header>
@@ -127,10 +128,45 @@
     </div>
   </div>
 
+    <!-- Modal para agregar/editar categoría -->
+  <div class="modal fade" id="modalCategoria" tabindex="-1" aria-labelledby="modalCategoriaLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form id="formCategoria" autocomplete="off">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalCategoriaLabel">Agregar Categoría</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">Nombre de la categoría*</label>
+              <input type="text" class="form-control" id="nombreCategoria" required />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Descripción</label>
+              <textarea class="form-control" id="descripcionCategoria"></textarea>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Color</label>
+              <input type="color" class="form-control form-control-color" id="colorCategoria" value="#7ed6df" title="Elige un color">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-warning">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <!-- Chart.js and your custom script -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+  <script src="scripts/categorias.js"></script>
   <script src="scripts/mostrar-categorias.js"></script>
   <script src="scripts/sidebar.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
