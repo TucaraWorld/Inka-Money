@@ -36,7 +36,7 @@ body.bienvenido-wrapper {
   top: 0;
   right: 0;
   width: 80px;
-  height: 125%;
+  height: 135%;
 }
 /*.rectangulo-inferior {
   position: absolute;
@@ -202,7 +202,7 @@ body.bienvenido-wrapper {
   margin-left: 0rem;
   display: flex;
   flex-direction: column;
-  max-width: 1050px;
+  width: calc(100% - 105px); 
 }
 
 .saldo-icon {
@@ -257,7 +257,7 @@ body.bienvenido-wrapper {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   position: relative;
   margin: 2.3rem 0rem 0rem 0rem;
-  max-width: 1050px;
+  width: calc(100% - 105px); 
 }
 .notificaciones-titulo {
   color: #002C5F;
@@ -346,14 +346,16 @@ body.bienvenido-wrapper {
 .footer {
   position: fixed;
   bottom: 0;
-  left: 250px;
-  right: 80px;
+  left: 250px; 
+  right: 0; 
   height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 2;
+  width: calc(100% - 250px); 
 }
+
 .footer-content {
   background-color: #002C5F;
   padding: 1rem;
@@ -632,6 +634,18 @@ body.bienvenido-wrapper {
   }
   .rectangulo-superior {
     display: none !important;
+  }
+  .footer{
+    left: 0 !important;
+    width: 100%; 
+  }
+  .saldo-card {
+    left: 0 !important;
+    width: 105%;  
+  }
+  .notificaciones-container{
+    left: -4!important;
+    width: 100%; 
   }
 }
 
