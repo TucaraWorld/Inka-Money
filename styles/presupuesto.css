@@ -411,3 +411,22 @@
   }
 }
 
+
+/* Navbar lateral fijo */
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+
+/* El contenido principal se desplaza a la derecha del navbar */
+.layout-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-left: 240px; /* igual al ancho del sidebar */
+}
+
+/* Footer siempre abajo y ocupando todo el ancho */
+.footer {
+  margin-top: auto;
+}
