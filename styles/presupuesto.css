@@ -512,3 +512,9 @@
   background-color: #cfcfcf;
   color: black;
 }
+
+
+.table td:nth-child(3),
+.table td:nth-child(4) {
+  font-family: 'Space Mono', monospace; /* Para montos */
+}
