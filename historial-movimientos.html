@@ -96,24 +96,21 @@
         <!-- FILTROS AVANZADOS -->
         <section class="mb-4 d-flex justify-content-end align-items-center gap-2 flex-wrap filtros-avanzados" aria-label="Agregar filtros">
           <span class="fw-bold filtro-label">+ Agregar Filtro</span>
-          <button class="btn btn-white btn-cuadrado text-dark" id="btnFiltrarPorCategoria">Por categoría</button>
-          <button class="btn btn-white btn-cuadrado text-dark" id="btnFiltrarPorFecha">Por fecha</button>
+          <select class="form-select form-select-sm mx-2" style="width:auto;" id="categoriaFiltro"></select>
+          <input type="text" id="filtroFechaInicio" class="form-select form-select-sm mx-2" style="width:auto;" placeholder="Fecha de inicio" readonly>
+          <input type="text" id="filtroFechaFin" class="form-select form-select-sm mx-2" style="width:auto;" placeholder="Fecha de fin" readonly>
         </section>
 
-        <!-- Contenedor del calendario (este se mostrará solo cuando se haga clic en el filtro) -->
-        <div id="calendarContainer" style="display: none;">
-          <button class="btn-close-calendar" id="closeCalendar" aria-label="Cerrar calendario">&times;</button>
-          <label for="startDate">Fecha de inicio:</label>
-          <input type="text" id="startDate" class="form-control" placeholder="Selecciona una fecha de inicio">
-
-          <label for="endDate">Fecha de fin:</label>
-          <input type="text" id="endDate" class="form-control" placeholder="Selecciona una fecha de fin">
-
-          <button id="applyDateFilter" class="btn btn-primary">Aplicar filtro</button>
+        <div id="noRecordsWarning" class="alert alert-info" style="display: none;">
+            <i class="bi bi-exclamation-circle-fill"></i>
+            <div class="alert-text">
+                <strong>¡Advertencia!</strong>
+                <p>No se han registrado movimientos en los filtros seleccionados.</p>
+            </div>
         </div>
 
         <!-- TABLA DE HISTORIAL -->
-        <section class="table-responsive shadow-sm rounded bg-white contenedor-tabla" aria-label="Tabla de gastos">
+        <section class="table-responsive shadow-sm rounded bg-white contenedor-tabla" aria-label="Tabla de movimientos">
           <table class="table table-bordered mb-0" id="tablaGastos">
             <thead class="table-light text-center">
               <tr>
@@ -123,41 +120,15 @@
               </tr>
             </thead>
             <tbody class="text-center align-middle cuerpo-tabla"  id="cuerpoTablaGastos">
-              <tr>
-                <td>20/04/2025</td>
-                <td>Comida</td>
-                <td>- S/. 50.00</td>
-              </tr>
-              <tr>
-                <td>18/04/2025</td>
-                <td>Transporte</td>
-                <td>+ S/. 40.00</td>
-              </tr>
-              <tr>
-                <td>16/04/2025</td>
-                <td>Educación</td>
-                <td>+ S/. 50.00</td>
-              </tr>
-              <tr>
-                <td>15/04/2025</td>
-                <td>Salud</td>
-                <td>- S/. 35.00</td>
-              </tr>
+              <!-- Dinámico -->
             </tbody>
           </table>
         </section>
 
-
         <!-- PAGINACIÓN -->
         <nav class="mt-4 mb-4 paginacion-tabla" aria-label="Paginación">
           <ul class="pagination justify-content-center">
-            <li class="page-item"><a class="page-link" href="#">‹</a></li>
-            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
-            <li class="page-item"><a class="page-link" href="#">10</a></li>
-            <li class="page-item"><a class="page-link" href="#">›</a></li>
+            <!-- Dinámico -->
           </ul>
         </nav>
       </main>
@@ -184,6 +155,7 @@
   <!-- Custom JS -->
   <script src="scripts/eliminar-gasto.js"></script>
   <script src="scripts/filtrar-gastos.js"></script>
+  <script src="scripts/data.js"></script>
   <script src="scripts/historial-movimientos.js"></script>
 
   <!-- Confirmación -->
