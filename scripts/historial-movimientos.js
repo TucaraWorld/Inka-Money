@@ -121,132 +121,151 @@ window.irPaginaHistorial = function(pagina, totalPaginas) {
 
 // Filtros dinámicos (categoría y fechas)
 document.addEventListener('DOMContentLoaded', function () {
-    // Llenar select de categorías
-    const categoriaFiltro = document.getElementById('categoriaFiltro');
-    categoriaFiltro.innerHTML = '<option value="">Todas las categorías</option>';
-    categorias.forEach(categoria => {
-        if (categoria.user_id === parseInt(idUsuarioActivo)) {
-            const option = document.createElement('option');
-            option.value = categoria.id;
-            option.textContent = categoria.nombre;
-            categoriaFiltro.appendChild(option);
-        }
-    });
-    categoriaFiltro.addEventListener('change', function() {
-        let filtros = getFiltrosGastos();
-        filtros.categoria = categoriaFiltro.value || null;
-        filtros.fechaInicio = null;
-        filtros.fechaFin = null;
-        setFiltrosGastos(filtros);
-        updateFilterButtonTextHistorial(null, null, categoriaFiltro.value);
-        paginaActualHistorial = 1;
-        renderHistorial(paginaActualHistorial);
-        renderPaginacionHistorial();
-    });
-    // Datepickers
-    const filtroFechaInicio = document.getElementById('filtroFechaInicio');
-    const filtroFechaFin = document.getElementById('filtroFechaFin');
-    $(filtroFechaInicio).datepicker({
-        format: 'dd/mm/yyyy',
-        language: 'es',
-        autoclose: true
-    });
-    $(filtroFechaFin).datepicker({
-        format: 'dd/mm/yyyy',
-        language: 'es',
-        autoclose: true
-    });
-    let prevStartDate = null;
-    let prevEndDate = null;
-    function handleDateFilterChange(ini) {
-        const startDateValue = filtroFechaInicio.value;
-        const endDateValue = filtroFechaFin.value;
-        let startDate = startDateValue ? new Date(startDateValue.split('/').reverse().join('/')) : null;
-        let endDate = endDateValue ? new Date(endDateValue.split('/').reverse().join('/')) : null;
-        if (ini && prevStartDate && prevStartDate.getTime() === (startDate ? startDate.getTime() : null)) {
-            prevStartDate = null;
-            filtroFechaInicio.value = '';
-            startDate = null;
-        } else {
-            prevStartDate = startDate;
-        }
-        if (!ini && prevEndDate && prevEndDate.getTime() === (endDate ? endDate.getTime() : null)) {
-            prevEndDate = null;
-            filtroFechaFin.value = '';
-            endDate = null;
-        } else {
-            prevEndDate = endDate;
-        }
-        let filtros = getFiltrosGastos();
-        filtros.fechaInicio = startDate;
-        filtros.fechaFin = endDate;
-        filtros.categoria = null;
-        setFiltrosGastos(filtros);
-        updateFilterButtonTextHistorial(startDate, endDate);
-        paginaActualHistorial = 1;
-        renderHistorial(paginaActualHistorial);
-        renderPaginacionHistorial();
+  const tagFiltrarFechas = document.getElementById('tagFiltrarFechas');
+  const tagFiltrarCategorias = document.getElementById('tagFiltrarCategorias');
+  const filtroFechaInicio = document.getElementById('filtroFechaInicio');
+  const filtroFechaFin = document.getElementById('filtroFechaFin');
+  const categoriaFiltro = document.getElementById('categoriaFiltro');
+
+  // Inicializar datepickers
+  $(filtroFechaInicio).datepicker({
+    format: 'dd/mm/yyyy',
+    language: 'es',
+    autoclose: true
+  });
+  $(filtroFechaFin).datepicker({
+    format: 'dd/mm/yyyy',
+    language: 'es',
+    autoclose: true
+  });
+
+  let prevStartDate = null;
+  let prevEndDate = null;
+
+  function updateFilterButtonText(startDate = null, endDate = null, categoriaId = '') {
+    let filterTextFecha = 'Todas las fechas';
+    if (startDate && endDate) {
+      filterTextFecha = `Desde: ${formatDate(startDate)}  |  Hasta: ${formatDate(endDate)}`;
+    } else if (startDate) {
+      filterTextFecha = `Desde: ${formatDate(startDate)}`;
+    } else if (endDate) {
+      filterTextFecha = `Hasta: ${formatDate(endDate)}`;
     }
-    $(filtroFechaInicio).on('changeDate', function() {
-        handleDateFilterChange(true);
-    });
-    $(filtroFechaFin).on('changeDate', function() {
-        handleDateFilterChange(false);
-    });
-    // Botones rápidos
-    const tagFiltrarFechas = document.getElementById('tagFiltrarFechas');
-    const tagFiltrarCategorias = document.getElementById('tagFiltrarCategorias');
-    function updateFilterButtonTextHistorial(startDate = null, endDate = null, categoriaId = '') {
-        let filterTextFecha = 'Todas las fechas';
-        if (startDate && endDate) {
-            filterTextFecha = `Desde: ${formatDate(startDate)}  |  Hasta: ${formatDate(endDate)}`;
-        } else if (startDate) {
-            filterTextFecha = `Desde: ${formatDate(startDate)}`;
-        } else if (endDate) {
-            filterTextFecha = `Hasta: ${formatDate(endDate)}`;
-        }
-        tagFiltrarFechas.textContent = filterTextFecha;
-        if (tagFiltrarFechas.textContent === 'Todas las fechas') {
-            filtroFechaInicio.value = '';
-            filtroFechaFin.value = '';
-        }
-        let filterTextCat = 'Todas las categorías';
-        if (categoriaId && categoriaId !== '') {
-            filterTextCat = "Categoría: " + categorias.find(cat => cat.id === parseInt(categoriaId)).nombre;
-        }
-        tagFiltrarCategorias.textContent = filterTextCat;
+    tagFiltrarFechas.textContent = filterTextFecha;
+    if (tagFiltrarFechas.textContent === 'Todas las fechas') {
+      filtroFechaInicio.value = '';
+      filtroFechaFin.value = '';
     }
-    tagFiltrarCategorias.addEventListener('click', function() {
-        categoriaFiltro.value = '';
-        let filtros = getFiltrosGastos();
-        filtros.categoria = null;
-        setFiltrosGastos(filtros);
-        updateFilterButtonTextHistorial(null, null, '');
-        paginaActualHistorial = 1;
-        renderHistorial(paginaActualHistorial);
-        renderPaginacionHistorial();
-    });
-    tagFiltrarFechas.addEventListener('click', function() {
-        filtroFechaInicio.value = '';
-        filtroFechaFin.value = '';
-        let filtros = getFiltrosGastos();
-        filtros.fechaInicio = null;
-        filtros.fechaFin = null;
-        setFiltrosGastos(filtros);
-        updateFilterButtonTextHistorial(null, null, categoriaFiltro.value);
-        paginaActualHistorial = 1;
-        renderHistorial(paginaActualHistorial);
-        renderPaginacionHistorial();
-    });
-    function formatDate(date) {
-        if (!date) return '';
-        const dia = String(date.getDate()).padStart(2, '0');
-        const mes = String(date.getMonth() + 1).padStart(2, '0');
-        const año = date.getFullYear();
-        return `${dia}/${mes}/${año}`;
+    let filterTextCat = 'Todas las categorías';
+    if (categoriaId && categoriaId !== '') {
+      filterTextCat = "Categoría: " + categorias.find(cat => cat.id === parseInt(categoriaId)).nombre;
     }
-    // Inicializar
-    updateFilterButtonTextHistorial();
-    renderHistorial(paginaActualHistorial);
+    tagFiltrarCategorias.textContent = filterTextCat;
+  }
+
+  function formatDate(date) {
+    const dia = String(date.getDate()).padStart(2, '0');
+    const mes = String(date.getMonth() + 1).padStart(2, '0');
+    const año = date.getFullYear();
+    return `${dia}/${mes}/${año}`;
+  }
+
+  function filtroPorFecha(pagina = 1, startDate, endDate) {
+    let filtrosHist = getFiltrosGastos();
+    filtrosHist.fechaInicio = startDate;
+    filtrosHist.fechaFin = endDate;
+    filtrosHist.categoria = null;
+    setFiltrosGastos(filtrosHist);
+    renderHistorial(pagina);
     renderPaginacionHistorial();
+  }
+
+  function filtroPorCategoria(pagina = 1, categoriaId) {
+    let filtrosHist = getFiltrosGastos();
+    if (categoriaId === "") {
+      filtrosHist.categoria = null;
+    } else {
+      filtrosHist.fechaInicio = null;
+      filtrosHist.fechaFin = null;
+      filtrosHist.categoria = categoriaId;
+    }
+    setFiltrosGastos(filtrosHist);
+    renderHistorial(pagina);
+    renderPaginacionHistorial();
+  }
+
+  function handleDateFilterChange(ini) {
+    console.log('handleDateFilterChange ejecutado', ini, filtroFechaInicio.value, filtroFechaFin.value);
+    const startDateValue = filtroFechaInicio.value;
+    const endDateValue = filtroFechaFin.value;
+    let startDate = startDateValue ? new Date(startDateValue.split('/').reverse().join('/')) : null;
+    let endDate = endDateValue ? new Date(endDateValue.split('/').reverse().join('/')) : null;
+    if (ini && prevStartDate && prevStartDate.getTime() === (startDate ? startDate.getTime() : null)) {
+      prevStartDate = null;
+      filtroFechaInicio.value = '';
+      startDate = null;
+    } else {
+      prevStartDate = startDate;
+    }
+    if (!ini && prevEndDate && prevEndDate.getTime() === (endDate ? endDate.getTime() : null)) {
+      prevEndDate = null;
+      filtroFechaFin.value = '';
+      endDate = null;
+    } else {
+      prevEndDate = endDate;
+    }
+    filtroPorFecha(1, startDate, endDate);
+    updateFilterButtonText(startDate, endDate);
+  }
+
+  $(filtroFechaInicio).on('changeDate', function() {
+    handleDateFilterChange(true);
+  });
+  $(filtroFechaFin).on('changeDate', function() {
+    handleDateFilterChange(false);
+  });
+
+  // Asegura filtrado automático también con el evento 'change' estándar
+  filtroFechaInicio.addEventListener('change', function() {
+    handleDateFilterChange(true);
+  });
+  filtroFechaFin.addEventListener('change', function() {
+    handleDateFilterChange(false);
+  });
+
+  categoriaFiltro.innerHTML = '<option value="">Todas las categorías</option>';
+  categorias.forEach(categoria => {
+    if (categoria.user_id === parseInt(idUsuarioActivo)) {
+      const option = document.createElement('option');
+      option.value = categoria.id;
+      option.textContent = categoria.nombre;
+      categoriaFiltro.appendChild(option);
+    }
+  });
+
+  function filtrarCategoria() {
+    const categoriaId = categoriaFiltro.value;
+    filtroPorCategoria(1, categoriaId);
+    updateFilterButtonText(null, null, categoriaId);
+  }
+
+  categoriaFiltro.addEventListener('change', filtrarCategoria);
+
+  tagFiltrarFechas.addEventListener('click', function () {
+    filtroFechaInicio.value = '';
+    filtroFechaFin.value = '';
+    filtroPorFecha(1, null, null);
+    updateFilterButtonText(null, null, categoriaFiltro.value);
+  });
+
+  tagFiltrarCategorias.addEventListener('click', function () {
+    categoriaFiltro.value = '';
+    filtroPorCategoria(1, '');
+    updateFilterButtonText(null, null, '');
+  });
+
+  // Inicializar
+  updateFilterButtonText();
+  renderHistorial(1);
+  renderPaginacionHistorial();
 });
