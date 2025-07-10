@@ -127,17 +127,38 @@ document.addEventListener('DOMContentLoaded', function () {
   const filtroFechaFin = document.getElementById('filtroFechaFin');
   const categoriaFiltro = document.getElementById('categoriaFiltro');
 
-  // Inicializar datepickers
-  $(filtroFechaInicio).datepicker({
-    format: 'dd/mm/yyyy',
-    language: 'es',
-    autoclose: true
-  });
-  $(filtroFechaFin).datepicker({
-    format: 'dd/mm/yyyy',
-    language: 'es',
-    autoclose: true
-  });
+  // Detectar si es móvil
+  function esDispositivoMovil() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  }
+
+  if (esDispositivoMovil()) {
+    // Usar input nativo tipo date en móviles
+    filtroFechaInicio.type = 'date';
+    filtroFechaFin.type = 'date';
+    filtroFechaInicio.removeAttribute('readonly');
+    filtroFechaFin.removeAttribute('readonly');
+    filtroFechaInicio.placeholder = 'Fecha de inicio';
+    filtroFechaFin.placeholder = 'Fecha de fin';
+  } else {
+    // Inicializar datepickers solo en desktop
+    filtroFechaInicio.type = 'text';
+    filtroFechaFin.type = 'text';
+    filtroFechaInicio.setAttribute('readonly', true);
+    filtroFechaFin.setAttribute('readonly', true);
+    filtroFechaInicio.placeholder = 'Fecha de inicio';
+    filtroFechaFin.placeholder = 'Fecha de fin';
+    $(filtroFechaInicio).datepicker({
+      format: 'dd/mm/yyyy',
+      language: 'es',
+      autoclose: true
+    });
+    $(filtroFechaFin).datepicker({
+      format: 'dd/mm/yyyy',
+      language: 'es',
+      autoclose: true
+    });
+  }
 
   let prevStartDate = null;
   let prevEndDate = null;
@@ -194,12 +215,23 @@ document.addEventListener('DOMContentLoaded', function () {
     renderPaginacionHistorial();
   }
 
+  function parseFechaInput(valor) {
+    // Si es yyyy-mm-dd (input type date), lo convertimos a dd/mm/yyyy
+    if (/^\d{4}-\d{2}-\d{2}$/.test(valor)) {
+      const [y, m, d] = valor.split('-');
+      return `${d}/${m}/${y}`;
+    }
+    // Si ya es dd/mm/yyyy, lo dejamos igual
+    return valor;
+  }
+
   function handleDateFilterChange(ini) {
-    console.log('handleDateFilterChange ejecutado', ini, filtroFechaInicio.value, filtroFechaFin.value);
     const startDateValue = filtroFechaInicio.value;
     const endDateValue = filtroFechaFin.value;
-    let startDate = startDateValue ? new Date(startDateValue.split('/').reverse().join('/')) : null;
-    let endDate = endDateValue ? new Date(endDateValue.split('/').reverse().join('/')) : null;
+    const parsedStart = startDateValue ? parseFechaInput(startDateValue) : null;
+    const parsedEnd = endDateValue ? parseFechaInput(endDateValue) : null;
+    let startDate = parsedStart ? new Date(parsedStart.split('/').reverse().join('/')) : null;
+    let endDate = parsedEnd ? new Date(parsedEnd.split('/').reverse().join('/')) : null;
     if (ini && prevStartDate && prevStartDate.getTime() === (startDate ? startDate.getTime() : null)) {
       prevStartDate = null;
       filtroFechaInicio.value = '';
