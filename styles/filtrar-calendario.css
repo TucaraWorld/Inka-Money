@@ -117,3 +117,11 @@
 #categoriaSelect .btn-secondary:hover {
   background-color: #bdbdbd;
 }
+
+@media (max-width: 768px) {
+  .filtros-avanzados {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.5rem;
+  }
+}

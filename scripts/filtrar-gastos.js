@@ -4,31 +4,71 @@ document.addEventListener('DOMContentLoaded', function() {
   const filtroFechaInicio = document.getElementById('filtroFechaInicio');
   const filtroFechaFin = document.getElementById('filtroFechaFin');
 
-  // Inicializar datepickers para los nuevos inputs
-  $(filtroFechaInicio).datepicker({
-    format: 'dd/mm/yyyy',
-    language: 'es',
-    autoclose: true
-  });
-  $(filtroFechaFin).datepicker({
-    format: 'dd/mm/yyyy',
-    language: 'es',
-    autoclose: true
-  });
+  // Detectar dispositivo móvil y usar calendario nativo en móviles
+  function esDispositivoMovil() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  }
+  if (esDispositivoMovil()) {
+    filtroFechaInicio.type = 'date';
+    filtroFechaFin.type = 'date';
+    filtroFechaInicio.removeAttribute('readonly');
+    filtroFechaFin.removeAttribute('readonly');
+    filtroFechaInicio.placeholder = 'Fecha de inicio';
+    filtroFechaFin.placeholder = 'Fecha de fin';
+    if (!document.getElementById('labelFechaInicio')) {
+      const labelInicio = document.createElement('label');
+      labelInicio.setAttribute('for', 'filtroFechaInicio');
+      labelInicio.id = 'labelFechaInicio';
+      labelInicio.textContent = 'Fecha de inicio:';
+      filtroFechaInicio.parentNode.insertBefore(labelInicio, filtroFechaInicio);
+    }
+    if (!document.getElementById('labelFechaFin')) {
+      const labelFin = document.createElement('label');
+      labelFin.setAttribute('for', 'filtroFechaFin');
+      labelFin.id = 'labelFechaFin';
+      labelFin.textContent = 'Fecha de fin:';
+      filtroFechaFin.parentNode.insertBefore(labelFin, filtroFechaFin);
+    }
+  } else {
+    // Inicializar datepickers en desktop
+    $(filtroFechaInicio).datepicker({
+      format: 'dd/mm/yyyy',
+      language: 'es',
+      autoclose: true
+    });
+    $(filtroFechaFin).datepicker({
+      format: 'dd/mm/yyyy',
+      language: 'es',
+      autoclose: true
+    });
+  }
 
   let prevStartDate = null;
   let prevEndDate = null;
 
+  // Utilidad para parsear fecha de input (soporta dd/mm/yyyy y yyyy-mm-dd)
+  function parseFechaInput(valor) {
+    if (!valor) return null;
+    if (/^\d{4}-\d{2}-\d{2}$/.test(valor)) {
+      const [y, m, d] = valor.split('-');
+      return new Date(Number(y), Number(m) - 1, Number(d));
+    }
+    if (/^\d{2}\/\d{2}\/\d{4}$/.test(valor)) {
+      const [d, m, y] = valor.split('/');
+      return new Date(Number(y), Number(m) - 1, Number(d));
+    }
+    return null;
+  }
+
   function handleDateFilterChange(ini) {
     const startDateValue = filtroFechaInicio.value;
     const endDateValue = filtroFechaFin.value;
-
-    let startDate = startDateValue ? new Date(startDateValue.split('/').reverse().join('/')) : null;
-    let endDate = endDateValue ? new Date(endDateValue.split('/').reverse().join('/')) : null;
+    let startDate = parseFechaInput(startDateValue);
+    let endDate = parseFechaInput(endDateValue);
 
     console.log('Start Date:', startDate, ' - Prev start date:', prevStartDate);
     console.log('End Date:', endDate, ' - Prev end date:', prevEndDate);
-    if (ini && prevStartDate && prevStartDate.getTime() === startDate.getTime()) 
+    if (ini && prevStartDate && prevStartDate.getTime() === (startDate ? startDate.getTime() : null)) 
       {
         prevStartDate = null;
         filtroFechaInicio.value = '';
@@ -38,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
     else {
         prevStartDate = startDate;
       }
-    if (!ini && prevEndDate && prevEndDate.getTime() === endDate.getTime()) 
+    if (!ini && prevEndDate && prevEndDate.getTime() === (endDate ? endDate.getTime() : null)) 
       {
         prevEndDate = null;
         filtroFechaFin.value = '';
@@ -91,6 +131,27 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   $(filtroFechaFin).on('changeDate', function() {
     handleDateFilterChange(false);
+  });
+
+  // Asegurar filtrado también con eventos nativos para inputs date en móviles
+  filtroFechaInicio.addEventListener('change', function() {
+    handleDateFilterChange(true);
+  });
+  filtroFechaFin.addEventListener('change', function() {
+    handleDateFilterChange(false);
+  });
+
+  // Resetear filtros al hacer clic en los tags
+  tagFiltrarFechas.addEventListener('click', function() {
+    filtroFechaInicio.value = '';
+    filtroFechaFin.value = '';
+    filtroPorFecha(1, null, null);
+    updateFilterButtonText();
+  });
+  tagFiltrarCategorias.addEventListener('click', function() {
+    categoriaFiltro.value = '';
+    filtroPorCategoria(1, '');
+    updateFilterButtonText();
   });
 
   //Actualizar el texto del botón "Todas las fechas"
