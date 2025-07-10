@@ -49,21 +49,15 @@ function renderGastos(pagina = 1) {
 function obtenerGastosFiltrados(filtrosGas = {}) {
       const gastos = getGastos();
       // Filtrar por fecha
-
-      //console.log("Filtros de gastos:", filtrosGas);
-
       if (filtrosGas.fechaInicio || filtrosGas.fechaFin) {
-        //console.log("Filtrando por fecha:", filtrosGas.fechaInicio, filtrosGas.fechaFin);
           return gastos.filter(gasto => {
-                const fecha = new Date(gasto.fecha.split('/').reverse().join('/'));
-                //console.log("Fecha de gasto:", fecha);
-
-                const fechaInicio = filtrosGas.fechaInicio ? new Date(filtrosGas.fechaInicio) : null;
-                const fechaFin = filtrosGas.fechaFin ? new Date(filtrosGas.fechaFin) : null;
-
-                //console.log("Fecha inicio:", filtrosGas.fechaInicio)
-                //console.log("Fecha fin:", filtrosGas.fechaFin);
-                
+                let fecha = new Date(gasto.fecha.split('/').reverse().join('/'));
+                // Ajustar zona horaria para evitar desfase de un día
+                fecha.setHours(12,0,0,0);
+                let fechaInicio = filtrosGas.fechaInicio ? new Date(filtrosGas.fechaInicio) : null;
+                let fechaFin = filtrosGas.fechaFin ? new Date(filtrosGas.fechaFin) : null;
+                if (fechaInicio) fechaInicio.setHours(0,0,0,0);
+                if (fechaFin) fechaFin.setHours(23,59,59,999);
                 let valido = true;
                 if (fechaInicio && fecha < fechaInicio) valido = false;
                 if (fechaFin && fecha > fechaFin) valido = false;
@@ -118,6 +112,8 @@ function irPaginaGasto(pagina, totalPaginas) {
     renderGastos(paginaActual);
     renderPaginacionGastos();
 }
+
+// Implementar calendario nativo en móviles y filtrado dinámico de fechas
 
 renderGastos(paginaActual);
 renderPaginacionGastos();

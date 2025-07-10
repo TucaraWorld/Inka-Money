@@ -61,21 +61,15 @@ function renderIngresos(pagina = 1) {
   function obtenerIngresosFiltrados(filtrosIngresos = {}) {
       const ingresos = getIngresos();
       // Filtrar por fecha
-
-        //console.log("Filtros de ingresos:", filtrosIngresos);
-
       if (filtrosIngresos.fechaInicio || filtrosIngresos.fechaFin) {
-        //console.log("Filtrando por fecha:", filtrosIngresos.fechaInicio, filtrosIngresos.fechaFin);
           return ingresos.filter(ingreso => {
-                const fecha = new Date(ingreso.fecha.split('/').reverse().join('/'));
-                //console.log("Fecha de ingreso:", fecha);
-
-                const fechaInicio = filtrosIngresos.fechaInicio ? new Date(filtrosIngresos.fechaInicio) : null;
-                const fechaFin = filtrosIngresos.fechaFin ? new Date(filtrosIngresos.fechaFin) : null;
-
-                //console.log("Fecha inicio:", filtrosIngresos.fechaInicio)
-                //console.log("Fecha fin:", filtrosIngresos.fechaFin);
-
+                let fecha = new Date(ingreso.fecha.split('/').reverse().join('/'));
+                // Ajustar zona horaria para evitar desfase de un día
+                fecha.setHours(12,0,0,0);
+                let fechaInicio = filtrosIngresos.fechaInicio ? new Date(filtrosIngresos.fechaInicio) : null;
+                let fechaFin = filtrosIngresos.fechaFin ? new Date(filtrosIngresos.fechaFin) : null;
+                if (fechaInicio) fechaInicio.setHours(0,0,0,0);
+                if (fechaFin) fechaFin.setHours(23,59,59,999);
                 let valido = true;
                 if (fechaInicio && fecha < fechaInicio) valido = false;
                 if (fechaFin && fecha > fechaFin) valido = false;
