@@ -1,144 +1,182 @@
 document.addEventListener('DOMContentLoaded', function() {
-  const btnFiltrarPorFecha = document.getElementById('btnFiltrarPorFecha');
-  const btnFiltrarPorCategoria = document.getElementById('btnFiltrarPorCategoria');
-  const calendarContainer = document.getElementById('calendarContainer');
-  const inputStartDate = document.getElementById('startDate');
-  const inputEndDate = document.getElementById('endDate');
-  const btnApplyDateFilter = document.getElementById('applyDateFilter');
-  const btnCloseCalendar = document.getElementById('closeCalendar');
   const tagFiltrarFechas = document.getElementById('tagFiltrarFechas');
   const tagFiltrarCategorias = document.getElementById('tagFiltrarCategorias');
+  const filtroFechaInicio = document.getElementById('filtroFechaInicio');
+  const filtroFechaFin = document.getElementById('filtroFechaFin');
 
-  //Mostrar el calendario cuando se haga clic en el botón de filtro
-  btnFiltrarPorFecha.addEventListener('click', function() {
-    calendarContainer.style.display = 'block';
-
-    $(inputStartDate).datepicker({
+  // Detectar dispositivo móvil y usar calendario nativo en móviles
+  function esDispositivoMovil() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  }
+  if (esDispositivoMovil()) {
+    filtroFechaInicio.type = 'date';
+    filtroFechaFin.type = 'date';
+    filtroFechaInicio.removeAttribute('readonly');
+    filtroFechaFin.removeAttribute('readonly');
+    filtroFechaInicio.placeholder = 'Fecha de inicio';
+    filtroFechaFin.placeholder = 'Fecha de fin';
+    if (!document.getElementById('labelFechaInicio')) {
+      const labelInicio = document.createElement('label');
+      labelInicio.setAttribute('for', 'filtroFechaInicio');
+      labelInicio.id = 'labelFechaInicio';
+      labelInicio.textContent = 'Fecha de inicio:';
+      filtroFechaInicio.parentNode.insertBefore(labelInicio, filtroFechaInicio);
+    }
+    if (!document.getElementById('labelFechaFin')) {
+      const labelFin = document.createElement('label');
+      labelFin.setAttribute('for', 'filtroFechaFin');
+      labelFin.id = 'labelFechaFin';
+      labelFin.textContent = 'Fecha de fin:';
+      filtroFechaFin.parentNode.insertBefore(labelFin, filtroFechaFin);
+    }
+  } else {
+    // Inicializar datepickers en desktop
+    $(filtroFechaInicio).datepicker({
       format: 'dd/mm/yyyy',
       language: 'es',
       autoclose: true
     });
-
-    $(inputEndDate).datepicker({
+    $(filtroFechaFin).datepicker({
       format: 'dd/mm/yyyy',
       language: 'es',
       autoclose: true
     });
-  });
+  }
 
-  btnCloseCalendar.addEventListener('click', function() {
-    calendarContainer.style.display = 'none';
-    inputStartDate.value = '';
-    inputEndDate.value = '';
-  });
+  let prevStartDate = null;
+  let prevEndDate = null;
 
-  //Aplicar el filtro de fecha
-  btnApplyDateFilter.addEventListener('click', function() {
-    const startDate = inputStartDate.value ? new Date(inputStartDate.value.split('/').reverse().join('/')) : null;
-    const endDate = inputEndDate.value ? new Date(inputEndDate.value.split('/').reverse().join('/')) : null;
+  // Utilidad para parsear fecha de input (soporta dd/mm/yyyy y yyyy-mm-dd)
+  function parseFechaInput(valor) {
+    if (!valor) return null;
+    if (/^\d{4}-\d{2}-\d{2}$/.test(valor)) {
+      const [y, m, d] = valor.split('-');
+      return new Date(Number(y), Number(m) - 1, Number(d));
+    }
+    if (/^\d{2}\/\d{2}\/\d{4}$/.test(valor)) {
+      const [d, m, y] = valor.split('/');
+      return new Date(Number(y), Number(m) - 1, Number(d));
+    }
+    return null;
+  }
+
+  function handleDateFilterChange(ini) {
+    const startDateValue = filtroFechaInicio.value;
+    const endDateValue = filtroFechaFin.value;
+    let startDate = parseFechaInput(startDateValue);
+    let endDate = parseFechaInput(endDateValue);
+
+    console.log('Start Date:', startDate, ' - Prev start date:', prevStartDate);
+    console.log('End Date:', endDate, ' - Prev end date:', prevEndDate);
+    if (ini && prevStartDate && prevStartDate.getTime() === (startDate ? startDate.getTime() : null)) 
+      {
+        prevStartDate = null;
+        filtroFechaInicio.value = '';
+        startDate = null;
+        console.log('Fecha de inicio eliminada');
+      }
+    else {
+        prevStartDate = startDate;
+      }
+    if (!ini && prevEndDate && prevEndDate.getTime() === (endDate ? endDate.getTime() : null)) 
+      {
+        prevEndDate = null;
+        filtroFechaFin.value = '';
+        endDate = null;
+      }
+    else {
+        prevEndDate = endDate;
+      }
     
     filtroPorFecha(1, startDate, endDate);
     updateFilterButtonText(startDate, endDate);
-    
-    calendarContainer.style.display = 'none';
-  });
-
-  //Filtrar las filas según la fecha seleccionada
-  function filterRowsByDate(startDate, endDate) {
-    const rows = document.querySelectorAll('#cuerpoTablaGastos tr');
-    let anyRowVisible = false;
-
-    rows.forEach(row => {
-      const rowDate = row.cells[1].textContent;
-      const rowDateObject = new Date(rowDate.split('/').reverse().join('-'));
-
-      let showRow = true;
-
-      if (startDate && rowDateObject < startDate) {
-        showRow = false;
-      }
-
-      if (endDate && rowDateObject > endDate) {
-        showRow = false;
-      }
-
-      if (showRow) {
-        row.style.display = '';
-        anyRowVisible = true;
-      } else {
-        row.style.display = 'none';
-      }
-    });
-
-    // Mostrar o ocultar el mensaje de advertencia
-    const warningMessage = document.getElementById('noRecordsWarning');
-    if (anyRowVisible) {
-      warningMessage.style.display = 'none';  // Ocultar el mensaje si hay registros
-    } else {
-      warningMessage.style.display = 'block';  // Mostrar el mensaje si no hay registros
-    }
   }
 
   function filtroPorFecha(pagina = 1, startDate, endDate) {
-      const gastosPagina = obtenerPaginaFiltroFecha(pagina, startDate, endDate);
-      const gastosBody = document.getElementById('cuerpoTablaGastos');
+      let filtrosGas = getFiltrosGastos();
+      
+      filtrosGas.fechaInicio = startDate;
+      filtrosGas.fechaFin = endDate;
+      filtrosGas.categoria = null;
 
-      gastosBody.innerHTML = '';
+      setFiltrosGastos(filtrosGas);
+      console.log('Filtros guardados en fpf:', getFiltrosGastos());
 
-      gastosBody.innerHTML = gastosPagina.map(gasto => `
-          <tr>
-            <td><i class="bi bi-pencil editar-fila" style="cursor:pointer"></i></td>
-            <td>${gasto.fecha}</td>
-            <td>${categorias.find(cat => cat.id === Number(gasto.categoria))?.nombre ?? 'Sin categoría'}</td>
-            <td>S/. ${gasto.monto.toFixed(2)}</td>
-            <td><i class="bi bi-trash eliminar-fila" style="cursor:pointer"></i></td>
-          </tr>
-      `).join('');
+      renderGastos(pagina); 
+      renderPaginacionGastos();
+  }
 
-      const warningMessage = document.getElementById('noRecordsWarning');
-      if (gastosPagina.length === 0) {
-        warningMessage.style.display = 'block';
+  // Función para filtrar los gastos por categoría
+  function filtroPorCategoria(pagina = 1, categoriaId) {
+      let filtroGas = getFiltrosGastos();
+      console.log('Filtros obtenidos en fpc:', filtroGas);
+
+      if (categoriaId === "") {
+        filtroGas.categoria = null;
       } else {
-        warningMessage.style.display = 'none';
+        filtroGas.fechaInicio = null;
+        filtroGas.fechaFin = null;
+        filtroGas.categoria = categoriaId;
       }
 
-      renderPaginacionGastos(gastosPagina);
+      setFiltrosGastos(filtroGas);
+      console.log('Filtros guardados en fpc:', getFiltros());
+
+      renderGastos(pagina); 
+      renderPaginacionGastos(); 
   }
 
-  function obtenerPaginaFiltroFecha(pagina, startDate, endDate) {
-    const todosLosGastos = getGastos();
+  $(filtroFechaInicio).on('changeDate', function() {
+    handleDateFilterChange(true);
+  });
+  $(filtroFechaFin).on('changeDate', function() {
+    handleDateFilterChange(false);
+  });
 
-    // Filtrar por fecha si se proporciona rango
-    const gastosFiltrados = todosLosGastos.filter(gasto => {
-      const gastoDate = new Date(gasto.fecha.split('/').reverse().join('-'));
+  // Asegurar filtrado también con eventos nativos para inputs date en móviles
+  filtroFechaInicio.addEventListener('change', function() {
+    handleDateFilterChange(true);
+  });
+  filtroFechaFin.addEventListener('change', function() {
+    handleDateFilterChange(false);
+  });
 
-      if (startDate && gastoDate < startDate) return false;
-      if (endDate && gastoDate > endDate) return false;
-
-      return true;
-    });
-
-    console.log('Filtrados: ', gastosFiltrados);
-
-    const inicio = (pagina - 1) * registrosPorPagina;
-    const fin = pagina * registrosPorPagina;
-    return gastosFiltrados.slice(inicio, fin);
-
-  }
+  // Resetear filtros al hacer clic en los tags
+  tagFiltrarFechas.addEventListener('click', function() {
+    filtroFechaInicio.value = '';
+    filtroFechaFin.value = '';
+    filtroPorFecha(1, null, null);
+    updateFilterButtonText();
+  });
+  tagFiltrarCategorias.addEventListener('click', function() {
+    categoriaFiltro.value = '';
+    filtroPorCategoria(1, '');
+    updateFilterButtonText();
+  });
 
   //Actualizar el texto del botón "Todas las fechas"
-  function updateFilterButtonText(startDate, endDate) {
-    let filterText = 'Todas las fechas';
+  function updateFilterButtonText(startDate = null, endDate = null, categoriaId = '') {
+    let filterTextFecha = 'Todas las fechas';
 
     if (startDate && endDate) {
-      filterText = `Desde: ${formatDate(startDate)}  |  Hasta: ${formatDate(endDate)}`;
+      filterTextFecha = `Desde: ${formatDate(startDate)}  |  Hasta: ${formatDate(endDate)}`;
     } else if (startDate) {
-      filterText = `Desde: ${formatDate(startDate)}`;
+      filterTextFecha = `Desde: ${formatDate(startDate)}`;
     } else if (endDate) {
-      filterText = `Hasta: ${formatDate(endDate)}`;
+      filterTextFecha = `Hasta: ${formatDate(endDate)}`;
     }
 
-    tagFiltrarFechas.textContent = filterText; // Actualiza el texto del botón
+    tagFiltrarFechas.textContent = filterTextFecha; // Actualiza el texto del botón
+    if (tagFiltrarFechas.textContent === 'Todas las fechas') {
+      filtroFechaInicio.value = '';
+      filtroFechaFin.value = '';
+    }
+
+    let filterTextCat = 'Todas las categorías';
+    if (categoriaId && categoriaId !== '') {
+      filterTextCat = "Categoría: " + categorias.find(cat => cat.id === parseInt(categoriaId)).nombre;
+    }
+    tagFiltrarCategorias.textContent = filterTextCat;
   }
 
   //Dar formato a la fecha
@@ -150,13 +188,9 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   
-  const categoriaSelect = document.getElementById('categoriaSelect');
   const categoriaFiltro = document.getElementById('categoriaFiltro');
-  const cancelarCategoriaFiltro = document.getElementById('cancelarCategoriaFiltro');
 
-  btnFiltrarPorCategoria.addEventListener('click', function() {
-    // Limpiar opciones previas, dejar solo la opción "Todas las categorías"
-    categoriaFiltro.innerHTML = '<option value=""></option>';
+  categoriaFiltro.innerHTML = '<option value="">Todas las categorías</option>';
     // Agregar opciones dinámicamente si tienes un array de categorías
     categorias.forEach(categoria => {
         if (categoria.user_id === parseInt(idUsuarioActivo)) {
@@ -166,85 +200,16 @@ document.addEventListener('DOMContentLoaded', function() {
             categoriaFiltro.appendChild(option);
         }
     });
-    // Mostrar el formulario
-    categoriaSelect.style.display = 'block';
-  });
 
-  if (categoriaSelect && categoriaFiltro) {
-    categoriaSelect.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const categoriaId = categoriaFiltro.value;
+  function filtrarCategoria() {
+    const categoriaId = categoriaFiltro.value;
 
-      console.log("Id: ", categoriaId);
+    console.log("Id: ", categoriaId);
 
-      filtroPorCategoria(1, categoriaId);
-      updateCategoriaFilterButtonText(categoriaId);
-      categoriaSelect.classList.add('visually-hidden');
-    });
-      
-
-      if (cancelarCategoriaFiltro) {
-        cancelarCategoriaFiltro.addEventListener('click', function() {
-        categoriaSelect.classList.add('visually-hidden');
-        tagFiltrarCategorias.textContent = "Todas las categorías";
-        renderGastos(paginaActual);
-        renderPaginacionGastos();
-        });
-      }
-      // Mostrar el formulario correctamente quitando la clase visually-hidden
-      btnFiltrarPorCategoria.addEventListener('click', function() {
-        categoriaSelect.classList.remove('visually-hidden');
-      });
-  }
-  
-
-  function filtroPorCategoria(pagina = 1, categoriaId) {
-    const gastosPagina = obtenerPaginaFiltroCategoria(pagina, categoriaId);
-    const gastosBody = document.getElementById('cuerpoTablaGastos');
-
-    gastosBody.innerHTML = '';
-
-    gastosBody.innerHTML = gastosPagina.map(gasto => `
-        <tr>
-            <td><i class="bi bi-pencil editar-fila" style="cursor:pointer"></i></td>
-            <td>${gasto.fecha}</td>
-            <td>${categorias.find(cat => cat.id === Number(gasto.categoria))?.nombre ?? 'Sin categoría'}</td>
-            <td>S/. ${gasto.monto.toFixed(2)}</td>
-            <td><i class="bi bi-trash eliminar-fila" style="cursor:pointer"></i></td>
-        </tr>
-    `).join('');
-
-    const warningMessage = document.getElementById('noRecordsWarning');
-    if (gastosPagina.length === 0) {
-      warningMessage.querySelector('p').textContent = 'No se han registrado gastos en la categoría seleccionada, ¿desearía registrar algún gasto? Haga clic en "Agregar gasto".';
-      warningMessage.style.display = 'block';
-    } else {
-      warningMessage.style.display = 'none';
-    }
-
-    renderPaginacionGastos(gastosPagina);
+    filtroPorCategoria(1, categoriaId);
+    updateFilterButtonText(null, null, categoriaId);
   }
 
-  function obtenerPaginaFiltroCategoria(pagina, categoriaId) {
-    const todosLosGastos = getGastos();
-
-    // Filtrar por categoría si se proporciona
-    const gastosFiltrados = categoriaId != "" ? todosLosGastos.filter(gasto => gasto.categoria === parseInt(categoriaId)) : todosLosGastos;
-
-
-    const inicio = (pagina - 1) * registrosPorPagina;
-    const fin = pagina * registrosPorPagina;
-    return gastosFiltrados.slice(inicio, fin);
-  }
-
-  function updateCategoriaFilterButtonText(categoriaId) {
-    let filterText = 'Todas las categorías';
-    if (categoriaId && categoriaId !== '') {
-      console.log("Cats: ", categorias);
-      console.log("CATID: ", categoriaId);
-      filterText = "Categoría: " + categorias.find(cat => cat.id === parseInt(categoriaId)).nombre;
-    }
-    tagFiltrarCategorias.textContent = filterText;
-  }
+  categoriaFiltro.addEventListener('change', filtrarCategoria);
   
 });

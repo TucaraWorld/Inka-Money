@@ -1,15 +1,38 @@
+let filtrosGast = {
+    fechaInicio: null,
+    fechaFin: null,
+    categoria: null
+};
+
+setFiltrosGastos(filtrosGast);
+
 const registrosPorPagina = 5;
 let paginaActual = 1;
 
-function obtenerPaginaGastos(pagina) {
+function obtenerPaginaGastos(pagina, gastosFiltrados) {
     const inicio = (pagina - 1) * registrosPorPagina;
     const fin = pagina * registrosPorPagina;
-    return getGastos().slice(inicio, fin);
+    return gastosFiltrados.slice(inicio, fin);
 }
 
 function renderGastos(pagina = 1) {
-    const gastosPagina = obtenerPaginaGastos(pagina);
+    const filtrosGas = getFiltrosGastos();
+    const gastosFiltrados = obtenerGastosFiltrados(filtrosGas);
+    const gastosPagina = obtenerPaginaGastos(pagina, gastosFiltrados);
     const gastosBody = document.getElementById('cuerpoTablaGastos');
+
+    gastosBody.innerHTML = '';
+
+    // Verificar si hay registros después de aplicar los filtros
+    if (gastosPagina.length === 0) {
+        // Mostrar el mensaje de advertencia si no hay registros
+        const warningMessage = document.getElementById('noRecordsWarning');
+        warningMessage.style.display = 'block';
+    } else {
+        // Ocultar el mensaje de advertencia si hay registros
+        const warningMessage = document.getElementById('noRecordsWarning');
+        warningMessage.style.display = 'none';
+    }
 
     gastosBody.innerHTML = gastosPagina.map(gasto => `
         <tr>
@@ -22,8 +45,40 @@ function renderGastos(pagina = 1) {
     `).join('');
 }
 
-function renderPaginacionGastos(regIngresos = getGastos()) {
-    const totalPaginas = Math.ceil(regIngresos.length / registrosPorPagina);
+  // Función para obtener los ingresos filtrados por fecha y categoría
+function obtenerGastosFiltrados(filtrosGas = {}) {
+      const gastos = getGastos();
+      // Filtrar por fecha
+      if (filtrosGas.fechaInicio || filtrosGas.fechaFin) {
+          return gastos.filter(gasto => {
+                let fecha = new Date(gasto.fecha.split('/').reverse().join('/'));
+                // Ajustar zona horaria para evitar desfase de un día
+                fecha.setHours(12,0,0,0);
+                let fechaInicio = filtrosGas.fechaInicio ? new Date(filtrosGas.fechaInicio) : null;
+                let fechaFin = filtrosGas.fechaFin ? new Date(filtrosGas.fechaFin) : null;
+                if (fechaInicio) fechaInicio.setHours(0,0,0,0);
+                if (fechaFin) fechaFin.setHours(23,59,59,999);
+                let valido = true;
+                if (fechaInicio && fecha < fechaInicio) valido = false;
+                if (fechaFin && fecha > fechaFin) valido = false;
+                return valido;
+          });
+      }
+
+      // Filtrar por categoría
+      if (filtrosGas.categoria) {
+          return gastos.filter(gasto => gasto.categoria === parseInt(filtrosGas.categoria));
+      }
+
+      //console.log("Gastos sin filtro:", gastos);
+
+      return gastos;
+  }
+
+function renderPaginacionGastos() {
+    const filtrosGas = getFiltrosGastos();
+    const gastosFiltrados = obtenerGastosFiltrados(filtrosGas);
+    const totalPaginas = Math.ceil(gastosFiltrados.length / registrosPorPagina);
     const paginacion = document.querySelector('.pagination');
     paginacion.innerHTML = '';
 
@@ -58,69 +113,8 @@ function irPaginaGasto(pagina, totalPaginas) {
     renderPaginacionGastos();
 }
 
+// Implementar calendario nativo en móviles y filtrado dinámico de fechas
+
 renderGastos(paginaActual);
 renderPaginacionGastos();
 
-function mostrarToastExitoGasto() {
-    const anterior = document.querySelector('.toast-registro');
-    if (anterior) anterior.remove();
-
-    const template = document.getElementById('register-expense-template');
-    const toast = template.content.cloneNode(true).children[0];
-
-    document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 5000);
-}
-
-const formAgregarGasto = document.getElementById('formAgregarGasto');
-
-document.getElementById('btnAgregarGasto').addEventListener('click', () => {
-    formAgregarGasto.reset();
-    const selectAgregarCategoria = document.getElementById('agregar-categoria-gasto');
-    selectAgregarCategoria.innerHTML = '<option value="">Seleccione una opción</option>';
-    getCategorias().forEach(categoria => {
-        if (categoria.user_id === parseInt(localStorage.getItem('idUsuarioActivo'))) {
-            const option = document.createElement('option');
-            option.value = categoria.id;
-            option.textContent = categoria.nombre;
-            selectAgregarCategoria.appendChild(option);
-        }
-    });
-    new bootstrap.Modal(document.getElementById('modalAgregarGasto')).show();
-});
-
-formAgregarGasto.addEventListener('submit', function (e) {
-    e.preventDefault();
-    const monto = document.getElementById('agregar-monto-gasto');
-    const categoria = document.getElementById('agregar-categoria-gasto');
-
-    let errores = 0;
-    document.querySelectorAll('.mensaje-error').forEach(el => el.textContent = '');
-
-    if (!monto.value.trim()) {
-        document.getElementById('error-monto-gasto').textContent = 'El monto es obligatorio';
-        errores++;
-    }
-
-    if (!categoria.value.trim()) {
-        document.getElementById('error-categoria-gasto').textContent = 'Selecciona una categoría';
-        errores++;
-    }
-
-    if (errores === 0) {
-        const nuevoGasto = {
-            id: getGastos().length + 1,
-            user_id: parseInt(localStorage.getItem('idUsuarioActivo')),
-            fecha: new Date().toLocaleDateString('es-ES'),
-            categoria: parseInt(categoria.value),
-            monto: parseFloat(monto.value)
-        };
-
-        guardarGasto(nuevoGasto);
-        renderGastos();
-        renderPaginacionGastos();
-
-        bootstrap.Modal.getInstance(document.getElementById('modalAgregarGasto')).hide();
-        mostrarToastExitoGasto();
-    }
-});

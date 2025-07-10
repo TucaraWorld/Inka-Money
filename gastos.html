@@ -23,7 +23,12 @@
 
 </head>
 <body class="layout-wrapper">
-
+  <!-- Barra hamburguesa móvil -->
+  <div class="franja-hamburguesa">
+    <button class="btn-hamburguesa" id="toggleSidebar">&#9776;</button>
+      <img src="assets/logo.png" alt="Logo de Inka Money" class="logo-img" width="32" height="32" />
+      <span class="logo-text">InkaMoney</span>
+  </div>
   <!-- HEADER -->
   <header class="top-header" aria-label="Encabezado superior"></header>
 
@@ -49,7 +54,8 @@
               <ul class="nav flex-column ms-4 mt-2 submenu-registros">
                 <li><a href="ingresos.html" class="nav-link text-white"><i class="bi bi-plus-lg me-2"></i>Ingresos</a></li>
                 <li><a href="gastos.html" class="nav-link nav-gastos"><i class="bi bi-dash-lg me-2"></i>Gastos</a></li>
-                <li><a href="balance.html" class="nav-link text-white"><i class="bi bi-bar-chart me-2"></i>Balance</a></li>
+                <li><a href="presupuesto.html" class="nav-link text-white"><i class="bi bi-bar-chart me-2"></i>Presupuesto</a></li>
+                <li><a href="formulario-categoria.html" class="nav-link text-white"><i class="bi bi-tags me-2"></i>Categorías</a></li>
               </ul>
             </div>
           </li>
@@ -79,7 +85,7 @@
         <!-- TÍTULO Y BOTÓN -->
         <header class="d-flex justify-content-between align-items-center mb-4 encabezado-principal">
           <h2>Gastos</h2>
-          <a class="btn btn-warning fw-bold rounded-pill px-4 boton-agregar-gasto" 
+          <a href="registrar-gasto.html" class="btn btn-warning fw-bold rounded-pill px-4 boton-agregar-gasto" 
             id="btnAgregarGasto">
             + Agregar gasto
           </a>
@@ -95,40 +101,17 @@
         <!-- FILTROS AVANZADOS -->
         <section class="mb-4 d-flex justify-content-end align-items-center gap-2 flex-wrap filtros-avanzados" aria-label="Agregar filtros">
           <span class="fw-bold filtro-label">+ Agregar Filtro</span>
-          <button class="btn btn-white btn-cuadrado text-dark" id="btnFiltrarPorCategoria">Por categoría</button>
-          <button class="btn btn-white btn-cuadrado text-dark" id="btnFiltrarPorFecha">Por fecha</button>
+          <select class="form-select form-select-sm mx-2" style="width:auto;" id="categoriaFiltro">           
+          </select>
+          <input type="text" id="filtroFechaInicio" class="form-select form-select-sm mx-2" style="width:auto;" placeholder="Fecha de inicio" readonly>
+          <input type="text" id="filtroFechaFin" class="form-select form-select-sm mx-2" style="width:auto;" placeholder="Fecha de fin" readonly>
         </section>
-
-        <!-- Contenedor del calendario (este se mostrará solo cuando se haga clic en el filtro) -->
-        <div id="calendarContainer" style="display: none;">
-          <button class="btn-close-calendar" id="closeCalendar" aria-label="Cerrar calendario">&times;</button>
-          <label for="startDate">Fecha de inicio:</label>
-          <input type="text" id="startDate" class="form-control" placeholder="Selecciona una fecha de inicio">
-
-          <label for="endDate">Fecha de fin:</label>
-          <input type="text" id="endDate" class="form-control" placeholder="Selecciona una fecha de fin">
-
-          <button id="applyDateFilter" class="btn btn-primary">Aplicar filtro</button>
-        </div>
-
-        <!-- Selector de categoría (oculto por defecto, tipo mini formulario) -->
-        <form class="mb-4" style="display: none;" id="categoriaSelect">
-          <label class="form-label fw-bold">Filtrar por categoría:</label>
-          <div>
-            <select class="form-select mb-2" id="categoriaFiltro">
-            </select>
-            <div class="d-flex gap-2">
-              <button type="submit" class="btn btn-primary btn-sm">Aplicar</button>
-              <button type="button" class="btn btn-secondary btn-sm" id="cancelarCategoriaFiltro">Cancelar</button>
-            </div>
-          </div>
-        </form>
 
         <div id="noRecordsWarning" class="alert alert-info" style="display: none;">
             <i class="bi bi-exclamation-circle-fill"></i>
             <div class="alert-text">
                 <strong>¡Advertencia!</strong>
-                <p>No se han registrado gastos en el rango de fecha seleccionado, ¿desearía registrar algún gasto? Haga clic en "Agregar gasto".</p>
+                <p>No se han registrado gastos en los filtros seleccionados, ¿desearía registrar algún gasto? Haga clic en "Agregar gasto".</p>
             </div>
         </div>
 
@@ -201,49 +184,6 @@
       </div>
     </div>
   </template>
-  <!-- Modal para agregar gasto -->
-  <div class="modal fade" id="modalAgregarGasto" tabindex="-1" aria-labelledby="modalAgregarGastoLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <form id="formAgregarGasto" autocomplete="off">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modalAgregarGastoLabel">Agregar Gasto</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-         </div>
-          <div class="modal-body">
-          <div class="mb-3">
-            <label class="form-label">Monto de gasto*</label>
-            <input type="text" class="form-control campo" id="agregar-monto-gasto" />
-            <div class="text-danger mensaje-error" id="error-monto-gasto"></div>
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label">Categoría de gasto*</label>
-            <select class="form-select campo" id="agregar-categoria-gasto">
-              <option value="">Seleccione una opción</option>
-            </select>
-            <div class="text-danger mensaje-error" id="error-categoria-gasto"></div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="submit" class="btn btn-warning">Registrar gasto</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-<!-- Toast de éxito -->
-<template id="register-expense-template">
-  <div class="toast-registro shadow rounded d-flex align-items-center justify-content-between p-3 notificacion-toast">
-    <div class="check-circle rounded-circle me-3 d-flex justify-content-center align-items-center">
-      <i class="bi bi-check-lg"></i>
-    </div>        
-    <span class="text-white fw-bold">¡Gasto registrado exitosamente!</span>
-  </div>
-</template>
-
   <!-- Modal para editar gasto -->
   <div class="modal fade" id="modalEditarGasto" tabindex="-1" aria-labelledby="modalEditarGastoLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -289,6 +229,7 @@
 
   <!-- Custom JS -->
   <script src="scripts/data.js"></script>
+  <script src="scripts/sidebar.js"></script>
   <script src="scripts/gastos.js"></script>
   <script src="scripts/filtrar-gastos.js"></script>
   <!-- jQuery (requerido para Bootstrap Datepicker) -->

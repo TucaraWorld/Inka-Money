@@ -1,111 +1,166 @@
 document.addEventListener('DOMContentLoaded', function() {
-  const btnFiltrarPorFecha = document.getElementById('btnFiltrarPorFecha');
-  const btnFiltrarPorCategoria = document.getElementById('btnFiltrarPorCategoria');
-  const calendarContainer = document.getElementById('calendarContainer');
-  const inputStartDate = document.getElementById('startDate');
-  const inputEndDate = document.getElementById('endDate');
-  const btnApplyDateFilter = document.getElementById('applyDateFilter');
-  const btnCloseCalendar = document.getElementById('closeCalendar');
   const tagFiltrarFechas = document.getElementById('tagFiltrarFechas');
   const tagFiltrarCategorias = document.getElementById('tagFiltrarCategorias');
+  const filtroFechaInicio = document.getElementById('filtroFechaInicio');
+  const filtroFechaFin = document.getElementById('filtroFechaFin');
 
-  //Mostrar el calendario cuando se haga clic en el botón de filtro
-  btnFiltrarPorFecha.addEventListener('click', function() {
-    calendarContainer.style.display = 'block';
-
-    $(inputStartDate).datepicker({
+  // Detectar dispositivo móvil y usar calendario nativo en móviles
+  function esDispositivoMovil() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  }
+  if (esDispositivoMovil()) {
+    filtroFechaInicio.type = 'date';
+    filtroFechaFin.type = 'date';
+    filtroFechaInicio.removeAttribute('readonly');
+    filtroFechaFin.removeAttribute('readonly');
+    filtroFechaInicio.placeholder = 'Fecha de inicio';
+    filtroFechaFin.placeholder = 'Fecha de fin';
+    if (!document.getElementById('labelFechaInicio')) {
+      const labelInicio = document.createElement('label');
+      labelInicio.setAttribute('for', 'filtroFechaInicio');
+      labelInicio.id = 'labelFechaInicio';
+      labelInicio.textContent = 'Fecha de inicio:';
+      filtroFechaInicio.parentNode.insertBefore(labelInicio, filtroFechaInicio);
+    }
+    if (!document.getElementById('labelFechaFin')) {
+      const labelFin = document.createElement('label');
+      labelFin.setAttribute('for', 'filtroFechaFin');
+      labelFin.id = 'labelFechaFin';
+      labelFin.textContent = 'Fecha de fin:';
+      filtroFechaFin.parentNode.insertBefore(labelFin, filtroFechaFin);
+    }
+  } else {
+    // Inicializar datepickers en desktop
+    $(filtroFechaInicio).datepicker({
       format: 'dd/mm/yyyy',
       language: 'es',
       autoclose: true
     });
-
-    $(inputEndDate).datepicker({
+    $(filtroFechaFin).datepicker({
       format: 'dd/mm/yyyy',
       language: 'es',
       autoclose: true
     });
-  });
+  }
 
-  btnCloseCalendar.addEventListener('click', function() {
-    calendarContainer.style.display = 'none';
-    inputStartDate.value = '';
-    inputEndDate.value = '';
-  });
+  let prevStartDate = null;
+  let prevEndDate = null;
 
-  //Aplicar el filtro de fecha
-  btnApplyDateFilter.addEventListener('click', function() {
-    const startDate = inputStartDate.value ? new Date(inputStartDate.value.split('/').reverse().join('/')) : null;
-    const endDate = inputEndDate.value ? new Date(inputEndDate.value.split('/').reverse().join('/')) : null;
+  // Utilidad para parsear fecha de input (soporta dd/mm/yyyy y yyyy-mm-dd)
+  function parseFechaInput(valor) {
+    if (!valor) return null;
+    if (/^\d{4}-\d{2}-\d{2}$/.test(valor)) {
+      const [y, m, d] = valor.split('-');
+      return new Date(Number(y), Number(m) - 1, Number(d));
+    }
+    if (/^\d{2}\/\d{2}\/\d{4}$/.test(valor)) {
+      const [d, m, y] = valor.split('/');
+      return new Date(Number(y), Number(m) - 1, Number(d));
+    }
+    return null;
+  }
+
+  function handleDateFilterChange(ini) {
+    const startDateValue = filtroFechaInicio.value;
+    const endDateValue = filtroFechaFin.value;
+    let startDate = parseFechaInput(startDateValue);
+    let endDate = parseFechaInput(endDateValue);
+
+    console.log('Start Date:', startDate, ' - Prev start date:', prevStartDate);
+    console.log('End Date:', endDate, ' - Prev end date:', prevEndDate);
+    if (ini && prevStartDate && prevStartDate.getTime() === (startDate ? startDate.getTime() : null)) 
+      {
+        prevStartDate = null;
+        filtroFechaInicio.value = '';
+        startDate = null;
+        console.log('Fecha de inicio eliminada');
+      }
+    else {
+        prevStartDate = startDate;
+      }
+    if (!ini && prevEndDate && prevEndDate.getTime() === (endDate ? endDate.getTime() : null)) 
+      {
+        prevEndDate = null;
+        filtroFechaFin.value = '';
+        endDate = null;
+      }
+    else {
+        prevEndDate = endDate;
+      }
     
     filtroPorFecha(1, startDate, endDate);
     updateFilterButtonText(startDate, endDate);
-    
-    calendarContainer.style.display = 'none';
-  });
+  }
 
-  
+
+  // Función para filtrar los ingresos por fecha
   function filtroPorFecha(pagina = 1, startDate, endDate) {
-      const ingresosPagina = obtenerPaginaFiltroFecha(pagina, startDate, endDate);
-      const ingresosBody = document.getElementById('cuerpoTablaIngresos');
+      let filtrosIngresos = getFiltros();
+      console.log('Filtros obtenidos en fpf:', filtrosIngresos);
 
-      ingresosBody.innerHTML = '';
+      filtrosIngresos.fechaInicio = startDate; 
+      filtrosIngresos.fechaFin = endDate;
+      filtrosIngresos.categoria = null;
 
-      ingresosBody.innerHTML = ingresosPagina.map(ingreso => `
-          <tr>
-              <td><i class="bi bi-pencil editar-fila" style="cursor:pointer"></i></td>
-              <td>${ingreso.fecha}</td>
-              <td>${categorias.find(cat => cat.id === ingreso.categoria)?.nombre ?? 'Sin categoría'}</td>
-              <td>S/. ${ingreso.monto.toFixed(2)}</td>
-              <td>${ingreso.descripcion}</td>
-              <td>${ingreso.frecuencia}</td>
-              <td><i class="bi bi-trash eliminar-fila" style="cursor: pointer;"></i></td>
-          </tr>
-      `).join('');
+      setFiltros(filtrosIngresos);
+      console.log('Filtros guardados en fpf:', getFiltros());
+      
+      renderIngresos(pagina); 
+      renderPaginacion();
+  }
 
-      const warningMessage = document.getElementById('noRecordsWarning');
-      if (ingresosPagina.length === 0) {
-        warningMessage.style.display = 'block';
+  // Función para filtrar los ingresos por categoría
+  function filtroPorCategoria(pagina = 1, categoriaId) {
+      let filtrosIngresos = getFiltros();
+      console.log('Filtros obtenidos en fpc:', filtrosIngresos);
+
+      if (categoriaId === "") {
+        filtrosIngresos.categoria = null;
       } else {
-        warningMessage.style.display = 'none';
+        filtrosIngresos.fechaInicio = null;
+        filtrosIngresos.fechaFin = null;
+        filtrosIngresos.categoria = categoriaId;
       }
 
-      renderPaginacion(ingresosPagina);
+      setFiltros(filtrosIngresos);
+      console.log('Filtros guardados en fpc:', getFiltros());
+
+      renderIngresos(pagina); 
+      renderPaginacion(); 
   }
 
-  function obtenerPaginaFiltroFecha(pagina, startDate, endDate) {
-    const todosLosIngresos = getIngresos();
 
-    // Filtrar por fecha si se proporciona rango
-    const ingresosFiltrados = todosLosIngresos.filter(ingreso => {
-      const ingresoDate = new Date(ingreso.fecha.split('/').reverse().join('-'));
-
-      if (startDate && ingresoDate < startDate) return false;
-      if (endDate && ingresoDate > endDate) return false;
-
-      return true;
-    });
-
-    console.log('Filtrados: ', ingresosFiltrados);
-
-    const inicio = (pagina - 1) * registrosPorPagina;
-    const fin = pagina * registrosPorPagina;
-    return ingresosFiltrados.slice(inicio, fin);
-
-  }
+  // Usar el evento 'changeDate' de Bootstrap Datepicker para inputs readonly
+  $(filtroFechaInicio).on('changeDate', function() {
+    handleDateFilterChange(true);
+  });
+  $(filtroFechaFin).on('changeDate', function() {
+    handleDateFilterChange(false);
+  });
 
   //Actualizar el texto del botón "Todas las fechas"
-  function updateFilterButtonText(startDate, endDate) {
-    let filterText = 'Todas las fechas';
+  function updateFilterButtonText(startDate = null, endDate = null, categoriaId = '') {
+    let filterTextFecha = 'Todas las fechas';
 
     if (startDate && endDate) {
-      filterText = `Desde: ${formatDate(startDate)}  |  Hasta: ${formatDate(endDate)}`;
+      filterTextFecha = `Desde: ${formatDate(startDate)}  |  Hasta: ${formatDate(endDate)}`;
     } else if (startDate) {
-      filterText = `Desde: ${formatDate(startDate)}`;
+      filterTextFecha = `Desde: ${formatDate(startDate)}`;
     } else if (endDate) {
-      filterText = `Hasta: ${formatDate(endDate)}`;
+      filterTextFecha = `Hasta: ${formatDate(endDate)}`;
     }
 
-    tagFiltrarFechas.textContent = filterText;
+    tagFiltrarFechas.textContent = filterTextFecha;
+    if (tagFiltrarFechas.textContent === 'Todas las fechas') {
+      filtroFechaInicio.value = '';
+      filtroFechaFin.value = '';
+    }
+
+    let filterTextCat = 'Todas las categorías';
+    if (categoriaId && categoriaId !== '') {
+      filterTextCat = "Categoría: " + categorias.find(cat => cat.id === parseInt(categoriaId)).nombre;
+    }
+    tagFiltrarCategorias.textContent = filterTextCat;
 
   }
 
@@ -117,15 +172,10 @@ document.addEventListener('DOMContentLoaded', function() {
     return `${dia}/${mes}/${año}`;
   }
 
-  
 
-  const categoriaSelect = document.getElementById('categoriaSelect');
-  const categoriaFiltro = document.getElementById('categoriaFiltro');
-  const cancelarCategoriaFiltro = document.getElementById('cancelarCategoriaFiltro');
+  const categoriaFiltro = document.getElementById('categoriaFiltro');  
 
-  btnFiltrarPorCategoria.addEventListener('click', function() {
-    // Limpiar opciones previas, dejar solo la opción "Todas las categorías"
-    categoriaFiltro.innerHTML = '<option value=""></option>';
+  categoriaFiltro.innerHTML = '<option value="">Todas las categorías</option>';
     // Agregar opciones dinámicamente si tienes un array de categorías
     categorias.forEach(categoria => {
         if (categoria.user_id === parseInt(idUsuarioActivo)) {
@@ -135,87 +185,17 @@ document.addEventListener('DOMContentLoaded', function() {
             categoriaFiltro.appendChild(option);
         }
     });
-    // Mostrar el formulario
-    categoriaSelect.style.display = 'block';
-  });
 
-  if (categoriaSelect && categoriaFiltro) {
-    categoriaSelect.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const categoriaId = categoriaFiltro.value;
 
-      console.log("Id: ", categoriaId);
+  function filtrarCategoria() {
+    const categoriaId = categoriaFiltro.value;
 
-      filtroPorCategoria(1, categoriaId);
-      updateCategoriaFilterButtonText(categoriaId);
-      categoriaSelect.classList.add('visually-hidden');
-    });
-      
+    console.log("Id: ", categoriaId);
 
-      if (cancelarCategoriaFiltro) {
-        cancelarCategoriaFiltro.addEventListener('click', function() {
-        categoriaSelect.classList.add('visually-hidden');
-        tagFiltrarCategorias.textContent = "Todas las categorías";
-        renderIngresos(paginaActual);
-        renderPaginacion();
-        });
-      }
-      // Mostrar el formulario correctamente quitando la clase visually-hidden
-      btnFiltrarPorCategoria.addEventListener('click', function() {
-        categoriaSelect.classList.remove('visually-hidden');
-      });
-  }
-  
-
-  function filtroPorCategoria(pagina = 1, categoriaId) {
-    const ingresosPagina = obtenerPaginaFiltroCategoria(pagina, categoriaId);
-    const ingresosBody = document.getElementById('cuerpoTablaIngresos');
-
-    ingresosBody.innerHTML = '';
-
-    ingresosBody.innerHTML = ingresosPagina.map(ingreso => `
-        <tr>
-            <td><i class="bi bi-pencil editar-fila" style="cursor:pointer"></i></td>
-            <td>${ingreso.fecha}</td>
-            <td>${categorias.find(cat => cat.id === ingreso.categoria)?.nombre ?? 'Sin categoría'}</td>
-            <td>S/. ${ingreso.monto.toFixed(2)}</td>
-            <td>${ingreso.descripcion}</td>
-            <td>${ingreso.frecuencia}</td>
-            <td><i class="bi bi-trash eliminar-fila" style="cursor: pointer;"></i></td>
-        </tr>
-    `).join('');
-
-    const warningMessage = document.getElementById('noRecordsWarning');
-    if (ingresosPagina.length === 0) {
-      warningMessage.querySelector('p').textContent = 'No se han registrado ingresos en la categoría seleccionada, ¿desearía registrar algún ingreso? Haga clic en "Agregar ingreso".';
-      warningMessage.style.display = 'block';
-    } else {
-      warningMessage.style.display = 'none';
-    }
-
-    renderPaginacion(ingresosPagina);
+    filtroPorCategoria(1, categoriaId);
+    updateFilterButtonText(null, null, categoriaId);
   }
 
-  function obtenerPaginaFiltroCategoria(pagina, categoriaId) {
-    const todosLosIngresos = getIngresos();
-
-    // Filtrar por categoría si se proporciona
-    const ingresosFiltrados = categoriaId != "" ? todosLosIngresos.filter(ingreso => ingreso.categoria === parseInt(categoriaId)) : todosLosIngresos;
-
-
-    const inicio = (pagina - 1) * registrosPorPagina;
-    const fin = pagina * registrosPorPagina;
-    return ingresosFiltrados.slice(inicio, fin);
-  }
-
-  function updateCategoriaFilterButtonText(categoriaId) {
-    let filterText = 'Todas las categorías';
-    if (categoriaId && categoriaId !== '') {
-      console.log("Cats: ", categorias);
-      console.log("CATID: ", categoriaId);
-      filterText = "Categoría: " + categorias.find(cat => cat.id === parseInt(categoriaId)).nombre;
-    }
-    tagFiltrarCategorias.textContent = filterText;
-  }
+  categoriaFiltro.addEventListener('change', filtrarCategoria);
 
 });

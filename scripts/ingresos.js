@@ -1,20 +1,47 @@
+let filtrosIng = {
+    fechaInicio: null,
+    fechaFin: null,
+    categoria: null
+};
+
+setFiltros(filtrosIng);
+
+
 // Número de registros por página
 const registrosPorPagina = 5;
 
 let paginaActual = 1;
 
+function obtenerPagina(pagina, ingresosFiltrados) {
+    const inicio = (pagina - 1) * registrosPorPagina;
+    const fin = pagina * registrosPorPagina;
+    return ingresosFiltrados.slice(inicio, fin);
+}
+
+/*
 function obtenerPagina(pagina) {
     const inicio = (pagina - 1) * registrosPorPagina;
     const fin = pagina * registrosPorPagina;
     return getIngresos().slice(inicio, fin);
-}
+}*/
 
 // Función para renderizar los ingresos en la tabla
 function renderIngresos(pagina = 1) {
-    const ingresosPagina = obtenerPagina(pagina);
+    const filtrosIngresos = getFiltros();  // Obtenemos los filtros desde localStorage
+    const ingresosFiltrados = obtenerIngresosFiltrados(filtrosIngresos);
+    const ingresosPagina = obtenerPagina(pagina, ingresosFiltrados);
     const ingresosBody = document.getElementById('cuerpoTablaIngresos');
 
     ingresosBody.innerHTML = '';
+
+    // Verificar si hay registros después de aplicar los filtros
+    if (ingresosPagina.length === 0) {
+        const warningMessage = document.getElementById('noRecordsWarning');
+        warningMessage.style.display = 'block';
+    } else {
+        const warningMessage = document.getElementById('noRecordsWarning');
+        warningMessage.style.display = 'none';
+    }
 
     ingresosBody.innerHTML = ingresosPagina.map(ingreso => `
         <tr>
@@ -29,10 +56,53 @@ function renderIngresos(pagina = 1) {
     `).join('');
 }
 
+
+  // Función para obtener los ingresos filtrados por fecha y categoría
+  function obtenerIngresosFiltrados(filtrosIngresos = {}) {
+      const ingresos = getIngresos();
+      // Utilidad para convertir yyyy-mm-dd a dd/mm/yyyy
+      function normalizarFechaInput(valor) {
+          if (!valor) return null;
+          if (/^\d{4}-\d{2}-\d{2}$/.test(valor)) {
+              const [y, m, d] = valor.split('-');
+              return `${d}/${m}/${y}`;
+          }
+          return valor;
+      }
+      // Filtrar por fecha
+      if (filtrosIngresos.fechaInicio || filtrosIngresos.fechaFin) {
+          const fechaInicioStr = normalizarFechaInput(filtrosIngresos.fechaInicio);
+          const fechaFinStr = normalizarFechaInput(filtrosIngresos.fechaFin);
+          return ingresos.filter(ingreso => {
+              let fecha = new Date(ingreso.fecha.split('/').reverse().join('/'));
+              fecha.setHours(12,0,0,0);
+              let fechaInicio = fechaInicioStr ? new Date(fechaInicioStr.split('/').reverse().join('/')) : null;
+              let fechaFin = fechaFinStr ? new Date(fechaFinStr.split('/').reverse().join('/')) : null;
+              if (fechaInicio) fechaInicio.setHours(0,0,0,0);
+              if (fechaFin) fechaFin.setHours(23,59,59,999);
+              let valido = true;
+              if (fechaInicio && fecha < fechaInicio) valido = false;
+              if (fechaFin && fecha > fechaFin) valido = false;
+              return valido;
+          });
+      }
+
+      // Filtrar por categoría
+      if (filtrosIngresos.categoria) {
+          return ingresos.filter(ingreso => ingreso.categoria === parseInt(filtrosIngresos.categoria));
+      }
+
+      //console.log("Ingresos sin filtro:", ingresos);
+
+      return ingresos;  // Si no hay filtro, se devuelven todos los ingresos
+  }
+
 // Función para renderizar los botones de paginación
-function renderPaginacion(regIngresos = getIngresos()) {
-    const totalPaginas = Math.ceil(regIngresos.length / registrosPorPagina);
-    //console.log(`Total de páginas: ${totalPaginas}`);
+function renderPaginacion() {
+    const filtrosIngresos = getFiltros();
+
+    const ingresosFiltrados = obtenerIngresosFiltrados(filtrosIngresos);
+    const totalPaginas = Math.ceil(ingresosFiltrados.length / registrosPorPagina);
     const paginacion = document.querySelector('.pagination');
     paginacion.innerHTML = '';
 
@@ -70,94 +140,163 @@ function irPagina(pagina, totalPaginas) {
     renderPaginacion();
 }
 
+// Filtros dinámicos de fecha y categoría para ingresos (adaptado de historial-movimientos.js)
+document.addEventListener('DOMContentLoaded', function () {
+  const tagFiltrarFechas = document.getElementById('tagFiltrarFechas');
+  const tagFiltrarCategorias = document.getElementById('tagFiltrarCategorias');
+  const filtroFechaInicio = document.getElementById('filtroFechaInicio');
+  const filtroFechaFin = document.getElementById('filtroFechaFin');
+  const categoriaFiltro = document.getElementById('categoriaFiltro');
+
+  function esDispositivoMovil() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  }
+
+  if (esDispositivoMovil()) {
+    filtroFechaInicio.type = 'date';
+    filtroFechaFin.type = 'date';
+    filtroFechaInicio.removeAttribute('readonly');
+    filtroFechaFin.removeAttribute('readonly');
+    filtroFechaInicio.placeholder = 'Fecha de inicio';
+    filtroFechaFin.placeholder = 'Fecha de fin';
+    // Agregar labels solo en móvil
+    if (!document.getElementById('labelFechaInicio')) {
+      const labelInicio = document.createElement('label');
+      labelInicio.setAttribute('for', 'filtroFechaInicio');
+      labelInicio.id = 'labelFechaInicio';
+      labelInicio.textContent = 'Fecha de inicio:';
+      filtroFechaInicio.parentNode.insertBefore(labelInicio, filtroFechaInicio);
+    }
+    if (!document.getElementById('labelFechaFin')) {
+      const labelFin = document.createElement('label');
+      labelFin.setAttribute('for', 'filtroFechaFin');
+      labelFin.id = 'labelFechaFin';
+      labelFin.textContent = 'Fecha de fin:';
+      filtroFechaFin.parentNode.insertBefore(labelFin, filtroFechaFin);
+    }
+  } else {
+    filtroFechaInicio.type = 'text';
+    filtroFechaFin.type = 'text';
+    filtroFechaInicio.setAttribute('readonly', true);
+    filtroFechaFin.setAttribute('readonly', true);
+    filtroFechaInicio.placeholder = 'Fecha de inicio';
+    filtroFechaFin.placeholder = 'Fecha de fin';
+    $(filtroFechaInicio).datepicker({
+      format: 'dd/mm/yyyy',
+      language: 'es',
+      autoclose: true
+    });
+    $(filtroFechaFin).datepicker({
+      format: 'dd/mm/yyyy',
+      language: 'es',
+      autoclose: true
+    });
+  }
+
+  function parseFechaInput(valor) {
+    if (/^\d{4}-\d{2}-\d{2}$/.test(valor)) {
+      const [y, m, d] = valor.split('-');
+      return `${d}/${m}/${y}`;
+    }
+    return valor;
+  }
+
+  function updateFilterButtonText(startDate = null, endDate = null, categoriaId = '') {
+    let filterTextFecha = 'Todas las fechas';
+    if (startDate && endDate) {
+      filterTextFecha = `Desde: ${startDate}  |  Hasta: ${endDate}`;
+    } else if (startDate) {
+      filterTextFecha = `Desde: ${startDate}`;
+    } else if (endDate) {
+      filterTextFecha = `Hasta: ${endDate}`;
+    }
+    tagFiltrarFechas.textContent = filterTextFecha;
+    if (tagFiltrarFechas.textContent === 'Todas las fechas') {
+      filtroFechaInicio.value = '';
+      filtroFechaFin.value = '';
+    }
+    let filterTextCat = 'Todas las categorías';
+    if (categoriaId && categoriaId !== '') {
+      filterTextCat = "Categoría: " + (categorias.find(cat => cat.id === parseInt(categoriaId))?.nombre || '');
+    }
+    tagFiltrarCategorias.textContent = filterTextCat;
+  }
+
+  function filtroPorFecha(pagina = 1, startDate, endDate) {
+    let filtrosIng = getFiltros();
+    filtrosIng.fechaInicio = startDate ? parseFechaInput(startDate) : null;
+    filtrosIng.fechaFin = endDate ? parseFechaInput(endDate) : null;
+    filtrosIng.categoria = null;
+    setFiltros(filtrosIng);
+    renderIngresos(pagina);
+    renderPaginacion();
+  }
+
+  function filtroPorCategoria(pagina = 1, categoriaId) {
+    let filtrosIng = getFiltros();
+    if (categoriaId === "") {
+      filtrosIng.categoria = null;
+    } else {
+      filtrosIng.fechaInicio = null;
+      filtrosIng.fechaFin = null;
+      filtrosIng.categoria = categoriaId;
+    }
+    setFiltros(filtrosIng);
+    renderIngresos(pagina);
+    renderPaginacion();
+  }
+
+  function handleDateFilterChange() {
+    const startDateValue = filtroFechaInicio.value;
+    const endDateValue = filtroFechaFin.value;
+    filtroPorFecha(1, startDateValue, endDateValue);
+    updateFilterButtonText(startDateValue, endDateValue, categoriaFiltro.value);
+  }
+
+  $(filtroFechaInicio).on('changeDate', handleDateFilterChange);
+  $(filtroFechaFin).on('changeDate', handleDateFilterChange);
+  filtroFechaInicio.addEventListener('change', handleDateFilterChange);
+  filtroFechaFin.addEventListener('change', handleDateFilterChange);
+
+  categoriaFiltro.innerHTML = '<option value="">Todas las categorías</option>';
+  categorias.forEach(categoria => {
+    if (categoria.user_id === parseInt(idUsuarioActivo)) {
+      const option = document.createElement('option');
+      option.value = categoria.id;
+      option.textContent = categoria.nombre;
+      categoriaFiltro.appendChild(option);
+    }
+  });
+
+  function filtrarCategoria() {
+    const categoriaId = categoriaFiltro.value;
+    filtroPorCategoria(1, categoriaId);
+    updateFilterButtonText(null, null, categoriaId);
+  }
+
+  categoriaFiltro.addEventListener('change', filtrarCategoria);
+
+  tagFiltrarFechas.addEventListener('click', function () {
+    filtroFechaInicio.value = '';
+    filtroFechaFin.value = '';
+    filtroPorFecha(1, null, null);
+    updateFilterButtonText(null, null, categoriaFiltro.value);
+  });
+
+  tagFiltrarCategorias.addEventListener('click', function () {
+    categoriaFiltro.value = '';
+    filtroPorCategoria(1, '');
+    updateFilterButtonText(null, null, '');
+  });
+
+  // Inicializar
+  updateFilterButtonText();
+  renderIngresos(1);
+  renderPaginacion();
+});
+
 // Inicializar la paginación
 renderIngresos(paginaActual);
 renderPaginacion();
 
-// Función para mostrar el Toast de éxito
-function mostrarToastExitoRegistro() {
-    const prev = document.querySelector('.toast-exito');
-    if (prev) prev.remove();
 
-    const template = document.getElementById('register-income-template'); 
-    const toastElement = template.content.cloneNode(true).children[0];
-
-    document.body.appendChild(toastElement);
-
-    setTimeout(() => toastElement.remove(), 5000);
-}
-
-//Registrar un ingreso
-const formAgregarIngreso = document.getElementById('formAgregarIngreso');
-
-// Abrir modal para agregar
-document.getElementById('btnAgregarIngreso').addEventListener('click', function () {
-    formAgregarIngreso.reset();
-    const selectAgregarCategoria = document.getElementById('agregar-categoria');
-    selectAgregarCategoria.innerHTML = '<option value="">Seleccione una opción</option>';
-    categorias.forEach(categoria => {
-        if (categoria.user_id === parseInt(idUsuarioActivo)) {
-            const option = document.createElement('option');
-            option.value = categoria.id;
-            option.textContent = categoria.nombre;
-            selectAgregarCategoria.appendChild(option);
-        }
-    }
-    );
-    new bootstrap.Modal(document.getElementById('modalAgregarIngreso')).show();
-});
-
-formAgregarIngreso.addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    const monto = document.getElementById('agregar-monto');
-    const categoria = document.getElementById('agregar-categoria');
-    const descripcion = document.getElementById('agregar-descripcion');
-    const frecuencia = document.getElementById('agregar-frecuencia');
-
-    let errores = 0;
-    document.querySelectorAll('.mensaje-error').forEach(el => el.textContent = '');
-    //exito.classList.add('d-none');
-
-    if (!monto.value.trim()) {
-        document.getElementById('error-monto').textContent = 'El monto es obligatorio';
-        errores++;
-    }
-
-    if (!categoria.value.trim()) {
-        document.getElementById('error-categoria').textContent = 'Selecciona una categoría';
-        errores++;
-    }
-
-    if (!descripcion.value.trim()) {
-        descripcion.value = 'Sin descripción';
-    }
-
-    if (!frecuencia.value.trim()) {
-        document.getElementById('error-frecuencia').textContent = 'Selecciona una frecuencia válida';
-        errores++;
-    }
-
-    if (errores === 0) {
-        const nuevoIngreso = {
-            id: getIngresos().length + 1,
-            user_id: parseInt(idUsuarioActivo),
-            fecha: new Date().toLocaleDateString('es-ES'),
-            categoria: parseInt(categoria.value),
-            monto: parseFloat(monto.value),
-            descripcion: descripcion.value,
-            frecuencia: frecuencia.value
-        }
-
-        console.log(nuevoIngreso);
-
-        guardarIngreso(nuevoIngreso);            
-        renderIngresos();
-        renderPaginacion();
-            
-        bootstrap.Modal.getInstance(document.getElementById('modalAgregarIngreso')).hide();
-
-        mostrarToastExitoRegistro();
-    }
-        
-});

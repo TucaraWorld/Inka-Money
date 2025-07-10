@@ -19,7 +19,12 @@
   <link rel="stylesheet" href="styles/visualizacion.css">
 </head>
 <body class="layout-wrapper">
-
+   <!-- Barra hamburguesa móvil -->
+  <div class="franja-hamburguesa">
+    <button class="btn-hamburguesa" id="toggleSidebar">&#9776;</button>
+      <img src="assets/logo.png" alt="Logo de Inka Money" class="logo-img" width="32" height="32" />
+      <span class="logo-text">InkaMoney</span>
+  </div>
   <!-- HEADER -->
   <header class="top-header"></header>
 
@@ -45,7 +50,8 @@
               <ul class="nav flex-column ms-4 mt-2 submenu-registros">
                 <li><a href="ingresos.html" class="nav-link text-white"><i class="bi bi-plus-lg me-2"></i>Ingresos</a></li>
                 <li><a href="gastos.html" class="nav-link text-white"><i class="bi bi-dash-lg me-2"></i>Gastos</a></li>
-                <li><a href="balance.html" class="nav-link text-white"><i class="bi bi-bar-chart me-2"></i>Balance</a></li>
+                <li><a href="presupuesto.html" class="nav-link text-white"><i class="bi bi-bar-chart me-2"></i>Presupuesto</a></li>
+                <li><a href="formulario-categoria.html" class="nav-link text-white"><i class="bi bi-tags me-2"></i>Categorías</a></li>
               </ul>
             </div>
           </li>
@@ -73,96 +79,76 @@
       <main class="p-4 w-100 flex-grow-1 area-contenido" role="main">
         
         <!-- Encabezado con título y selector de periodo -->
-        <header class="d-flex justify-content-between align-items-center mb-4">
-          <h2 class="mb-0">Resumen</h2>
+        <header class="d-flex justify-content-between align-items-center mb-4 encabezado-principal">
+          <h2 class="mb-0">Resumen de Gastos</h2>
           <div class="selector-periodo">
-            <button class="btn btn-outline-primary btn-periodo active" data-periodo="semanal">Semanal</button>
-            <button class="btn btn-outline-primary btn-periodo" data-periodo="mensual">Mensual</button>
+            <button class="btn btn-periodo btn-amarillo active" data-periodo="semanal">Semanal</button>
+            <button class="btn btn-periodo btn-amarillo" data-periodo="mensual">Mensual</button>
           </div>
         </header>
 
-        <!-- Resumen de datos -->
-        <div class="contenedor-resumen p-4 mb-4">
-        <section class="resumen-container ">
-          <h3 class="mb-3">Resumen semanal</h3>
-          <div class="resumen-item">
-            <span class="resumen-label">
-            <span class="icono-circulo"></span>
-            <strong>Ingresos:</strong>
-            </span>
-            <span class="monto-rect"><span class="monto">S/. 400.00</span></span>
-          </div>
-          <div class="resumen-item">
-            <span class="resumen-label">
-            <span class="icono-circulo"></span>
-            <strong>Gastos:</strong>
-            </span>
-            <span class="monto-rect"><span class="monto">S/. 250.00</span></span>
-          </div>
-          <div class="resumen-item">
-            <span class="resumen-label">
-            <span class="icono-circulo"></span>
-            <strong>Balance:</strong>
-            </span>
-            <span class="monto-rect"><span class="monto">S/. 150.00</span></span>
+        <!-- Gráfico de barras -->
+        <!-- Caja blanca para el gráfico -->
+        <div class="visualizacion-caja-gris mb-4" style="max-width:900px;">
+          <canvas id="graficoBarras" height="250"></canvas>
+        </div>
+
+        
+         <!-- Resumen de datos -->
+        <!-- Caja gris para el resumen -->
+        <div class="visualizacion-caja-blanca" style="max-width:900px;">
+          <div id="resumenSemanal">
+          
+            <div class="resumen-item">
+              <span class="resumen-label"><strong>Ingresos:</strong></span>
+              <span class="monto-rect"><span class="monto">S/. 400.00</span></span>
+            </div>
+            <div class="resumen-item">
+              <span class="resumen-label"><strong>Gastos:</strong></span>
+              <span class="monto-rect"><span class="monto">S/. 250.00</span></span>
+            </div>
+            <div class="resumen-item">
+              <span class="resumen-label"><strong>Balance:</strong></span>
+              <span class="monto-rect"><span class="monto">S/. 150.00</span></span>
+            </div>
           </div>
         </div>
-        </section>
+        <!-- Cards de mayor/menor ingreso/gasto -->
+        <div class="cards-row hide-when-zero">
+          <div class="card" id="mayorIngresoCard">
+            <h5>Mayor ingreso</h5>
+            <p>Para comida</p>
+            <h6>S/. 250.00</h6>
+          </div>
+          <div class="card" id="mayorGastoCard">
+            <h5>Mayor gasto</h5>
+            <p>Para comida</p>
+            <h6>S/. 50.00</h6>
+          </div>
+          <div class="card icon" id="mayoresLinesCard">
+            <img src="assets/icons/profit-lines.png" alt="Profit Lines Icon"
+                  class="card-icon">
+          </div>
+        </div>
 
-        <!-- Gráfico de barras -->
-            <section class="grafico-container mb-4">
-            <div class="contenedor-grafico p-4 mb-4">    
-            <div class="grafico-barras">          
-                <!-- Contenedor principal del gráfico -->
-                <div class="contenedor-barras">
-                <!-- Líneas de guía verticales -->
-                <div class="lineas-guia">
-                    <div class="linea-guia" style="left: 0%"></div>
-                    <div class="linea-guia" style="left: 20%"></div>
-                    <div class="linea-guia" style="left: 40%"></div>
-                    <div class="linea-guia" style="left: 60%"></div>
-                    <div class="linea-guia" style="left: 80%"></div>
-                    <div class="linea-guia" style="left: 100%"></div>
-                </div>
-            </div>
-                <!-- Barras -->
-                <div class="grafico-barras" style="position: relative;">
-                    <div class="eje-y-vertical"></div>
-                <div class="barras">
-                    <div class="barra-container">
-                        <span class="etiqueta-y">Ingresos</span>
-                        <div class="barra ingreso"></div>
-                        <span class="valor-barra">400</span>
-                    </div>
-                    <div class="barra-container">
-                        <span class="etiqueta-y">Gastos</span>
-                    
-                        <div class="barra gasto"></div>
-                        <span class="valor-barra">250</span>
-                    </div>
-                    <div class="barra-container">
-                        <span class="etiqueta-y">Balance</span>
-                        <div class="barra balance"></div>
-                        <span class="valor-barra">150</span>
-                    </div>
-                </div>
-                
-                <!-- Eje X con valores -->
-                <div class="eje-x">
-                <div class="valor-x">0</div>
-                <div class="valor-x">100</div>
-                <div class="valor-x">200</div>
-                <div class="valor-x">300</div>
-                <div class="valor-x">400</div>
-                <div class="valor-x">500</div>
-                </div>
-            </div>
-            </section>
-
-            <button id="btn-sin-datos" class="btn btn-warning position-fixed" style="bottom: 60px; right: 10px; z-index: 999;"
-            onclick="window.location.href='sin-datos.html'">
-             Sin datos
-        </button>
+        <div class="cards-row hide-when-zero">
+          <div class="card" id="menorIngresoCard">
+            <h5>Menor ingreso</h5>
+            <p>Para Transporte</p>
+            <h6>S/. 50.00</h6>
+          </div>
+          <div class="card" id="menorGastoCard">
+            <h5>Menor gasto</h5>
+            <p>Para Salud</p>
+            <h6>S/. 35.00</h6>
+          </div>
+          <div class="card icon" id="menoresLinesCard">
+            <img src="assets/icons/loss-lines.png" alt="Loss Lines Icon" class="card-icon">
+          </div>
+          </div>
+          <div class="advertencia-text ">
+            <p>*Los montos mostrados en las tarjetas son en un contexto mensual</p>
+          </div>       
       </main>
       
 
@@ -177,5 +163,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <!-- Custom JS -->
   <script src="scripts/visualizaciones.js"></script>
+  <script src="scripts/sidebar.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>
