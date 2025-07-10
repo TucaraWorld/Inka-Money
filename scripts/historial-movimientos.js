@@ -140,6 +140,22 @@ document.addEventListener('DOMContentLoaded', function () {
     filtroFechaFin.removeAttribute('readonly');
     filtroFechaInicio.placeholder = 'Fecha de inicio';
     filtroFechaFin.placeholder = 'Fecha de fin';
+
+    // Agregar labels solo en móvil
+    if (!document.getElementById('labelFechaInicio')) {
+      const labelInicio = document.createElement('label');
+      labelInicio.setAttribute('for', 'filtroFechaInicio');
+      labelInicio.id = 'labelFechaInicio';
+      labelInicio.textContent = 'Fecha de inicio:';
+      filtroFechaInicio.parentNode.insertBefore(labelInicio, filtroFechaInicio);
+    }
+    if (!document.getElementById('labelFechaFin')) {
+      const labelFin = document.createElement('label');
+      labelFin.setAttribute('for', 'filtroFechaFin');
+      labelFin.id = 'labelFechaFin';
+      labelFin.textContent = 'Fecha de fin:';
+      filtroFechaFin.parentNode.insertBefore(labelFin, filtroFechaFin);
+    }
   } else {
     // Inicializar datepickers solo en desktop
     filtroFechaInicio.type = 'text';
